@@ -1,0 +1,10 @@
+<Project>
+
+  <ItemGroup>
+    <PackageReference Update="BizTalk.Server.2020.Build;BizTalk.Server.2020.Runtime;BizTalk.Server.2020.Runtime.Adapters">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>build; buildtransitive; compile; native; runtime; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>
