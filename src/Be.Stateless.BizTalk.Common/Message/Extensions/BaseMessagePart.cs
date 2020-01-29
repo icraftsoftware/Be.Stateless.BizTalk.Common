@@ -46,8 +46,6 @@ namespace Be.Stateless.BizTalk.Message.Extensions
 		/// </param>
 		public static void SetDataStream(this IBaseMessagePart messagePart, Stream stream, IResourceTracker tracker)
 		{
-			// TODO ?consider providing an overload when there is no IResourceTracker as this is necessary only for unmanaged objects/resources? not really necessary as one could use Data setter, but it'd be consistent/balanced API
-
 			if (messagePart == null) throw new ArgumentNullException(nameof(messagePart));
 			if (stream == null) throw new ArgumentNullException(nameof(stream));
 			if (tracker == null) throw new ArgumentNullException(nameof(tracker));
@@ -75,8 +73,6 @@ namespace Be.Stateless.BizTalk.Message.Extensions
 		/// </returns>
 		public static T WrapOriginalDataStream<T>(this IBaseMessagePart messagePart, Func<Stream, T> wrapper, IResourceTracker tracker) where T : Stream
 		{
-			// TODO ?consider providing an overload when there is no IResourceTracker as this is necessary only for unmanaged objects/resources?
-
 			if (messagePart == null) throw new ArgumentNullException(nameof(messagePart));
 			if (wrapper == null) throw new ArgumentNullException(nameof(wrapper));
 			if (tracker == null) throw new ArgumentNullException(nameof(tracker));

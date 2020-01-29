@@ -93,7 +93,7 @@ namespace Be.Stateless.BizTalk.Xml
 
 				var readers = (XmlReader[]) Reflector.GetField(composite, "_readers");
 				readers.ForEach(r => r.NameTable.Should().BeSameAs(composite.NameTable));
-				// TODO readers.Select(r => r.NameTable).Should().AllBeSameAs(composite.NameTable);
+				// TODO create XUnit custom constraint for readers.Select(r => r.NameTable).Should().AllBeSameAs(composite.NameTable);
 			}
 		}
 

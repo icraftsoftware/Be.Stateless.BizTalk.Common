@@ -121,7 +121,7 @@ namespace Be.Stateless.BizTalk.Streaming.Extensions
 		private Stream Apply(XslCompiledTransform xsl, XsltArgumentList arguments, Encoding encoding)
 		{
 			var output = new VirtualStream(DEFAULT_BUFFER_SIZE, DEFAULT_THRESHOLD_SIZE);
-			// Clone() to have a modifiable copy of the transform's settings
+			// Clone() to get a modifiable copy of the transform's settings
 			var settings = xsl.OutputSettings.Clone();
 			settings.CloseOutput = false;
 			settings.Encoding = encoding;
@@ -129,12 +129,8 @@ namespace Be.Stateless.BizTalk.Streaming.Extensions
 			{
 				if (_streams.Length == 1)
 				{
-					// TODO ?? *always* skip CompositeStream.Read() and wraps CompositeStream.Streams in a CompositeXmlReader instead ??
-					//var compositeStream = _streams[0] as CompositeStream;
-					//if (compositeStream != null)
-					//   xsl.Transform(compositeStream.Streams, arguments, writer);
-					//else
-					xsl.Transform(_streams[0], arguments, writer);
+					if (_streams[0] is CompositeStream compositeStream) xsl.Transform(compositeStream.Streams, arguments, writer);
+					else xsl.Transform(_streams[0], arguments, writer);
 				}
 				else
 				{

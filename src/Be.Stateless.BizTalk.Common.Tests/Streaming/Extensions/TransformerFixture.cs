@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Xml;
 using System.Xml.Xsl;
@@ -25,6 +26,7 @@ using Be.Stateless.BizTalk.Runtime.Caching;
 using Be.Stateless.BizTalk.Transform;
 using Be.Stateless.BizTalk.Xml.Xsl;
 using Be.Stateless.IO;
+using Be.Stateless.IO.Extensions;
 using FluentAssertions;
 using Microsoft.BizTalk.Message.Interop;
 using Moq;
@@ -115,6 +117,61 @@ namespace Be.Stateless.BizTalk.Streaming.Extensions
 
 			// specific arguments and message ctxt requirement, new XsltArgumentList instance is required
 			sut.BuildArgumentList(descriptor, null).Should().NotBeSameAs(descriptor.Arguments).And.NotBeSameAs(arguments);
+		}
+
+		[Fact]
+		public void TransformMultipleStreamsDiscardsXmlDeclarations()
+		{
+			using (var stream1 = new StringStream("<?xml version='1.0' encoding='utf-16'?><root><one/></root>"))
+			using (var stream2 = new StringStream("<?xml version='1.0' encoding='utf-16'?><root><two/></root>"))
+			using (var stream6 = new StringStream("<?xml version='1.0' encoding='utf-16'?><root><six/></root>"))
+			using (var stream = new Stream[] { stream1, stream2, stream6 }.Transform().Apply(typeof(IdentityTransform)))
+			using (var reader = XmlReader.Create(stream))
+			{
+				reader.MoveToContent();
+				reader.ReadOuterXml().Should().Be(
+					"<agg:Root xmlns:agg=\"http://schemas.microsoft.com/BizTalk/2003/aggschema\">"
+					+ "<agg:InputMessagePart_0><root><one /></root></agg:InputMessagePart_0>"
+					+ "<agg:InputMessagePart_1><root><two /></root></agg:InputMessagePart_1>"
+					+ "<agg:InputMessagePart_2><root><six /></root></agg:InputMessagePart_2>"
+					+ "</agg:Root>");
+			}
+		}
+
+		[Fact]
+		[SuppressMessage("ReSharper", "AccessToDisposedClosure")]
+		public void TransformOneAggregateStreamDoesNotDiscardXmlDeclarationsAndThrows()
+		{
+			using (var stream1 = new StringStream("<?xml version='1.0' encoding='utf-16'?><root><one/></root>"))
+			using (var stream2 = new StringStream("<?xml version='1.0' encoding='utf-16'?><root><two/></root>"))
+			using (var stream6 = new StringStream("<?xml version='1.0' encoding='utf-16'?><root><six/></root>"))
+			using (var compositeStream = new CompositeStream(new Stream[] { stream1, stream2, stream6 }))
+			using (var memoryStream = new MemoryStream())
+			{
+				compositeStream.CopyTo(memoryStream);
+				Action act = () => memoryStream.Rewind().Transform().Apply(typeof(IdentityTransform));
+				act.Should().Throw<XmlException>();
+			}
+		}
+
+		[Fact]
+		public void TransformOneCompositeStreamDiscardsXmlDeclarations()
+		{
+			using (var stream1 = new StringStream("<?xml version='1.0' encoding='utf-16'?><root><one/></root>"))
+			using (var stream2 = new StringStream("<?xml version='1.0' encoding='utf-16'?><root><two/></root>"))
+			using (var stream6 = new StringStream("<?xml version='1.0' encoding='utf-16'?><root><six/></root>"))
+			using (var compositeStream = new CompositeStream(new Stream[] { stream1, stream2, stream6 }))
+			using (var stream = compositeStream.Transform().Apply(typeof(IdentityTransform)))
+			using (var reader = XmlReader.Create(stream))
+			{
+				reader.MoveToContent();
+				reader.ReadOuterXml().Should().Be(
+					"<agg:Root xmlns:agg=\"http://schemas.microsoft.com/BizTalk/2003/aggschema\">"
+					+ "<agg:InputMessagePart_0><root><one /></root></agg:InputMessagePart_0>"
+					+ "<agg:InputMessagePart_1><root><two /></root></agg:InputMessagePart_1>"
+					+ "<agg:InputMessagePart_2><root><six /></root></agg:InputMessagePart_2>"
+					+ "</agg:Root>");
+			}
 		}
 	}
 }

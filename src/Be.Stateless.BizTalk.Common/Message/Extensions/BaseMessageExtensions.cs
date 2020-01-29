@@ -71,7 +71,6 @@ namespace Be.Stateless.BizTalk.Message.Extensions
 			catch (Exception exception)
 			{
 				if (exception.IsFatal()) throw;
-				// TODO add some logging here
 			}
 
 			return new XmlQNameTable(contextProperties ?? new Hashtable());
