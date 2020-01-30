@@ -23,24 +23,25 @@ using Microsoft.BizTalk.XLANGs.BTXEngine;
 using Microsoft.XLANGs.BaseTypes;
 using Microsoft.XLANGs.Core;
 
-namespace Be.Stateless.BizTalk.Message
+// ReSharper disable CheckNamespace
+namespace BizTalk.Factory.XLang
 {
 	[Serializable]
-	public sealed class XLangMessage : BTXMessage
+	public sealed class Message : BTXMessage
 	{
 		public static XLANGMessage Create(Context context, Stream content)
 		{
-			var message = new XLangMessage(context, content);
+			var message = new Message(context, content);
 			return message.GetMessageWrapperForUserCode();
 		}
 
 		public static XLANGMessage Create(Context context, XmlDocument content)
 		{
-			var message = new XLangMessage(context, content);
+			var message = new Message(context, content);
 			return message.GetMessageWrapperForUserCode();
 		}
 
-		private XLangMessage(Context context, object content) : base("BizTalkFactoryXLangMessage", context)
+		private Message(Context context, object content) : base("BizTalkFactoryXLangMessage", context)
 		{
 			context.RefMessage(this);
 			AddPart(string.Empty, "Body");

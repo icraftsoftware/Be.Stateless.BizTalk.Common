@@ -22,7 +22,6 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Xsl;
-using Be.Stateless.BizTalk.Message;
 using Be.Stateless.BizTalk.Runtime.Caching;
 using Be.Stateless.Xml.Extensions;
 using Be.Stateless.Xml.Xsl;
@@ -32,7 +31,8 @@ using Microsoft.XLANGs.BaseTypes;
 using Microsoft.XLANGs.Core;
 using XsltArgumentList = Be.Stateless.Xml.Xsl.XsltArgumentList;
 
-namespace Be.Stateless.BizTalk.Transform
+// ReSharper disable CheckNamespace
+namespace BizTalk.Factory.XLang
 {
 	/// <summary>
 	/// Helper class that allows for an orchestration to easily use an <see cref="XslCompiledTransform"/>.
@@ -46,7 +46,7 @@ namespace Be.Stateless.BizTalk.Transform
 	/// </remarks>
 	[SuppressMessage("ReSharper", "UnusedType.Global", Justification = "Public API.")]
 	[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
-	public static class XLangTransformHelper
+	public static class TransformHelper
 	{
 		/// <summary>
 		/// Applies the XSL transformation specified by <paramref name="map"/> to the specified <paramref name="message"/>.
@@ -67,7 +67,7 @@ namespace Be.Stateless.BizTalk.Transform
 		public static XLANGMessage Transform(XLANGMessage message, Type map)
 		{
 			if (message == null) throw new ArgumentNullException(nameof(message));
-			return Transform(new XLangMessageCollection { message }, map);
+			return Transform(new MessageCollection { message }, map);
 		}
 
 		/// <summary>
@@ -92,7 +92,7 @@ namespace Be.Stateless.BizTalk.Transform
 		public static XLANGMessage Transform(XLANGMessage message, Type map, params XsltArgument[] arguments)
 		{
 			if (message == null) throw new ArgumentNullException(nameof(message));
-			return Transform(new XLangMessageCollection { message }, map, arguments);
+			return Transform(new MessageCollection { message }, map, arguments);
 		}
 
 		/// <summary>
@@ -103,7 +103,7 @@ namespace Be.Stateless.BizTalk.Transform
 		/// and creates an output message with a single part named "Main".
 		/// </remarks>
 		/// <param name="messages">
-		/// The <see cref="XLangMessageCollection"/> to be transformed.
+		/// The <see cref="MessageCollection"/> to be transformed.
 		/// </param>
 		/// <param name="map">
 		/// The type of the BizTalk map class containing the transform to apply.
@@ -111,7 +111,7 @@ namespace Be.Stateless.BizTalk.Transform
 		/// <returns>
 		/// The transformed message with the result in the first part (at index 0).
 		/// </returns>
-		public static XLANGMessage Transform(XLangMessageCollection messages, Type map)
+		public static XLANGMessage Transform(MessageCollection messages, Type map)
 		{
 			return Transform(messages, map, new XsltArgumentList());
 		}
@@ -120,7 +120,7 @@ namespace Be.Stateless.BizTalk.Transform
 		/// Applies the XSL transformation specified by <paramref name="map"/> to the specified <paramref name="messages"/>.
 		/// </summary>
 		/// <param name="messages">
-		/// The <see cref="XLangMessageCollection"/> to be transformed.
+		/// The <see cref="MessageCollection"/> to be transformed.
 		/// </param>
 		/// <param name="map">
 		/// The type of the BizTalk map class containing the transform to apply.
@@ -131,20 +131,20 @@ namespace Be.Stateless.BizTalk.Transform
 		/// <returns>
 		/// The transformed message with the result in the first part (at index 0).
 		/// </returns>
-		public static XLANGMessage Transform(XLangMessageCollection messages, Type map, params XsltArgument[] arguments)
+		public static XLANGMessage Transform(MessageCollection messages, Type map, params XsltArgument[] arguments)
 		{
 			return Transform(messages, map, new XsltArgumentList(arguments));
 		}
 
-		private static XLANGMessage Transform(XLangMessageCollection messages, Type map, System.Xml.Xsl.XsltArgumentList arguments)
+		private static XLANGMessage Transform(MessageCollection messages, Type map, System.Xml.Xsl.XsltArgumentList arguments)
 		{
 			if (messages == null) throw new ArgumentNullException(nameof(messages));
-			if (messages.Count == 0) throw new ArgumentException("XLangMessageCollection is empty.", nameof(messages));
+			if (messages.Count == 0) throw new ArgumentException("MessageCollection is empty.", nameof(messages));
 			if (map == null) throw new ArgumentNullException(nameof(map));
 			using (messages)
 			{
 				var resultContent = Transform((XmlReader) messages, map, arguments);
-				var resultMessage = XLangMessage.Create(Service.RootService.XlangStore.OwningContext, resultContent);
+				var resultMessage = Message.Create(Service.RootService.XlangStore.OwningContext, resultContent);
 				return resultMessage;
 			}
 		}
@@ -174,6 +174,6 @@ namespace Be.Stateless.BizTalk.Transform
 
 		private const int DEFAULT_BUFFER_SIZE = 10 * 1024; //10 KB
 		private const int DEFAULT_THRESHOLD_SIZE = 1024 * 1024; //1 MB
-		private static readonly ILog _logger = LogManager.GetLogger(typeof(XLangTransformHelper));
+		private static readonly ILog _logger = LogManager.GetLogger(typeof(TransformHelper));
 	}
 }

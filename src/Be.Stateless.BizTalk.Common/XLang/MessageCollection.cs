@@ -1,6 +1,6 @@
-#region Copyright & License
+ï»¿#region Copyright & License
 
-// Copyright © 2012 - 2020 François Chabot
+// Copyright Â© 2012 - 2020 FranÃ§ois Chabot
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,18 +26,19 @@ using Be.Stateless.BizTalk.Xml;
 using Be.Stateless.Linq.Extensions;
 using Microsoft.XLANGs.BaseTypes;
 
-namespace Be.Stateless.BizTalk.Transform
+// ReSharper disable CheckNamespace
+namespace BizTalk.Factory.XLang
 {
 	/// <summary>
-	/// A collection of <see cref="XLANGMessage"/> messages in order to support easy calling of <see
-	/// cref="XLangTransformHelper"/> with several messages from within an orchestration.
+	/// A collection of <see cref="XLANGMessage"/> messages in order to support easy calling of <see cref="TransformHelper"/>
+	/// with several messages from within an orchestration.
 	/// </summary>
 	[Serializable]
-	public sealed class XLangMessageCollection : LinkedList<XLANGMessage>, IDisposable
+	public sealed class MessageCollection : LinkedList<XLANGMessage>, IDisposable
 	{
 		#region Operators
 
-		public static implicit operator XmlReader(XLangMessageCollection collection)
+		public static implicit operator XmlReader(MessageCollection collection)
 		{
 			var xmlReaderSettings = new XmlReaderSettings { CloseInput = true };
 			return collection.Count == 1
@@ -47,26 +48,26 @@ namespace Be.Stateless.BizTalk.Transform
 
 		#endregion
 
-		public XLangMessageCollection() { }
+		public MessageCollection() { }
 
 		// NOTICE ctor with params XLANGMessage[], though callable in a XLang expression shape of a BTS orchestration,
 		// does not behave as expected and entails weird NullReferenceException upon Dispose(); hence the other 9 ctors
-		// public XLangMessageCollection(params XLANGMessage[] messages) : base(messages) { }
+		// public MessageCollection(params XLANGMessage[] messages) : base(messages) { }
 
-		public XLangMessageCollection(XLANGMessage message1)
+		public MessageCollection(XLANGMessage message1)
 			: base(new[] { message1 })
 		{
 			if (message1 == null) throw new ArgumentNullException(nameof(message1));
 		}
 
-		public XLangMessageCollection(XLANGMessage message1, XLANGMessage message2)
+		public MessageCollection(XLANGMessage message1, XLANGMessage message2)
 			: base(new[] { message1, message2 })
 		{
 			if (message1 == null) throw new ArgumentNullException(nameof(message1));
 			if (message2 == null) throw new ArgumentNullException(nameof(message2));
 		}
 
-		public XLangMessageCollection(XLANGMessage message1, XLANGMessage message2, XLANGMessage message3)
+		public MessageCollection(XLANGMessage message1, XLANGMessage message2, XLANGMessage message3)
 			: base(new[] { message1, message2, message3 })
 		{
 			if (message1 == null) throw new ArgumentNullException(nameof(message1));
@@ -74,7 +75,7 @@ namespace Be.Stateless.BizTalk.Transform
 			if (message3 == null) throw new ArgumentNullException(nameof(message3));
 		}
 
-		public XLangMessageCollection(XLANGMessage message1, XLANGMessage message2, XLANGMessage message3, XLANGMessage message4)
+		public MessageCollection(XLANGMessage message1, XLANGMessage message2, XLANGMessage message3, XLANGMessage message4)
 			: base(new[] { message1, message2, message3, message4 })
 		{
 			if (message1 == null) throw new ArgumentNullException(nameof(message1));
@@ -83,7 +84,7 @@ namespace Be.Stateless.BizTalk.Transform
 			if (message4 == null) throw new ArgumentNullException(nameof(message4));
 		}
 
-		public XLangMessageCollection(XLANGMessage message1, XLANGMessage message2, XLANGMessage message3, XLANGMessage message4, XLANGMessage message5)
+		public MessageCollection(XLANGMessage message1, XLANGMessage message2, XLANGMessage message3, XLANGMessage message4, XLANGMessage message5)
 			: base(new[] { message1, message2, message3, message4, message5 })
 		{
 			if (message1 == null) throw new ArgumentNullException(nameof(message1));
@@ -93,7 +94,7 @@ namespace Be.Stateless.BizTalk.Transform
 			if (message5 == null) throw new ArgumentNullException(nameof(message5));
 		}
 
-		public XLangMessageCollection(
+		public MessageCollection(
 			XLANGMessage message1,
 			XLANGMessage message2,
 			XLANGMessage message3,
@@ -110,7 +111,7 @@ namespace Be.Stateless.BizTalk.Transform
 			if (message6 == null) throw new ArgumentNullException(nameof(message6));
 		}
 
-		public XLangMessageCollection(
+		public MessageCollection(
 			XLANGMessage message1,
 			XLANGMessage message2,
 			XLANGMessage message3,
@@ -129,7 +130,7 @@ namespace Be.Stateless.BizTalk.Transform
 			if (message7 == null) throw new ArgumentNullException(nameof(message7));
 		}
 
-		public XLangMessageCollection(
+		public MessageCollection(
 			XLANGMessage message1,
 			XLANGMessage message2,
 			XLANGMessage message3,
@@ -150,7 +151,7 @@ namespace Be.Stateless.BizTalk.Transform
 			if (message8 == null) throw new ArgumentNullException(nameof(message8));
 		}
 
-		public XLangMessageCollection(
+		public MessageCollection(
 			XLANGMessage message1,
 			XLANGMessage message2,
 			XLANGMessage message3,
@@ -173,7 +174,7 @@ namespace Be.Stateless.BizTalk.Transform
 			if (message9 == null) throw new ArgumentNullException(nameof(message9));
 		}
 
-		private XLangMessageCollection(SerializationInfo info, StreamingContext context) : base(info, context) { }
+		private MessageCollection(SerializationInfo info, StreamingContext context) : base(info, context) { }
 
 		#region IDisposable Members
 
