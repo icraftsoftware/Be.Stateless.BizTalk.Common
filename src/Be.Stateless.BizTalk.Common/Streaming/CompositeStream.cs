@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -127,10 +128,10 @@ namespace Be.Stateless.BizTalk.Streaming
 		/// <returns>
 		/// A long value representing the length of the stream in bytes.
 		/// </returns>
-		/// <exception cref="T:System.NotSupportedException">
+		/// <exception cref="NotSupportedException">
 		/// A class derived from Stream does not support seeking.
 		/// </exception>
-		/// <exception cref="T:System.ObjectDisposedException">
+		/// <exception cref="ObjectDisposedException">
 		/// Methods were called after the stream was closed.
 		/// </exception>
 		public override long Length
@@ -167,7 +168,7 @@ namespace Be.Stateless.BizTalk.Streaming
 		/// <returns>
 		/// The current position within the stream.
 		/// </returns>
-		/// <exception cref="T:System.NotSupportedException">The stream does not support seeking.</exception>
+		/// <exception cref="NotSupportedException">The stream does not support seeking.</exception>
 		public override long Position
 		{
 			get
@@ -253,7 +254,7 @@ namespace Be.Stateless.BizTalk.Streaming
 		/// A byte offset relative to the <paramref name="origin"/> parameter.
 		/// </param>
 		/// <param name="origin">
-		/// A value of type <see cref="T:System.IO.SeekOrigin"/> indicating the reference point used to obtain the new position.
+		/// A value of type <see cref="SeekOrigin"/> indicating the reference point used to obtain the new position.
 		/// </param>
 		public override long Seek(long offset, SeekOrigin origin)
 		{
@@ -280,7 +281,7 @@ namespace Be.Stateless.BizTalk.Streaming
 		/// <param name="value">
 		/// The desired length of the current stream in bytes.
 		/// </param>
-		/// <exception cref="T:System.NotSupportedException">
+		/// <exception cref="NotSupportedException">
 		/// The stream does not support both writing and seeking, such as if the stream is constructed from a pipe or console
 		/// output.
 		/// </exception>
@@ -312,6 +313,7 @@ namespace Be.Stateless.BizTalk.Streaming
 
 		#endregion
 
+		[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
 		internal Stream[] Streams
 		{
 			get

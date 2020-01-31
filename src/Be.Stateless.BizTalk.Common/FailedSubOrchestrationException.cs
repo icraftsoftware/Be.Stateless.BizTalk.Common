@@ -30,6 +30,7 @@ namespace Be.Stateless.BizTalk
 	/// failed by throwing a <see cref="FailedSubOrchestrationException"/> that identifies it by its <see cref="Name"/>.
 	/// </summary>
 	[Serializable]
+	[SuppressMessage("Design", "CA1032:Implement standard exception constructors")]
 	public class FailedSubOrchestrationException : Exception
 	{
 		/// <summary>

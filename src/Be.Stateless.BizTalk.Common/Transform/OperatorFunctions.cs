@@ -46,6 +46,7 @@ namespace Be.Stateless.BizTalk.Transform
 		/// Either <paramref name="then"/> or <paramref name="else"/> value depending on the Boolean value of <paramref
 		/// name="condition"/>.
 		/// </returns>
+		[SuppressMessage("Performance", "CA1822:Mark members as static")]
 		public string Iif(bool condition, string then, string @else)
 		{
 			return condition ? then : @else;

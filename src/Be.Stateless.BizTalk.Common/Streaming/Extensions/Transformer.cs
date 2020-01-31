@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -35,8 +36,10 @@ namespace Be.Stateless.BizTalk.Streaming.Extensions
 	/// Provides map/transform extensions to XML streams.
 	/// </summary>
 	/// <seealso cref="StreamExtensions.Transform(System.IO.Stream)"/>
+	[SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
 	internal class Transformer : ITransformStream
 	{
+		[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
 		public Transformer(Stream[] streams)
 		{
 			_streams = streams ?? throw new ArgumentNullException(nameof(streams));

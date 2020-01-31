@@ -42,6 +42,7 @@ namespace Be.Stateless.BizTalk.Message.Extensions
 	{
 		public static Stream AsStream(this XLANGMessage message)
 		{
+			if (message == null) throw new ArgumentNullException(nameof(message));
 			return message[0].AsStream();
 		}
 
@@ -86,6 +87,7 @@ namespace Be.Stateless.BizTalk.Message.Extensions
 
 		public static string ProbeMessageType(this IBaseMessage message, IResourceTracker resourceTracker)
 		{
+			if (message == null) throw new ArgumentNullException(nameof(message));
 			var markableForwardOnlyEventingReadStream = message.BodyPart.WrapOriginalDataStream(
 				originalStream => originalStream.AsMarkable(),
 				resourceTracker);
@@ -96,6 +98,7 @@ namespace Be.Stateless.BizTalk.Message.Extensions
 
 		public static string ToXml(this XmlQNameTable context)
 		{
+			if (context == null) throw new ArgumentNullException(nameof(context));
 			// cache xmlns while constructing xml infoset...
 			var nsCache = new XmlDictionary();
 			var xmlDocument = new XElement(

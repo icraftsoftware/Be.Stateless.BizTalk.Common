@@ -24,6 +24,7 @@ using Microsoft.BizTalk.Message.Interop;
 namespace Be.Stateless.BizTalk.Message.Extensions
 {
 	[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
+	[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
 	public static class PortTypeExtensions
 	{
 		public static PortType PortType(this IBaseMessage message)

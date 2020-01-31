@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.XLANGs.BaseTypes;
 
 namespace Be.Stateless.BizTalk.Message
@@ -30,6 +31,7 @@ namespace Be.Stateless.BizTalk.Message
 	{
 		#region Operators
 
+		[SuppressMessage("Usage", "CA2225:Operator overloads have named alternates")]
 		public static implicit operator Base64StringMessageContent(string content)
 		{
 			return new Base64StringMessageContent(content);
@@ -43,7 +45,7 @@ namespace Be.Stateless.BizTalk.Message
 
 		protected override byte[] GetBytes()
 		{
-			return Convert.FromBase64String(_content);
+			return Convert.FromBase64String(Content);
 		}
 
 		#endregion

@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Xml;
 using Microsoft.BizTalk.XLANGs.BTXEngine;
@@ -27,16 +28,20 @@ using Microsoft.XLANGs.Core;
 namespace BizTalk.Factory.XLang
 {
 	[Serializable]
+	[SuppressMessage("Design", "CA1010:Collections should implement generic interface", Justification = "<Pending>")]
+	[SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "<Pending>")]
 	public sealed class Message : BTXMessage
 	{
 		public static XLANGMessage Create(Context context, Stream content)
 		{
+			if (context == null) throw new ArgumentNullException(nameof(context));
 			var message = new Message(context, content);
 			return message.GetMessageWrapperForUserCode();
 		}
 
 		public static XLANGMessage Create(Context context, XmlDocument content)
 		{
+			if (context == null) throw new ArgumentNullException(nameof(context));
 			var message = new Message(context, content);
 			return message.GetMessageWrapperForUserCode();
 		}

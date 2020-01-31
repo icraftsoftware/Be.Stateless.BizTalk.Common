@@ -46,6 +46,7 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 
 		#region Base Class Member Overrides
 
+		[SuppressMessage("Design", "CA1062:Validate arguments of public methods")]
 		protected override string ConvertKeyToString(Type key)
 		{
 			ValidateKey(key);
@@ -63,6 +64,7 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 		#region Helpers
 
 		[Conditional("DEBUG")]
+		[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
 		private void ValidateKey(Type key)
 		{
 			if (!key.IsTransform()) throw new ArgumentException("Type is not a TransformBase derived Type instance.", nameof(key));

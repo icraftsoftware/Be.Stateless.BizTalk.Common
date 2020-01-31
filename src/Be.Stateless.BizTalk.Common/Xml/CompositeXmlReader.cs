@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -59,6 +60,7 @@ namespace Be.Stateless.BizTalk.Xml
 	/// </remarks>
 	/// <seealso cref="Microsoft.XLANGs.Core.Service.CompositeStreamReader"/>
 	[SuppressMessage("ReSharper", "LocalizableElement")]
+	[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
 	public class CompositeXmlReader : XmlReaderWrapper
 	{
 		#region Nested Type: CompoundXmlReader
@@ -142,7 +144,7 @@ namespace Be.Stateless.BizTalk.Xml
 			builder.Append($"<agg:Root xmlns:agg=\"{XML_AGGREGATE_SCHEMA_TARGET_NAMESPACE}\">");
 			for (var i = 0; i < parts; i++)
 			{
-				builder.AppendFormat("<agg:InputMessagePart_{0}></agg:InputMessagePart_{0}>", i);
+				builder.AppendFormat(CultureInfo.InvariantCulture, "<agg:InputMessagePart_{0}></agg:InputMessagePart_{0}>", i);
 			}
 
 			builder.Append("</agg:Root>");
@@ -214,7 +216,9 @@ namespace Be.Stateless.BizTalk.Xml
 
 		#endregion
 
+		[SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores")]
 		public const string XML_AGGREGATE_SCHEMA_TARGET_NAMESPACE = "http://schemas.microsoft.com/BizTalk/2003/aggschema";
+
 		private readonly XmlReader _outlineReader;
 		private readonly CompoundXmlReader[] _readers;
 		private int _currentMessagePartIndex;

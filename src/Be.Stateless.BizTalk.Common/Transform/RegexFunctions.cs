@@ -43,6 +43,7 @@ namespace Be.Stateless.BizTalk.Transform
 		/// <c>true</c> if the regular expression finds a match; <c>false</c> otherwise.
 		/// </returns>
 		/// <seealso cref="Regex.IsMatch(string,string)"/>
+		[SuppressMessage("Performance", "CA1822:Mark members as static")]
 		public bool IsMatch(string input, string pattern)
 		{
 			return Regex.IsMatch(input, pattern);
@@ -61,6 +62,7 @@ namespace Be.Stateless.BizTalk.Transform
 		/// <c>true</c> if the regular expression finds a match; <c>false</c> otherwise.
 		/// </returns>
 		/// <seealso cref="Regex.IsMatch(string,string)"/>
+		[SuppressMessage("Performance", "CA1822:Mark members as static")]
 		public bool IsOneOf(string input, string pattern)
 		{
 			return Regex.IsMatch(input, "^(" + pattern + ")$");
@@ -84,6 +86,7 @@ namespace Be.Stateless.BizTalk.Transform
 		/// string. If pattern is not matched in the current instance, the method returns the current instance unchanged.
 		/// </returns>
 		/// <seealso cref="Regex.Replace(string,string,string)"/>
+		[SuppressMessage("Performance", "CA1822:Mark members as static")]
 		public string Replace(string input, string pattern, string replacement)
 		{
 			return Regex.Replace(input, pattern, replacement);

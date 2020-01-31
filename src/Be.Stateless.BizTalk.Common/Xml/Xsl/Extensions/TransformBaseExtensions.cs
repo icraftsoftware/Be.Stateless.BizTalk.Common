@@ -60,6 +60,7 @@ namespace Be.Stateless.BizTalk.Xml.Xsl.Extensions
 		/// <returns>
 		/// The <see cref="XmlWriterSettings"/> related to the <see cref="TransformBase"/>-derived <see cref="Type"/>.
 		/// </returns>
+		[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
 		public static XmlWriterSettings GetOutputSettings(this Type type)
 		{
 			if (!type.IsTransform()) throw new ArgumentException("Type is not a TransformBase derived Type instance.", nameof(type));

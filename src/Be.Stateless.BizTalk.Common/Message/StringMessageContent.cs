@@ -36,6 +36,7 @@ namespace Be.Stateless.BizTalk.Message
 	{
 		#region Nested Type: StringContentFormatter
 
+		[SuppressMessage("Design", "CA1034:Nested types should not be visible")]
 		public class StringContentFormatter : IFormatter
 		{
 			#region IFormatter Members
@@ -67,6 +68,8 @@ namespace Be.Stateless.BizTalk.Message
 
 			public void Serialize(Stream serializationStream, object graph)
 			{
+				if (serializationStream == null) throw new ArgumentNullException(nameof(serializationStream));
+				if (graph == null) throw new ArgumentNullException(nameof(graph));
 				var content = (StringMessageContent) graph;
 				var bytes = content.GetBytes();
 				serializationStream.Write(bytes, 0, bytes.Length);
@@ -79,6 +82,7 @@ namespace Be.Stateless.BizTalk.Message
 
 		#region Operators
 
+		[SuppressMessage("Usage", "CA2225:Operator overloads have named alternates")]
 		public static implicit operator StringMessageContent(string content)
 		{
 			return new StringMessageContent(content);
@@ -88,24 +92,25 @@ namespace Be.Stateless.BizTalk.Message
 
 		public StringMessageContent(string content)
 		{
-			_content = content ?? throw new ArgumentNullException(nameof(content));
+			Content = content ?? throw new ArgumentNullException(nameof(content));
 		}
 
 		#region Base Class Member Overrides
 
 		public override string ToString()
 		{
-			return _content;
+			return Content;
 		}
 
 		#endregion
 
+		[XmlIgnore]
+		[field: XmlIgnore]
+		protected string Content { get; }
+
 		protected virtual byte[] GetBytes()
 		{
-			return Encoding.UTF8.GetBytes(_content);
+			return Encoding.UTF8.GetBytes(Content);
 		}
-
-		[XmlIgnore]
-		protected readonly string _content;
 	}
 }

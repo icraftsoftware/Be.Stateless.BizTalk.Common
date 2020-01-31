@@ -16,6 +16,7 @@
 
 #endregion
 
+using System;
 using System.Xml;
 using System.Xml.Xsl;
 using Be.Stateless.BizTalk.Transform;
@@ -39,22 +40,22 @@ namespace Be.Stateless.BizTalk.Xml.Xsl
 		/// </param>
 		public XslCompiledTransformDescriptor(XslCompiledTransformDescriptorBuilder builder)
 		{
+			if (builder == null) throw new ArgumentNullException(nameof(builder));
 			Arguments = builder.BuildXsltArgumentList();
 			ExtensionRequirements = builder.BuildExtensionRequirements();
 			if ((ExtensionRequirements & ExtensionRequirements.MessageContext) == ExtensionRequirements.MessageContext)
 			{
 				NamespaceResolver = builder.BuildNamespaceResolver();
 			}
-
 			XslCompiledTransform = builder.BuildXslCompiledTransform();
 		}
 
 		/// <summary>
-		/// The cloneable <see cref="T:Be.Stateless.Xml.Xsl.XsltArgumentList"/> equivalent of the <see
+		/// The cloneable <see cref="Be.Stateless.Xml.Xsl.XsltArgumentList"/> equivalent of the <see
 		/// cref="TransformBase"/>-derived <see cref="TransformBase.TransformArgs"/>.
 		/// </summary>
 		/// <remarks>
-		/// Relying on the cloneable <see cref="T:Be.Stateless.Xml.Xsl.XsltArgumentList"/> allows a <see
+		/// Relying on the cloneable <see cref="Be.Stateless.Xml.Xsl.XsltArgumentList"/> allows a <see
 		/// cref="XslCompiledTransformDescriptor"/> not to keep a reference on a <see cref="TransformBase"/> instance.
 		/// </remarks>
 		public Stateless.Xml.Xsl.XsltArgumentList Arguments { get; private set; }

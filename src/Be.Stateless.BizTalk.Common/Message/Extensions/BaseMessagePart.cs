@@ -29,6 +29,7 @@ namespace Be.Stateless.BizTalk.Message.Extensions
 	{
 		public static Stream AsStream(this XLANGPart messagePart)
 		{
+			if (messagePart == null) throw new ArgumentNullException(nameof(messagePart));
 			return (Stream) messagePart.RetrieveAs(typeof(Stream));
 		}
 

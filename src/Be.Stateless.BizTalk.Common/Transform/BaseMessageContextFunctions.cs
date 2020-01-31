@@ -127,6 +127,7 @@ namespace Be.Stateless.BizTalk.Transform
 		/// If an XSLT choose not to declare this namespace then it is up to itself to instantiate this class and add it as an
 		/// extension object.
 		/// </remarks>
+		[SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores")]
 		public const string TARGET_NAMESPACE = "urn:extensions.stateless.be:biztalk:message:context:2012:12";
 
 		private readonly IBaseMessageContext _context;

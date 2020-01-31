@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Xml;
 using System.Xml.XPath;
@@ -30,6 +31,7 @@ using Microsoft.XLANGs.BaseTypes;
 
 namespace Be.Stateless.BizTalk.Xml.Xsl
 {
+	[SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
 	public class XslCompiledTransformDescriptorBuilder
 	{
 		/// <summary>
@@ -37,8 +39,11 @@ namespace Be.Stateless.BizTalk.Xml.Xsl
 		/// of a <see cref="XslCompiledTransformDescriptor"/> for the given <see cref="TransformBase"/>-derived transform.
 		/// </summary>
 		/// <param name="transform">The <see cref="TransformBase"/>-derived transform.</param>
+		[SuppressMessage("Usage", "CA2208:Instantiate argument exceptions correctly")]
+		[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>")]
 		public XslCompiledTransformDescriptorBuilder(Type transform)
 		{
+			if (transform == null) throw new ArgumentNullException(nameof(transform));
 			if (!transform.IsTransform())
 				throw new ArgumentException(
 					$"The type {transform.AssemblyQualifiedName} does not derive from TransformBase.",
@@ -47,9 +52,11 @@ namespace Be.Stateless.BizTalk.Xml.Xsl
 			_transformBase = transformBase ?? throw new ArgumentException(
 				"transform",
 				$"Cannot instantiate type '{transform.AssemblyQualifiedName}'.");
-			_transform = transform;
+			Transform = transform;
 			_navigator = BuildNavigator();
 		}
+
+		protected Type Transform { get; }
 
 		public virtual ExtensionRequirements BuildExtensionRequirements()
 		{
@@ -66,10 +73,11 @@ namespace Be.Stateless.BizTalk.Xml.Xsl
 			return nsm;
 		}
 
+		[SuppressMessage("Security", "CA3076:Insecure XSLT script processing.")]
 		public virtual XslCompiledTransform BuildXslCompiledTransform()
 		{
 			var xslCompiledTransform = new XslCompiledTransform();
-			xslCompiledTransform.Load(_navigator, XsltSettings.TrustedXslt, new XslMapUrlResolver(_transform));
+			xslCompiledTransform.Load(_navigator, XsltSettings.TrustedXslt, new XslMapUrlResolver(Transform));
 			return xslCompiledTransform;
 		}
 
@@ -78,6 +86,8 @@ namespace Be.Stateless.BizTalk.Xml.Xsl
 			return new Stateless.Xml.Xsl.XsltArgumentList(_transformBase.TransformArgs);
 		}
 
+		[SuppressMessage("Security", "CA3075:Insecure DTD processing in XML")]
+		[SuppressMessage("Security", "CA5372:Use XmlReader For XPathDocument")]
 		private XPathNavigator BuildNavigator()
 		{
 			using (var stringReader = new StringReader(_transformBase.XmlContent))
@@ -87,8 +97,6 @@ namespace Be.Stateless.BizTalk.Xml.Xsl
 				return navigator;
 			}
 		}
-
-		protected readonly Type _transform;
 
 		private readonly XPathNavigator _navigator;
 		private readonly TransformBase _transformBase;

@@ -36,6 +36,7 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 	/// <see cref="System.Runtime.Caching.MemoryCache"/>.
 	/// </remarks>
 	[SuppressMessage("ReSharper", "LocalizableElement")]
+	[SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable")]
 	public abstract class Cache<TKey, TItem>
 	{
 		/// <summary>
@@ -57,6 +58,7 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 		/// The <see cref="Cache{TKey,TItem}"/> creates behind the scene a <see cref="MemoryCache"/> named after the derived class
 		/// name.
 		/// </remarks>
+		[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
 		protected Cache(TimeSpan slidingExpiration)
 		{
 			if (slidingExpiration.TotalMinutes <= 0) throw new ArgumentException("Sliding expiration time span must be greater than 0 minutes", nameof(slidingExpiration));

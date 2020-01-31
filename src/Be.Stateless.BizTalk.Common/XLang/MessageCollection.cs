@@ -18,12 +18,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml;
 using Be.Stateless.BizTalk.Message.Extensions;
 using Be.Stateless.BizTalk.Xml;
 using Be.Stateless.Linq.Extensions;
+using Be.Stateless.Xml;
 using Microsoft.XLANGs.BaseTypes;
 
 // ReSharper disable CheckNamespace
@@ -38,12 +40,15 @@ namespace BizTalk.Factory.XLang
 	{
 		#region Operators
 
+		[SuppressMessage("Usage", "CA2225:Operator overloads have named alternates")]
 		public static implicit operator XmlReader(MessageCollection collection)
 		{
 			var xmlReaderSettings = new XmlReaderSettings { CloseInput = true };
-			return collection.Count == 1
-				? XmlReader.Create(collection.First.Value.AsStream(), xmlReaderSettings)
-				: CompositeXmlReader.Create(collection.Select(m => m.AsStream()).ToArray(), xmlReaderSettings);
+			return collection is null
+				? EmptyXmlReader.Create()
+				: collection.Count == 1
+					? XmlReader.Create(collection.First.Value.AsStream(), xmlReaderSettings)
+					: CompositeXmlReader.Create(collection.Select(m => m.AsStream()).ToArray(), xmlReaderSettings);
 		}
 
 		#endregion
@@ -178,6 +183,7 @@ namespace BizTalk.Factory.XLang
 
 		#region IDisposable Members
 
+		[SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Pending>")]
 		void IDisposable.Dispose()
 		{
 			this.Where(m => m != null).ForEach(m => m.Dispose());

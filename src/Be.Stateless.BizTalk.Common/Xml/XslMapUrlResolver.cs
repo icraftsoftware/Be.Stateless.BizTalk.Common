@@ -79,6 +79,7 @@ namespace Be.Stateless.BizTalk.Xml
 		[SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
 		public override object GetEntity(Uri absoluteUri, string role, Type ofObjectToReturn)
 		{
+			if (absoluteUri == null) throw new ArgumentNullException(nameof(absoluteUri));
 			if (absoluteUri.Scheme == MAP_SCHEME)
 			{
 				if (absoluteUri.Host == TYPE_HOST)

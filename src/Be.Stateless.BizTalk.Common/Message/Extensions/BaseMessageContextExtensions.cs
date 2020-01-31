@@ -29,6 +29,7 @@ namespace Be.Stateless.BizTalk.Message.Extensions
 	{
 		public static string ToXml(this IBaseMessageContext context)
 		{
+			if (context == null) throw new ArgumentNullException(nameof(context));
 			// cache xmlns while constructing xml infoset...
 			var nsCache = new XmlDictionary();
 			var xmlDocument = new XElement(
