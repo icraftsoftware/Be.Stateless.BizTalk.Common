@@ -59,6 +59,7 @@ namespace Be.Stateless.BizTalk.Message
 				set => throw new NotSupportedException();
 			}
 
+			[SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope")]
 			public object Deserialize(Stream serializationStream)
 			{
 				var reader = new StreamReader(serializationStream, true);

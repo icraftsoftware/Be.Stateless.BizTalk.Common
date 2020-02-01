@@ -183,7 +183,7 @@ namespace BizTalk.Factory.XLang
 
 		#region IDisposable Members
 
-		[SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Pending>")]
+		[SuppressMessage("Design", "CA1063:Implement IDisposable Correctly")]
 		void IDisposable.Dispose()
 		{
 			this.Where(m => m != null).ForEach(m => m.Dispose());

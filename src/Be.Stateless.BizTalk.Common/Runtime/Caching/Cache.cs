@@ -37,6 +37,7 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 	/// </remarks>
 	[SuppressMessage("ReSharper", "LocalizableElement")]
 	[SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable")]
+	[SuppressMessage("Naming", "CA1724:Type names should not match namespaces")]
 	public abstract class Cache<TKey, TItem>
 	{
 		/// <summary>

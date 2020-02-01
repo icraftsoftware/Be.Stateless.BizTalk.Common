@@ -28,8 +28,9 @@ using Microsoft.XLANGs.Core;
 namespace BizTalk.Factory.XLang
 {
 	[Serializable]
-	[SuppressMessage("Design", "CA1010:Collections should implement generic interface", Justification = "<Pending>")]
-	[SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "<Pending>")]
+	[SuppressMessage("Design", "CA1010:Collections should implement generic interface")]
+	[SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix")]
+	[SuppressMessage("Naming", "CA1724:Type names should not match namespaces")]
 	public sealed class Message : BTXMessage
 	{
 		public static XLANGMessage Create(Context context, Stream content)
