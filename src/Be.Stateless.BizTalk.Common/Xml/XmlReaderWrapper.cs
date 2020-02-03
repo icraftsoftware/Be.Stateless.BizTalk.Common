@@ -28,110 +28,104 @@ namespace Be.Stateless.BizTalk.Xml
 	{
 		protected XmlReaderWrapper(XmlReader reader)
 		{
-			_reader = reader ?? throw new ArgumentNullException(nameof(reader));
+			InnerReader = reader ?? throw new ArgumentNullException(nameof(reader));
 		}
 
 		#region Base Class Member Overrides
 
-		public override int AttributeCount => _reader.AttributeCount;
+		public override int AttributeCount => InnerReader.AttributeCount;
 
-		public override string BaseURI => _reader.BaseURI;
+		public override string BaseURI => InnerReader.BaseURI;
 
 		public override void Close()
 		{
-			_reader.Close();
+			InnerReader.Close();
 		}
 
-		public override int Depth => _reader.Depth;
+		public override int Depth => InnerReader.Depth;
 
-		public override bool EOF => _reader.EOF;
+		public override bool EOF => InnerReader.EOF;
 
 		public override string GetAttribute(string name)
 		{
-			return _reader.GetAttribute(name);
+			return InnerReader.GetAttribute(name);
 		}
 
 		public override string GetAttribute(string name, string ns)
 		{
-			return _reader.GetAttribute(name, ns);
+			return InnerReader.GetAttribute(name, ns);
 		}
 
 		public override string GetAttribute(int i)
 		{
-			return _reader.GetAttribute(i);
+			return InnerReader.GetAttribute(i);
 		}
 
-		public override bool HasValue => _reader.HasValue;
+		public override bool HasValue => InnerReader.HasValue;
 
-		public override bool IsEmptyElement => _reader.IsEmptyElement;
+		public override bool IsEmptyElement => InnerReader.IsEmptyElement;
 
-		public override string LocalName => _reader.LocalName;
+		public override string LocalName => InnerReader.LocalName;
 
 		public override string LookupNamespace(string prefix)
 		{
-			return _reader.LookupNamespace(prefix);
+			return InnerReader.LookupNamespace(prefix);
 		}
 
 		public override bool MoveToAttribute(string name)
 		{
-			return _reader.MoveToAttribute(name);
+			return InnerReader.MoveToAttribute(name);
 		}
 
 		public override bool MoveToAttribute(string name, string ns)
 		{
-			return _reader.MoveToAttribute(name, ns);
+			return InnerReader.MoveToAttribute(name, ns);
 		}
 
 		public override bool MoveToElement()
 		{
-			return _reader.MoveToElement();
+			return InnerReader.MoveToElement();
 		}
 
 		public override bool MoveToFirstAttribute()
 		{
-			return _reader.MoveToFirstAttribute();
+			return InnerReader.MoveToFirstAttribute();
 		}
 
 		public override bool MoveToNextAttribute()
 		{
-			return _reader.MoveToNextAttribute();
+			return InnerReader.MoveToNextAttribute();
 		}
 
-		public override string NamespaceURI => _reader.NamespaceURI;
+		public override string NamespaceURI => InnerReader.NamespaceURI;
 
-		public override XmlNameTable NameTable => _reader.NameTable;
+		public override XmlNameTable NameTable => InnerReader.NameTable;
 
-		public override XmlNodeType NodeType => _reader.NodeType;
+		public override XmlNodeType NodeType => InnerReader.NodeType;
 
-		public override string Prefix => _reader.Prefix;
+		public override string Prefix => InnerReader.Prefix;
 
 		public override bool Read()
 		{
-			return _reader.Read();
+			return InnerReader.Read();
 		}
 
 		public override bool ReadAttributeValue()
 		{
-			return _reader.ReadAttributeValue();
+			return InnerReader.ReadAttributeValue();
 		}
 
-		public override ReadState ReadState => _reader.ReadState;
+		public override ReadState ReadState => InnerReader.ReadState;
 
 		public override void ResolveEntity()
 		{
-			_reader.ResolveEntity();
+			InnerReader.ResolveEntity();
 		}
 
-		public override string Value => _reader.Value;
+		public override string Value => InnerReader.Value;
 
 		#endregion
 
-		protected XmlReader InnerReader
-		{
-			get => _reader;
-			set => _reader = value;
-		}
-
-		private XmlReader _reader;
+		protected XmlReader InnerReader { get; set; }
 	}
 }
