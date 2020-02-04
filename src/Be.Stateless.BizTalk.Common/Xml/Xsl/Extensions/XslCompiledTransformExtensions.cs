@@ -36,8 +36,7 @@ namespace Be.Stateless.BizTalk.Xml.Xsl.Extensions
 		/// A <see cref="Stream"/> containing the input document.
 		/// </param>
 		/// <param name="arguments">
-		/// An <see cref="T:System.Xml.Xsl.XsltArgumentList"/> containing the namespace-qualified arguments used as input to the
-		/// transform.
+		/// An <see cref="XsltArgumentList"/> containing the namespace-qualified arguments used as input to the transform.
 		/// </param>
 		/// <param name="writer">
 		/// The <see cref="XmlWriter"/> to which to output.
@@ -62,8 +61,7 @@ namespace Be.Stateless.BizTalk.Xml.Xsl.Extensions
 		/// The input <see cref="Stream"/> compound.
 		/// </param>
 		/// <param name="arguments">
-		/// An <see cref="T:System.Xml.Xsl.XsltArgumentList"/> containing the namespace-qualified arguments used as input to the
-		/// transform.
+		/// An <see cref="XsltArgumentList"/> containing the namespace-qualified arguments used as input to the transform.
 		/// </param>
 		/// <param name="writer">
 		/// The <see cref="XmlWriter"/> to which to output.
