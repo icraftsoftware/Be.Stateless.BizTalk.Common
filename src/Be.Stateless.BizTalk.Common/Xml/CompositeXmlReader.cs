@@ -26,6 +26,7 @@ using System.Text;
 using System.Xml;
 using Be.Stateless.Extensions;
 using Be.Stateless.Linq.Extensions;
+using Be.Stateless.Xml;
 using Microsoft.BizTalk.Streaming;
 
 namespace Be.Stateless.BizTalk.Xml
