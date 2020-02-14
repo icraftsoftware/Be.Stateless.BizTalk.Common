@@ -35,7 +35,6 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 	/// For each derived class, <see cref="Cache{TKey,TItem}"/> creates behind the scene a named memory cache instance, i.e. a
 	/// <see cref="System.Runtime.Caching.MemoryCache"/>.
 	/// </remarks>
-	[SuppressMessage("ReSharper", "LocalizableElement")]
 	[SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable")]
 	[SuppressMessage("Naming", "CA1724:Type names should not match namespaces")]
 	public abstract class Cache<TKey, TItem>
@@ -86,7 +85,6 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 			get
 			{
 				var keyString = ConvertKeyToString(key);
-
 				if (_cache.Contains(keyString)) return (TItem) _cache[keyString];
 
 				lock (_cache)
@@ -99,7 +97,6 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 						return (TItem) cacheItem.Value;
 					}
 				}
-
 				return (TItem) _cache[keyString];
 			}
 		}

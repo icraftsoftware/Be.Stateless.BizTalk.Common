@@ -29,18 +29,30 @@ namespace Be.Stateless.BizTalk.Message.Extensions
 	{
 		public static MessageDirection Direction(this IBaseMessage message)
 		{
+			if (message == null) throw new ArgumentNullException(nameof(message));
+			return message.Context.Direction();
+		}
+
+		public static MessageDirection Direction(this IBaseMessageContext context)
+		{
 			// It's imperative to check outbound context properties first. If send port subscribes to a receive port, all of the
 			// context properties of the receive location will also be present in the outbound context, though demoted, which would
 			// confuse this code if it'd check the inbound context properties first.
-			if (!message.GetProperty(BtsProperties.OutboundTransportLocation).IsNullOrEmpty()) return MessageDirection.Outbound;
-			if (!message.GetProperty(BtsProperties.InboundTransportLocation).IsNullOrEmpty()) return MessageDirection.Inbound;
+			if (!context.GetProperty(BtsProperties.OutboundTransportLocation).IsNullOrEmpty()) return MessageDirection.Outbound;
+			if (!context.GetProperty(BtsProperties.InboundTransportLocation).IsNullOrEmpty()) return MessageDirection.Inbound;
 			throw new Exception("Unable to determine message direction.");
 		}
 
 		public static MessageDirection FailedDirection(this IBaseMessage message)
 		{
-			if (!message.GetProperty(ErrorReportProperties.OutboundTransportLocation).IsNullOrEmpty()) return MessageDirection.Outbound;
-			if (!message.GetProperty(ErrorReportProperties.InboundTransportLocation).IsNullOrEmpty()) return MessageDirection.Inbound;
+			if (message == null) throw new ArgumentNullException(nameof(message));
+			return message.Context.FailedDirection();
+		}
+
+		public static MessageDirection FailedDirection(this IBaseMessageContext context)
+		{
+			if (!context.GetProperty(ErrorReportProperties.OutboundTransportLocation).IsNullOrEmpty()) return MessageDirection.Outbound;
+			if (!context.GetProperty(ErrorReportProperties.InboundTransportLocation).IsNullOrEmpty()) return MessageDirection.Inbound;
 			throw new Exception("Unable to determine message direction.");
 		}
 
