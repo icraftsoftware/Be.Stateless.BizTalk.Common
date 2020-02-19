@@ -22,7 +22,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml;
-using Be.Stateless.BizTalk.Message.Extensions;
+using Be.Stateless.BizTalk.Extensions;
 using Be.Stateless.BizTalk.Xml;
 using Be.Stateless.Linq.Extensions;
 using Be.Stateless.Xml;

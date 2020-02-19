@@ -108,23 +108,53 @@ namespace Be.Stateless.BizTalk.Schema
 
 		#endregion
 
+		[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
 		internal static ISchemaMetadata Create(Type type)
 		{
+			if (!type.IsSchema()) throw new ArgumentException("Type is not a SchemaBase derived Type instance.", nameof(type));
 			return type.IsSchemaRoot()
 				? (ISchemaMetadata) new RootedSchemaMetadata(type)
 				: new RootlessSchemaMetadata(type);
 		}
 
+		#region Mock's Factory Hook Point
+
+		/// <summary>
+		/// The purpose of this factory is to make <see cref="SchemaBase"/>-derived <see cref="Type"/>'s <see cref="ISchemaMetadata"/>
+		/// amenable to mocking.
+		/// </summary>
+		/// <seealso href="http://blogs.clariusconsulting.net/kzu/how-to-mock-extension-methods/"/>
+		/// <seealso href="http://blogs.clariusconsulting.net/kzu/how-extension-methods-ruined-unit-testing-and-oop-and-a-way-forward/"/>
+		/// <seealso href="http://blogs.clariusconsulting.net/kzu/making-extension-methods-amenable-to-mocking/"/>
+		internal static Func<Type, ISchemaMetadata> SchemaMetadataFactory { get; set; } = type => SchemaMetadataCache.Instance[type];
+
+		#endregion
+
+		/// <summary>
+		/// Metadata for <see cref="SchemaBase"/>-derived <see cref="Type"/>.
+		/// </summary>
+		/// <typeparam name="T">
+		/// The <see cref="SchemaBase"/>-derived <see cref="Type"/>.
+		/// </typeparam>
+		/// <returns>
+		/// The <see cref="ISchemaMetadata"/> pieces of information related to the <see cref="SchemaBase"/>-derived <see cref="Type"/>.
+		/// </returns>
 		public static ISchemaMetadata For<T>() where T : SchemaBase
 		{
 			return For(typeof(T));
 		}
 
-		[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
+		/// <summary>
+		/// Metadata for <see cref="SchemaBase"/>-derived <see cref="Type"/>.
+		/// </summary>
+		/// <param name="type">
+		/// </param>
+		/// <returns>
+		/// The <see cref="ISchemaMetadata"/> pieces of information related to the <see cref="SchemaBase"/>-derived <see cref="Type"/>.
+		/// </returns>
 		public static ISchemaMetadata For(Type type)
 		{
-			if (!type.IsSchema()) throw new ArgumentException("Type is not a SchemaBase derived Type instance.", nameof(type));
-			return SchemaMetadataCache.Instance[type];
+			return SchemaMetadataFactory(type);
 		}
 	}
 }
