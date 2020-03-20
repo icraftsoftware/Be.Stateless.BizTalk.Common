@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <RootNamespace>Be.Stateless.BizTalk</RootNamespace>
     <AssemblyTitle>Be.Stateless.BizTalk.Common.Tests</AssemblyTitle>
     <Description>Unit testing of BizTalk Factory's common class library for general purpose BizTalk Server development.</Description>
