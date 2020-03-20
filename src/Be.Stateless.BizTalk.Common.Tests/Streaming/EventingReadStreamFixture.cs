@@ -30,62 +30,6 @@ namespace Be.Stateless.BizTalk.Streaming
 {
 	public class EventingReadStreamFixture
 	{
-		#region Nested Type: MicrosoftEventingReadStream
-
-		private class MicrosoftEventingReadStream : Microsoft.BizTalk.Streaming.EventingReadStream
-		{
-			#region Base Class Member Overrides
-
-			public override bool CanRead => true;
-
-			public override bool CanSeek => throw new NotSupportedException();
-
-			public override void Flush()
-			{
-				throw new NotSupportedException();
-			}
-
-			public override long Length => throw new NotSupportedException();
-
-			public override long Position { get; set; }
-
-			public override long Seek(long offset, SeekOrigin origin)
-			{
-				throw new NotSupportedException();
-			}
-
-			public override void SetLength(long value)
-			{
-				throw new NotSupportedException();
-			}
-
-			#endregion
-
-			#region Base Class Member Overrides
-
-			protected override int ReadInternal(byte[] buffer, int offset, int count)
-			{
-				// always read less bytes than requested
-				return _innerStream.Read(buffer, 0, count - 7);
-			}
-
-			#endregion
-
-			private readonly Stream _innerStream = new MemoryStream(_content);
-		}
-
-		#endregion
-
-		static EventingReadStreamFixture()
-		{
-			var content = string.Empty;
-			for (var i = 0; i < 70; i++)
-			{
-				content += Guid.NewGuid().ToString("N");
-			}
-			_content = Encoding.Default.GetBytes(content);
-		}
-
 		[Fact]
 		public void InnerStreamIsClosed()
 		{
@@ -192,6 +136,58 @@ namespace Be.Stateless.BizTalk.Streaming
 				stream.ReadCompleted.Should().BeFalse();
 				edgeEventsCount.Should().Be(0);
 			}
+		}
+
+		private class MicrosoftEventingReadStream : Microsoft.BizTalk.Streaming.EventingReadStream
+		{
+			#region Base Class Member Overrides
+
+			public override bool CanRead => true;
+
+			public override bool CanSeek => throw new NotSupportedException();
+
+			public override void Flush()
+			{
+				throw new NotSupportedException();
+			}
+
+			public override long Length => throw new NotSupportedException();
+
+			public override long Position { get; set; }
+
+			public override long Seek(long offset, SeekOrigin origin)
+			{
+				throw new NotSupportedException();
+			}
+
+			public override void SetLength(long value)
+			{
+				throw new NotSupportedException();
+			}
+
+			#endregion
+
+			#region Base Class Member Overrides
+
+			protected override int ReadInternal(byte[] buffer, int offset, int count)
+			{
+				// always read less bytes than requested
+				return _innerStream.Read(buffer, 0, count - 7);
+			}
+
+			#endregion
+
+			private readonly Stream _innerStream = new MemoryStream(_content);
+		}
+
+		static EventingReadStreamFixture()
+		{
+			var content = string.Empty;
+			for (var i = 0; i < 70; i++)
+			{
+				content += Guid.NewGuid().ToString("N");
+			}
+			_content = Encoding.Default.GetBytes(content);
 		}
 
 		private static readonly byte[] _content;

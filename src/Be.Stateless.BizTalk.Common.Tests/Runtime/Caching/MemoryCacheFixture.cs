@@ -27,11 +27,6 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 {
 	public class MemoryCacheFixture
 	{
-		public MemoryCacheFixture()
-		{
-			_memoryCache = new MemoryCache("test");
-		}
-
 		[Fact]
 		public void AccessingItemRenewsItWhenUsingSlidingExpiration()
 		{
@@ -176,6 +171,11 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 			_memoryCache.Add(new CacheItem("test", value), new CacheItemPolicy());
 
 			_memoryCache.Remove("test").Should().BeSameAs(value);
+		}
+
+		public MemoryCacheFixture()
+		{
+			_memoryCache = new MemoryCache("test");
 		}
 
 		private readonly MemoryCache _memoryCache;

@@ -147,6 +147,10 @@ namespace Be.Stateless.BizTalk.Xml
 			}
 		}
 
+		private readonly byte[] _part1 = Encoding.UTF8.GetBytes("<?xml version=\"1.0\" encoding=\"utf-8\" ?>" + PART_1);
+		private readonly byte[] _part2 = Encoding.Unicode.GetBytes("<?xml version=\"1.0\" encoding=\"utf-16\" ?>" + PART_2);
+		private readonly byte[] _part3 = Encoding.GetEncoding("iso-8859-1").GetBytes("<?xml version=\"1.0\" encoding=\"iso-8859-1\" ?>" + PART_3);
+
 		private const string EXPECTED = "<agg:Root xmlns:agg=\"http://schemas.microsoft.com/BizTalk/2003/aggschema\">" +
 			"<agg:InputMessagePart_0>" + PART_1 + "</agg:InputMessagePart_0>" +
 			"<agg:InputMessagePart_1>" + PART_2 + "</agg:InputMessagePart_1>" +
@@ -155,9 +159,5 @@ namespace Be.Stateless.BizTalk.Xml
 		private const string PART_1 = "<part-one xmlns=\"part-one\"><child-one>one</child-one></part-one>";
 		private const string PART_2 = "<part-two xmlns=\"part-two\"><child-two>two</child-two></part-two>";
 		private const string PART_3 = "<part-six xmlns=\"part-six\"><child-six>six</child-six></part-six>";
-
-		private readonly byte[] _part1 = Encoding.UTF8.GetBytes("<?xml version=\"1.0\" encoding=\"utf-8\" ?>" + PART_1);
-		private readonly byte[] _part2 = Encoding.Unicode.GetBytes("<?xml version=\"1.0\" encoding=\"utf-16\" ?>" + PART_2);
-		private readonly byte[] _part3 = Encoding.GetEncoding("iso-8859-1").GetBytes("<?xml version=\"1.0\" encoding=\"iso-8859-1\" ?>" + PART_3);
 	}
 }
