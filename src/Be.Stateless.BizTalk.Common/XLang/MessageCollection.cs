@@ -32,8 +32,8 @@ using Microsoft.XLANGs.BaseTypes;
 namespace BizTalk.Factory.XLang
 {
 	/// <summary>
-	/// A collection of <see cref="XLANGMessage"/> messages in order to support easy calling of <see cref="TransformHelper"/>
-	/// with several messages from within an orchestration.
+	/// A collection of <see cref="XLANGMessage"/> messages that facilitates calling of <see cref="TransformHelper"/> with
+	/// several messages from within an orchestration XLang expression shape.
 	/// </summary>
 	[Serializable]
 	public sealed class MessageCollection : LinkedList<XLANGMessage>, IDisposable

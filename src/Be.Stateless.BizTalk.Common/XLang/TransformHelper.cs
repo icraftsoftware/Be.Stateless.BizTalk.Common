@@ -35,7 +35,8 @@ using XsltArgumentList = Be.Stateless.Xml.Xsl.XsltArgumentList;
 namespace BizTalk.Factory.XLang
 {
 	/// <summary>
-	/// Helper class that allows for an orchestration to easily use an <see cref="XslCompiledTransform"/>.
+	/// Helper class that allows to easily use an <see cref="XslCompiledTransform"/> from within an orchestration XLang
+	/// expression shape.
 	/// </summary>
 	/// <remarks>
 	/// The implementation is directly inspired by <see
