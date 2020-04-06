@@ -40,29 +40,14 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 	public abstract class Cache<TKey, TItem>
 	{
 		/// <summary>
-		/// Create the <see cref="Cache{TKey,TItem}"/>-derived instance with a default sliding expiration of 30 minutes.
+		/// Create the <see cref="Cache{TKey,TItem}"/>-derived instance.
 		/// </summary>
 		/// <remarks>
 		/// The <see cref="Cache{TKey,TItem}"/> creates behind the scene a <see cref="MemoryCache"/> named after the derived class
 		/// name.
 		/// </remarks>
-		protected Cache() : this(TimeSpan.FromMinutes(30)) { }
-
-		/// <summary>
-		/// Create the <see cref="Cache{TKey,TItem}"/>-derived instance and overrides the default sliding expiration.
-		/// </summary>
-		/// <param name="slidingExpiration">
-		/// The <see cref="TimeSpan"/> denoting the sliding expiration to apply to newly inserted items in cache.
-		/// </param>
-		/// <remarks>
-		/// The <see cref="Cache{TKey,TItem}"/> creates behind the scene a <see cref="MemoryCache"/> named after the derived class
-		/// name.
-		/// </remarks>
-		[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
-		protected Cache(TimeSpan slidingExpiration)
+		protected Cache()
 		{
-			if (slidingExpiration.TotalMinutes <= 0) throw new ArgumentException("Sliding expiration time span must be greater than 0 minutes", nameof(slidingExpiration));
-			_slidingExpiration = slidingExpiration;
 			_cache = new MemoryCache(GetType().Name);
 		}
 
@@ -77,8 +62,8 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 		/// The <typeparamref name="TKey"/> object instance associated to the <typeparamref name="TKey"/> instance.
 		/// </returns>
 		/// <remarks>
-		/// When the cache does not already contains the <typeparamref name="TItem"/> instance, it is inserted into the cache with
-		/// a default 30 minutes sliding expiration, unless overridden by <see cref="Cache{TKey,TItem}(TimeSpan)"/>.
+		/// When the cache does not already contain the <typeparamref name="TItem"/> instance, it is inserted into the cache with
+		/// <see cref="CacheItemPolicy"/> provided by the derived class.
 		/// </remarks>
 		public TItem this[TKey key]
 		{
@@ -92,14 +77,18 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 					if (!_cache.Contains(keyString))
 					{
 						var cacheItem = new CacheItem(keyString, CreateItem(key));
-						if (!_cache.Add(cacheItem, new CacheItemPolicy { SlidingExpiration = _slidingExpiration }))
-							throw new InvalidOperationException($"{GetType().Name} already contains an entry for '{keyString}'.");
+						if (!_cache.Add(cacheItem, CacheItemPolicy)) throw new InvalidOperationException($"{GetType().Name} already contains an entry for '{keyString}'.");
 						return (TItem) cacheItem.Value;
 					}
 				}
 				return (TItem) _cache[keyString];
 			}
 		}
+
+		/// <summary>
+		/// <see cref="CacheItemPolicy"/> to be used for any new item that will be added to the cache.
+		/// </summary>
+		protected abstract CacheItemPolicy CacheItemPolicy { get; }
 
 		/// <summary>
 		/// Determines whether a cache entry exists in the cache for the <typeparamref name="TKey"/> instance.
@@ -117,11 +106,28 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 			return _cache.Contains(keyString);
 		}
 
+		/// <summary>
+		/// Returns the item to be added to the cache.
+		/// </summary>
+		/// <param name="key">
+		/// The key of the item to add to the cache.
+		/// </param>
+		/// <returns>
+		/// The item to be added to the cache.
+		/// </returns>
 		protected abstract TItem CreateItem(TKey key);
 
+		/// <summary>
+		/// Converts an item key to its string representation.
+		/// </summary>
+		/// <param name="key">
+		/// The item key.
+		/// </param>
+		/// <returns>
+		/// The string representation of the item key.
+		/// </returns>
 		protected abstract string ConvertKeyToString(TKey key);
 
 		private readonly MemoryCache _cache;
-		private readonly TimeSpan _slidingExpiration;
 	}
 }

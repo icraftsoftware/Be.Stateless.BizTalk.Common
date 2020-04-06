@@ -17,11 +17,9 @@
 #endregion
 
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Xml.Xsl;
 using Be.Stateless.BizTalk.Xml.Xsl;
-using Be.Stateless.BizTalk.Xml.Xsl.Extensions;
 using Microsoft.XLANGs.BaseTypes;
 
 namespace Be.Stateless.BizTalk.Runtime.Caching
@@ -32,7 +30,7 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 	/// </summary>
 	/// <seealso cref="Cache{TKey,TItem}"/>
 	[SuppressMessage("ReSharper", "LocalizableElement")]
-	public class XsltCache : Cache<Type, XslCompiledTransformDescriptor>
+	public class XsltCache : SlidingCache<Type, XslCompiledTransformDescriptor>
 	{
 		/// <summary>
 		/// Singleton <see cref="XsltCache"/> instance.
@@ -49,25 +47,12 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 		[SuppressMessage("Design", "CA1062:Validate arguments of public methods")]
 		protected override string ConvertKeyToString(Type key)
 		{
-			ValidateKey(key);
 			return key.AssemblyQualifiedName;
 		}
 
 		protected override XslCompiledTransformDescriptor CreateItem(Type key)
 		{
-			ValidateKey(key);
 			return new XslCompiledTransformDescriptor(new XslCompiledTransformDescriptorBuilder(key));
-		}
-
-		#endregion
-
-		#region Helpers
-
-		[Conditional("DEBUG")]
-		[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
-		private void ValidateKey(Type key)
-		{
-			if (!key.IsTransform()) throw new ArgumentException("Type is not a TransformBase derived Type instance.", nameof(key));
 		}
 
 		#endregion
