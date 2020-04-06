@@ -17,7 +17,6 @@
 #endregion
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -313,7 +312,6 @@ namespace Be.Stateless.BizTalk.Streaming
 
 		#endregion
 
-		[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
 		internal Stream[] Streams
 		{
 			get

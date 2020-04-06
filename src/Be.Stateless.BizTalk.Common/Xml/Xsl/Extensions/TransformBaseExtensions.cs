@@ -29,11 +29,7 @@ namespace Be.Stateless.BizTalk.Xml.Xsl.Extensions
 	{
 		#region Mock's Factory Hook Point
 
-		internal static Func<Type, XslCompiledTransformDescriptor> TransformDescriptorFactory
-		{
-			get => _transformDescriptorFactory;
-			set => _transformDescriptorFactory = value;
-		}
+		internal static Func<Type, XslCompiledTransformDescriptor> TransformDescriptorFactory { get; set; } = type => XsltCache.Instance[type];
 
 		#endregion
 
@@ -60,13 +56,10 @@ namespace Be.Stateless.BizTalk.Xml.Xsl.Extensions
 		/// <returns>
 		/// The <see cref="XmlWriterSettings"/> related to the <see cref="TransformBase"/>-derived <see cref="Type"/>.
 		/// </returns>
-		[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
 		public static XmlWriterSettings GetOutputSettings(this Type type)
 		{
 			if (!type.IsTransform()) throw new ArgumentException("Type is not a TransformBase derived Type instance.", nameof(type));
-			return _transformDescriptorFactory(type).XslCompiledTransform.OutputSettings;
+			return TransformDescriptorFactory(type).XslCompiledTransform.OutputSettings;
 		}
-
-		private static Func<Type, XslCompiledTransformDescriptor> _transformDescriptorFactory = type => XsltCache.Instance[type];
 	}
 }

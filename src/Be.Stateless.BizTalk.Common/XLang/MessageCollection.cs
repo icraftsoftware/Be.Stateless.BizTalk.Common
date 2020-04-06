@@ -22,7 +22,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml;
-using Be.Stateless.BizTalk.Extensions;
+using Be.Stateless.BizTalk.XLang.Extensions;
 using Be.Stateless.BizTalk.Xml;
 using Be.Stateless.Linq.Extensions;
 using Be.Stateless.Xml;
@@ -36,6 +36,7 @@ namespace BizTalk.Factory.XLang
 	/// several messages from within an orchestration XLang expression shape.
 	/// </summary>
 	[Serializable]
+	[SuppressMessage("ReSharper", "CommentTypo")]
 	public sealed class MessageCollection : LinkedList<XLANGMessage>, IDisposable
 	{
 		#region Operators

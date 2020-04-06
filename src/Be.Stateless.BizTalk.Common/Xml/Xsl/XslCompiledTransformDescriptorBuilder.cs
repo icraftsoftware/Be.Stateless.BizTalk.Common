@@ -40,7 +40,6 @@ namespace Be.Stateless.BizTalk.Xml.Xsl
 		/// </summary>
 		/// <param name="transform">The <see cref="TransformBase"/>-derived transform.</param>
 		[SuppressMessage("Usage", "CA2208:Instantiate argument exceptions correctly")]
-		[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
 		public XslCompiledTransformDescriptorBuilder(Type transform)
 		{
 			if (transform == null) throw new ArgumentNullException(nameof(transform));

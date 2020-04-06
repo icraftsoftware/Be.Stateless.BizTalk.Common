@@ -39,7 +39,6 @@ namespace Be.Stateless.BizTalk.Streaming.Extensions
 	[SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
 	internal class Transformer : ITransformStream
 	{
-		[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
 		public Transformer(Stream[] streams)
 		{
 			_streams = streams ?? throw new ArgumentNullException(nameof(streams));

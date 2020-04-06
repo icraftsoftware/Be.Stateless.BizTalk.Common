@@ -290,7 +290,6 @@ namespace Be.Stateless.BizTalk.Streaming
 		/// assume that the end of the stream has been reached as soon as <see cref="Read"/> returns a total number of bytes read
 		/// that is less than <paramref name="count"/>.
 		/// </remarks>
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
 		public override int Read(byte[] buffer, int offset, int count)
 		{
 			if (buffer == null) throw new ArgumentNullException(nameof(buffer));

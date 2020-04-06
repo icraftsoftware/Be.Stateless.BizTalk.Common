@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Be.Stateless.BizTalk.Schemas.Xml;
 using FluentAssertions;
 using Microsoft.BizTalk.Component.Interop;
@@ -24,6 +25,7 @@ using Xunit;
 
 namespace Be.Stateless.BizTalk.Schema
 {
+	[SuppressMessage("ReSharper", "StringLiteralTypo")]
 	public class SchemaMetadataFixture
 	{
 		[Fact]

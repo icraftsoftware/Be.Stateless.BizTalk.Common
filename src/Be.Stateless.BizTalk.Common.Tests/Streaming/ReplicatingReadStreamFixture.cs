@@ -142,7 +142,7 @@ namespace Be.Stateless.BizTalk.Streaming
 		}
 
 		[Fact]
-		public void TargetStreamIsCommittedOnlyOnceEvenIfStreamIsRewinded()
+		public void TargetStreamIsCommittedOnlyOnceEvenIfStreamIsRewound()
 		{
 			var targetStream = new Mock<Stream> { CallBase = true };
 			var streamTransacted = targetStream.As<IStreamTransacted>();

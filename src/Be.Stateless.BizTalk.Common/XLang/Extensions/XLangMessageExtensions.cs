@@ -30,7 +30,7 @@ using Be.Stateless.Reflection;
 using Microsoft.XLANGs.BaseTypes;
 using Microsoft.XLANGs.Core;
 
-namespace Be.Stateless.BizTalk.Extensions
+namespace Be.Stateless.BizTalk.XLang.Extensions
 {
 	public static class XLangMessageExtensions
 	{

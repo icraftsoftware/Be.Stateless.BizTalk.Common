@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Schema;
 using BTS;
 using FluentAssertions;
@@ -34,6 +35,7 @@ namespace Be.Stateless.BizTalk.Message
 		}
 
 		[Fact]
+		[SuppressMessage("ReSharper", "StringLiteralTypo")]
 		public void CreatingMessageForNonSchemaTypeThrows()
 		{
 			Action act = () => MessageFactory.CreateMessage(typeof(int));

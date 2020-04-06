@@ -137,7 +137,6 @@ namespace BizTalk.Factory.XLang
 			return Transform(messages, map, new XsltArgumentList(arguments));
 		}
 
-		[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
 		private static XLANGMessage Transform(MessageCollection messages, Type map, System.Xml.Xsl.XsltArgumentList arguments)
 		{
 			if (messages == null) throw new ArgumentNullException(nameof(messages));

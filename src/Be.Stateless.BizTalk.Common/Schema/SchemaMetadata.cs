@@ -17,7 +17,6 @@
 #endregion
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Be.Stateless.BizTalk.Extensions;
 using Be.Stateless.BizTalk.Runtime.Caching;
 using Be.Stateless.Extensions;
@@ -72,7 +71,6 @@ namespace Be.Stateless.BizTalk.Schema
 
 		private class RootlessSchemaMetadata : ISchemaMetadata
 		{
-			[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
 			internal RootlessSchemaMetadata(Type type)
 			{
 				Type = type ?? throw new ArgumentNullException(nameof(type));
@@ -108,7 +106,6 @@ namespace Be.Stateless.BizTalk.Schema
 
 		#endregion
 
-		[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
 		internal static ISchemaMetadata Create(Type type)
 		{
 			if (!type.IsSchema()) throw new ArgumentException("Type is not a SchemaBase derived Type instance.", nameof(type));

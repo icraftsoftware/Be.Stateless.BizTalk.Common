@@ -104,18 +104,18 @@ namespace Be.Stateless.BizTalk.Streaming.Extensions
 
 			var descriptor = XsltCache.Instance[typeof(IdentityTransform)];
 
-			// no specific arguments, no message ctxt requirement, same XsltArgumentList instance can be shared
+			// no specific arguments, no message context requirement, same XsltArgumentList instance can be shared
 			sut.BuildArgumentList(descriptor, null).Should().BeSameAs(descriptor.Arguments);
 
-			// specific arguments, no message ctxt requirement, new XsltArgumentList instance is required
+			// specific arguments, no message context requirement, new XsltArgumentList instance is required
 			sut.BuildArgumentList(descriptor, arguments).Should().NotBeSameAs(descriptor.Arguments).And.NotBeSameAs(arguments);
 
 			descriptor = XsltCache.Instance[typeof(CompoundContextMapTransform)];
 
-			// no specific arguments but message ctxt requirement, new XsltArgumentList instance is required
+			// no specific arguments but message context requirement, new XsltArgumentList instance is required
 			sut.BuildArgumentList(descriptor, null).Should().NotBeSameAs(descriptor.Arguments).And.NotBeSameAs(arguments);
 
-			// specific arguments and message ctxt requirement, new XsltArgumentList instance is required
+			// specific arguments and message context requirement, new XsltArgumentList instance is required
 			sut.BuildArgumentList(descriptor, null).Should().NotBeSameAs(descriptor.Arguments).And.NotBeSameAs(arguments);
 		}
 

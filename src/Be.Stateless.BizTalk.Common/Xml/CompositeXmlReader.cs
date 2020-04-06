@@ -61,7 +61,6 @@ namespace Be.Stateless.BizTalk.Xml
 	/// </remarks>
 	/// <seealso cref="Microsoft.XLANGs.Core.Service.CompositeStreamReader"/>
 	[SuppressMessage("ReSharper", "LocalizableElement")]
-	[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
 	public class CompositeXmlReader : XmlReaderWrapper
 	{
 		#region Nested Type: CompoundXmlReader

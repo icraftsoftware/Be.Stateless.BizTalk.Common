@@ -58,12 +58,12 @@ namespace Be.Stateless.BizTalk.Xml.Xsl
 		/// Relying on the cloneable <see cref="Be.Stateless.Xml.Xsl.XsltArgumentList"/> allows a <see
 		/// cref="XslCompiledTransformDescriptor"/> not to keep a reference on a <see cref="TransformBase"/> instance.
 		/// </remarks>
-		public Stateless.Xml.Xsl.XsltArgumentList Arguments { get; private set; }
+		public Stateless.Xml.Xsl.XsltArgumentList Arguments { get; }
 
 		/// <summary>
 		/// Requirements of a <see cref="XslCompiledTransform"/> in terms of extension objects.
 		/// </summary>
-		public ExtensionRequirements ExtensionRequirements { get; private set; }
+		public ExtensionRequirements ExtensionRequirements { get; }
 
 		/// <summary>
 		/// The <see cref="IXmlNamespaceResolver"/> that will be passed to the <see cref="BaseMessageContextFunctions"/> extension
@@ -75,11 +75,11 @@ namespace Be.Stateless.BizTalk.Xml.Xsl
 		/// cref="BaseMessageContextFunctions"/> extensions objects to resolve the namespace prefix of the XML Qualified name
 		/// passed to <see cref="BaseMessageContextFunctions.Read"/>.
 		/// </remarks>
-		public IXmlNamespaceResolver NamespaceResolver { get; private set; }
+		public IXmlNamespaceResolver NamespaceResolver { get; }
 
 		/// <summary>
 		/// The <see cref="System.Xml.Xsl.XslCompiledTransform"/> equivalent of <see cref="TransformBase"/>-derived transform.
 		/// </summary>
-		public XslCompiledTransform XslCompiledTransform { get; private set; }
+		public XslCompiledTransform XslCompiledTransform { get; }
 	}
 }

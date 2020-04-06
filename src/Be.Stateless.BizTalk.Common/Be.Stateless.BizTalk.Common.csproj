@@ -31,6 +31,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Be.Stateless.BizTalk.Schemas" Version="2.0.20026.21320" />
     <PackageReference Include="Be.Stateless.Common" Version="2.0.20026.20089" />
     <PackageReference Include="Be.Stateless.Xml" Version="2.0.20035.22663" />

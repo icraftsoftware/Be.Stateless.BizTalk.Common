@@ -25,7 +25,7 @@ using Xunit;
 
 namespace Be.Stateless.BizTalk.Runtime.Caching
 {
-	public class MemoryCacheFixture
+	public class MemoryCacheAssumptionFixture
 	{
 		[Fact]
 		public void AccessingItemRenewsItWhenUsingSlidingExpiration()
@@ -34,7 +34,7 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 			// data for expiration that is below 1 second, therefore we use longer timespans in this test
 			var value = new object();
 
-			_memoryCache.Add(new CacheItem("test", value), new CacheItemPolicy { SlidingExpiration = TimeSpan.FromMilliseconds(2000.0) });
+			_memoryCache.Add(new CacheItem("test", value), new CacheItemPolicy { SlidingExpiration = TimeSpan.FromMilliseconds(2000d) });
 
 			Thread.Sleep(1000);
 			_memoryCache["test"].Should().NotBeNull(); // should renew for another 2000 ms
@@ -67,7 +67,7 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 		{
 			var value = new object();
 
-			_memoryCache.Add(new CacheItem("test", value), new CacheItemPolicy { SlidingExpiration = TimeSpan.FromMilliseconds(50.0) });
+			_memoryCache.Add(new CacheItem("test", value), new CacheItemPolicy { SlidingExpiration = TimeSpan.FromMilliseconds(50d) });
 			Thread.Sleep(60);
 
 			_memoryCache.Contains("test").Should().BeFalse();
@@ -90,7 +90,7 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 		[Fact]
 		public void ContainsReturnsTrueWithExistingUnexpiredKeyWhenUsingSlidingExpiration()
 		{
-			_memoryCache.Add(new CacheItem("test", new object()), new CacheItemPolicy { SlidingExpiration = TimeSpan.FromMilliseconds(50.0) });
+			_memoryCache.Add(new CacheItem("test", new object()), new CacheItemPolicy { SlidingExpiration = TimeSpan.FromMilliseconds(50d) });
 
 			_memoryCache.Contains("test").Should().BeTrue();
 		}
@@ -120,7 +120,7 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 
 			_memoryCache.Add(
 				new CacheItem("test", value),
-				new CacheItemPolicy { AbsoluteExpiration = new DateTimeOffset(DateTime.UtcNow + TimeSpan.FromMilliseconds(50.0)) });
+				new CacheItemPolicy { AbsoluteExpiration = new DateTimeOffset(DateTime.UtcNow + TimeSpan.FromMilliseconds(50d)) });
 
 			_memoryCache["test"].Should().BeSameAs(value);
 		}
@@ -130,7 +130,7 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 		{
 			var value = new object();
 
-			_memoryCache.Add(new CacheItem("test", value), new CacheItemPolicy { SlidingExpiration = TimeSpan.FromMilliseconds(50.0) });
+			_memoryCache.Add(new CacheItem("test", value), new CacheItemPolicy { SlidingExpiration = TimeSpan.FromMilliseconds(50d) });
 			Thread.Sleep(60);
 
 			_memoryCache["test"].Should().BeNull();
@@ -143,7 +143,7 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 
 			_memoryCache.Add(
 				new CacheItem("test", value),
-				new CacheItemPolicy { AbsoluteExpiration = new DateTimeOffset(DateTime.UtcNow + TimeSpan.FromMilliseconds(50.0)) });
+				new CacheItemPolicy { AbsoluteExpiration = new DateTimeOffset(DateTime.UtcNow + TimeSpan.FromMilliseconds(50d)) });
 			Thread.Sleep(30);
 			var unused = _memoryCache["test"];
 			Thread.Sleep(30);
@@ -173,7 +173,7 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 			_memoryCache.Remove("test").Should().BeSameAs(value);
 		}
 
-		public MemoryCacheFixture()
+		public MemoryCacheAssumptionFixture()
 		{
 			_memoryCache = new MemoryCache("test");
 		}

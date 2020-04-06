@@ -17,14 +17,12 @@
 #endregion
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Be.Stateless.BizTalk.ContextProperties;
 using Be.Stateless.Extensions;
 using Microsoft.BizTalk.Message.Interop;
 
 namespace Be.Stateless.BizTalk.Message.Extensions
 {
-	[SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
 	public static class MessageDirectionExtensions
 	{
 		public static MessageDirection Direction(this IBaseMessage message)

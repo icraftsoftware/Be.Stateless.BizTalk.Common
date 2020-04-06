@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Xml.Linq;
 using Be.Stateless.BizTalk.Schema.Extensions;
@@ -65,6 +66,7 @@ namespace Be.Stateless.BizTalk.Schema
 	/// ]]>
 	/// </code>
 	/// </example>
+	[SuppressMessage("ReSharper", "CommentTypo")]
 	public class SchemaAnnotations : ISchemaAnnotations
 	{
 		#region Nested Type: EmptySchemaAnnotations

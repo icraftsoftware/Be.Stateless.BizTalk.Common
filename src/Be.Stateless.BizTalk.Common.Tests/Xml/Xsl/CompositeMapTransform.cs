@@ -16,6 +16,7 @@
 
 #endregion
 
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.XLANGs.BaseTypes;
 
 namespace Be.Stateless.BizTalk.Xml.Xsl
@@ -23,9 +24,10 @@ namespace Be.Stateless.BizTalk.Xml.Xsl
 	[SchemaReference(@"Be.Stateless.BizTalk.Schemas.Xml.Any", typeof(Schemas.Xml.Any))]
 	internal sealed class CompositeMapTransform : TransformBase
 	{
+		[SuppressMessage("ReSharper", "StringLiteralTypo")]
 		static CompositeMapTransform()
 		{
-			// TODO do not declare ctxt and bf and bts ns as they are already defined in nested CompoundContextMapTransform
+			// TODO do not declare context and bf and bts ns as they are already defined in nested CompoundContextMapTransform
 			_xmlContent = @"<xsl:stylesheet version='1.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
 	xmlns:ctxt='urn:extensions.stateless.be:biztalk:message:context:2012:12'
 	xmlns:bf='urn:schemas.stateless.be:biztalk:properties:system:2012:04'

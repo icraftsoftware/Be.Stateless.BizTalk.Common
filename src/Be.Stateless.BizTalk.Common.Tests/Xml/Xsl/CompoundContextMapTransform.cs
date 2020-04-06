@@ -16,6 +16,7 @@
 
 #endregion
 
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.XLANGs.BaseTypes;
 
 namespace Be.Stateless.BizTalk.Xml.Xsl
@@ -23,6 +24,7 @@ namespace Be.Stateless.BizTalk.Xml.Xsl
 	[SchemaReference(@"Be.Stateless.BizTalk.Schemas.Xml.Any", typeof(Schemas.Xml.Any))]
 	internal sealed class CompoundContextMapTransform : TransformBase
 	{
+		[SuppressMessage("ReSharper", "StringLiteralTypo")]
 		static CompoundContextMapTransform()
 		{
 			_xmlContent = @"<xsl:stylesheet version='1.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'

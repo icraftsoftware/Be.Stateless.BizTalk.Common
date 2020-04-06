@@ -16,6 +16,7 @@
 
 #endregion
 
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.XLANGs.BaseTypes;
 
 namespace Be.Stateless.BizTalk.Schema
@@ -23,6 +24,8 @@ namespace Be.Stateless.BizTalk.Schema
 	[Schema(@"urn:schemas.stateless.be:biztalk:any:2020:02", @"Root")]
 	[SchemaRoots(new[] { @"Root" })]
 	[SchemaType(SchemaTypeEnum.Document)]
+	[SuppressMessage("ReSharper", "StringLiteralTypo")]
+	[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 	internal class RootedSchema : SchemaBase
 	{
 		static RootedSchema()
