@@ -145,7 +145,7 @@ namespace Be.Stateless.BizTalk.Streaming
 		public void TargetStreamIsCommittedOnlyOnceEvenIfStreamIsRewound()
 		{
 			var targetStream = new Mock<Stream> { CallBase = true };
-			var streamTransacted = targetStream.As<IStreamTransacted>();
+			var streamTransacted = targetStream.As<ITransactionalStream>();
 			streamTransacted.Setup(s => s.Commit());
 			using (var stream = new ReplicatingReadStream(new MemoryStream(_content), targetStream.Object))
 			{
@@ -160,7 +160,7 @@ namespace Be.Stateless.BizTalk.Streaming
 		public void TargetStreamIsCommittedUponSourceStreamExhaustion()
 		{
 			var targetStream = new Mock<Stream> { CallBase = true };
-			targetStream.As<IStreamTransacted>().Setup(st => st.Commit()).Verifiable("targetStream");
+			targetStream.As<ITransactionalStream>().Setup(st => st.Commit()).Verifiable("targetStream");
 			using (var stream = new ReplicatingReadStream(new MemoryStream(_content), targetStream.Object))
 			{
 				stream.Drain();
@@ -172,14 +172,14 @@ namespace Be.Stateless.BizTalk.Streaming
 		public void TargetStreamIsNotCommittedIfSourceStreamNotExhausted()
 		{
 			var targetStream = new Mock<Stream> { CallBase = true };
-			targetStream.As<IStreamTransacted>();
+			targetStream.As<ITransactionalStream>();
 			using (var stream = new ReplicatingReadStream(new MemoryStream(_content), targetStream.Object))
 			{
 				// don't drain the whole stream
 				stream.Read(new byte[1024], 0, 1024);
 			}
 			// Rollback() is never called explicitly when targetStream is disposed, but neither is Commit()
-			targetStream.As<IStreamTransacted>().Verify(s => s.Commit(), Times.Never());
+			targetStream.As<ITransactionalStream>().Verify(s => s.Commit(), Times.Never());
 		}
 
 		private readonly byte[] _content = Encoding.Unicode.GetBytes(new string('A', 3999));

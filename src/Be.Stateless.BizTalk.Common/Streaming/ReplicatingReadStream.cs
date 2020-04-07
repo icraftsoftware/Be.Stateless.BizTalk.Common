@@ -211,10 +211,10 @@ namespace Be.Stateless.BizTalk.Streaming
 					else if (!_readCompleted) // extra _readCompleted check to ensure _target stream is closed only once
 					{
 						_readCompleted = true;
-						if (_target is IStreamTransacted streamTransacted)
+						if (_target is ITransactionalStream transactionalStream)
 						{
 							if (_logger.IsDebugEnabled) _logger.Debug("Replication completed, committing the transacted stream.");
-							streamTransacted.Commit();
+							transactionalStream.Commit();
 						}
 						else
 						{

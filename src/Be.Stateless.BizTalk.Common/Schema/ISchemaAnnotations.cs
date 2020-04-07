@@ -32,7 +32,7 @@ namespace Be.Stateless.BizTalk.Schema
 		/// Name of the annotation whose XML-serialized element need to be returned.
 		/// </param>
 		/// <returns>
-		/// XML-serialized element for annotation whose name is <param name="annotationElementName"/>.
+		/// XML-serialized element for annotation whose name is <paramref name="annotationElementName"/>.
 		/// </returns>
 		XElement GetAnnotation(string annotationElementName);
 	}
