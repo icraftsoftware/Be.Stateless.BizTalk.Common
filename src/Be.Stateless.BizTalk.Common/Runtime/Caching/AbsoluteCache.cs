@@ -42,15 +42,27 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 		/// Create the <see cref="Cache{TKey,TItem}"/>-derived instance with a default absolute expiration of 30 minutes from the
 		/// time the item is added to the cache.
 		/// </summary>
-		protected AbsoluteCache() : this(TimeSpan.FromMinutes(30)) { }
+		/// <param name="keyFactory">
+		/// Converts a <typeparamref name="TKey"/> item key to its string representation.
+		/// </param>
+		/// <param name="itemFactory">
+		/// Returns the item to be added to the cache.
+		/// </param>
+		protected AbsoluteCache(Func<TKey, string> keyFactory, Func<TKey, TItem> itemFactory) : this(keyFactory, itemFactory, TimeSpan.FromMinutes(30)) { }
 
 		/// <summary>
 		/// Create the <see cref="Cache{TKey,TItem}"/>-derived instance and overrides the default absolute expiration.
 		/// </summary>
+		/// <param name="keyFactory">
+		/// Converts a <typeparamref name="TKey"/> item key to its string representation.
+		/// </param>
+		/// <param name="itemFactory">
+		/// Returns the item to be added to the cache.
+		/// </param>
 		/// <param name="absoluteExpirationDuration">
 		/// The <see cref="TimeSpan"/> denoting the absolute expiration duration from the time an item was is to the cache.
 		/// </param>
-		protected AbsoluteCache(TimeSpan absoluteExpirationDuration)
+		protected AbsoluteCache(Func<TKey, string> keyFactory, Func<TKey, TItem> itemFactory, TimeSpan absoluteExpirationDuration) : base(keyFactory, itemFactory)
 		{
 			if (absoluteExpirationDuration.TotalMinutes <= 0)
 				throw new ArgumentException("Absolute expiration duration must be greater than 0 minutes", nameof(absoluteExpirationDuration));
@@ -65,10 +77,10 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 		/// </summary>
 		/// <remarks>
 		/// The absolute expiration duration defaults to 30 minutes, unless specified otherwise via the <see
-		/// cref="AbsoluteCache{TKey,TItem}(TimeSpan)"/> constructor.
+		/// cref="AbsoluteCache{TKey,TItem}(Func{TKey,string},Func{TKey,TItem},TimeSpan)"/> constructor.
 		/// </remarks>
-		/// <seealso cref="AbsoluteCache{TKey,TItem}"/>
-		/// <seealso cref="AbsoluteCache{TKey,TItem}(TimeSpan)"/>
+		/// <seealso cref="AbsoluteCache{TKey,TItem}(Func{TKey,string},Func{TKey,TItem})"/>
+		/// <seealso cref="AbsoluteCache{TKey,TItem}(Func{TKey,string},Func{TKey,TItem},TimeSpan)"/>
 		protected override CacheItemPolicy CacheItemPolicy => new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.UtcNow + _absoluteExpirationDuration };
 
 		#endregion

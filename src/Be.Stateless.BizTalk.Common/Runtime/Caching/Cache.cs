@@ -33,7 +33,7 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 	/// </typeparam>
 	/// <remarks>
 	/// For each derived class, <see cref="Cache{TKey,TItem}"/> creates behind the scene a named memory cache instance, i.e. a
-	/// <see cref="System.Runtime.Caching.MemoryCache"/>.
+	/// <see cref="System.Runtime.Caching.MemoryCache"/>, named after the most-derived class name.
 	/// </remarks>
 	[SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable")]
 	[SuppressMessage("Naming", "CA1724:Type names should not match namespaces")]
@@ -42,12 +42,16 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 		/// <summary>
 		/// Create the <see cref="Cache{TKey,TItem}"/>-derived instance.
 		/// </summary>
-		/// <remarks>
-		/// The <see cref="Cache{TKey,TItem}"/> creates behind the scene a <see cref="MemoryCache"/> named after the derived class
-		/// name.
-		/// </remarks>
-		protected Cache()
+		/// <param name="keyFactory">
+		/// Converts a <typeparamref name="TKey"/> item key to its string representation.
+		/// </param>
+		/// <param name="itemFactory">
+		/// Returns the item to be added to the cache.
+		/// </param>
+		protected Cache(Func<TKey, string> keyFactory, Func<TKey, TItem> itemFactory)
 		{
+			_keyFactory = keyFactory ?? throw new ArgumentNullException(nameof(keyFactory));
+			_itemFactory = itemFactory ?? throw new ArgumentNullException(nameof(itemFactory));
 			_cache = new MemoryCache(GetType().Name);
 		}
 
@@ -69,14 +73,14 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 		{
 			get
 			{
-				var keyString = ConvertKeyToString(key);
+				var keyString = _keyFactory(key);
 				if (_cache.Contains(keyString)) return (TItem) _cache[keyString];
 
 				lock (_cache)
 				{
 					if (!_cache.Contains(keyString))
 					{
-						var cacheItem = new CacheItem(keyString, CreateItem(key));
+						var cacheItem = new CacheItem(keyString, _itemFactory(key));
 						if (!_cache.Add(cacheItem, CacheItemPolicy)) throw new InvalidOperationException($"{GetType().Name} already contains an entry for '{keyString}'.");
 						return (TItem) cacheItem.Value;
 					}
@@ -102,32 +106,12 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
 		public bool Contains(TKey key)
 		{
-			var keyString = ConvertKeyToString(key);
+			var keyString = _keyFactory(key);
 			return _cache.Contains(keyString);
 		}
 
-		/// <summary>
-		/// Returns the item to be added to the cache.
-		/// </summary>
-		/// <param name="key">
-		/// The key of the item to add to the cache.
-		/// </param>
-		/// <returns>
-		/// The item to be added to the cache.
-		/// </returns>
-		protected abstract TItem CreateItem(TKey key);
-
-		/// <summary>
-		/// Converts an item key to its string representation.
-		/// </summary>
-		/// <param name="key">
-		/// The item key.
-		/// </param>
-		/// <returns>
-		/// The string representation of the item key.
-		/// </returns>
-		protected abstract string ConvertKeyToString(TKey key);
-
 		private readonly MemoryCache _cache;
+		private readonly Func<TKey, TItem> _itemFactory;
+		private readonly Func<TKey, string> _keyFactory;
 	}
 }

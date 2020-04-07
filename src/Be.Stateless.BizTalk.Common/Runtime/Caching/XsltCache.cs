@@ -40,21 +40,6 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 		/// <summary>
 		/// Create the singleton <see cref="XsltCache"/> instance.
 		/// </summary>
-		private XsltCache() { }
-
-		#region Base Class Member Overrides
-
-		[SuppressMessage("Design", "CA1062:Validate arguments of public methods")]
-		protected override string ConvertKeyToString(Type key)
-		{
-			return key.AssemblyQualifiedName;
-		}
-
-		protected override XslCompiledTransformDescriptor CreateItem(Type key)
-		{
-			return new XslCompiledTransformDescriptor(new XslCompiledTransformDescriptorBuilder(key));
-		}
-
-		#endregion
+		private XsltCache() : base(key => key.AssemblyQualifiedName, key => new XslCompiledTransformDescriptor(new XslCompiledTransformDescriptorBuilder(key))) { }
 	}
 }

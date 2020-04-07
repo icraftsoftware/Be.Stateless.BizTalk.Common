@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Caching;
 
 namespace Be.Stateless.BizTalk.Runtime.Caching
@@ -41,15 +42,28 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 		/// <summary>
 		/// Create the <see cref="Cache{TKey,TItem}"/>-derived instance with a default sliding expiration of 30 minutes.
 		/// </summary>
-		protected SlidingCache() : this(TimeSpan.FromMinutes(30)) { }
+		/// <param name="keyFactory">
+		/// Converts a <typeparamref name="TKey"/> item key to its string representation.
+		/// </param>
+		/// <param name="itemFactory">
+		/// Returns the item to be added to the cache.
+		/// </param>
+		protected SlidingCache(Func<TKey, string> keyFactory, Func<TKey, TItem> itemFactory) : this(keyFactory, itemFactory, TimeSpan.FromMinutes(30)) { }
 
 		/// <summary>
 		/// Create the <see cref="Cache{TKey,TItem}"/>-derived instance and overrides the default sliding expiration.
 		/// </summary>
+		/// <param name="keyFactory">
+		/// Converts a <typeparamref name="TKey"/> item key to its string representation.
+		/// </param>
+		/// <param name="itemFactory">
+		/// Returns the item to be added to the cache.
+		/// </param>
 		/// <param name="slidingExpiration">
 		/// The <see cref="TimeSpan"/> denoting the sliding expiration to apply to newly inserted items in cache.
 		/// </param>
-		protected SlidingCache(TimeSpan slidingExpiration)
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+		protected SlidingCache(Func<TKey, string> keyFactory, Func<TKey, TItem> itemFactory, TimeSpan slidingExpiration) : base(keyFactory, itemFactory)
 		{
 			if (slidingExpiration.TotalMinutes <= 0) throw new ArgumentException("Sliding expiration time span must be greater than 0 minutes", nameof(slidingExpiration));
 			_slidingExpiration = slidingExpiration;
@@ -63,10 +77,10 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 		/// </summary>
 		/// <remarks>
 		/// The sliding expiration defaults to 30 minutes, unless specified otherwise via the <see
-		/// cref="SlidingCache{TKey,TItem}(TimeSpan)"/> constructor.
+		/// cref="SlidingCache{TKey,TItem}(Func{TKey,string},Func{TKey,TItem},TimeSpan)"/> constructor.
 		/// </remarks>
-		/// <seealso cref="SlidingCache{TKey,TItem}"/>
-		/// <seealso cref="SlidingCache{TKey,TItem}(TimeSpan)"/>
+		/// <seealso cref="SlidingCache{TKey,TItem}(Func{TKey,string},Func{TKey,TItem})"/>
+		/// <seealso cref="SlidingCache{TKey,TItem}(Func{TKey,string},Func{TKey,TItem},TimeSpan)"/>
 		protected override CacheItemPolicy CacheItemPolicy => new CacheItemPolicy { SlidingExpiration = _slidingExpiration };
 
 		#endregion

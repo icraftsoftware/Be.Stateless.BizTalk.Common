@@ -36,21 +36,6 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 		/// <summary>
 		/// Create the singleton <see cref="SchemaMetadataCache"/> instance.
 		/// </summary>
-		private SchemaMetadataCache() { }
-
-		#region Base Class Member Overrides
-
-		protected override string ConvertKeyToString(Type key)
-		{
-			if (key == null) throw new ArgumentNullException(nameof(key));
-			return key.AssemblyQualifiedName;
-		}
-
-		protected override ISchemaMetadata CreateItem(Type key)
-		{
-			return SchemaMetadata.Create(key);
-		}
-
-		#endregion
+		private SchemaMetadataCache() : base(key => key.AssemblyQualifiedName, SchemaMetadata.Create) { }
 	}
 }
