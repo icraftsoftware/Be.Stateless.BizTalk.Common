@@ -17,7 +17,6 @@
 #endregion
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Xml.Xsl;
 using Be.Stateless.BizTalk.Xml.Xsl;
 using Microsoft.XLANGs.BaseTypes;
@@ -30,7 +29,6 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 	/// </summary>
 	/// <seealso cref="Cache{TKey,TItem}"/>
 	/// <seealso cref="SlidingCache{TKey,TItem}"/>
-	[SuppressMessage("ReSharper", "LocalizableElement")]
 	public class XsltCache : SlidingCache<Type, XslCompiledTransformDescriptor>
 	{
 		/// <summary>
