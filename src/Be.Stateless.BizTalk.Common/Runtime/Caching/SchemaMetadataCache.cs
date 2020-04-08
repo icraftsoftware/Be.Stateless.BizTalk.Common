@@ -26,6 +26,7 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 	/// Runtime memory cache for the <see cref="ISchemaMetadata"/> associated to <see cref="SchemaBase"/>-derived types.
 	/// </summary>
 	/// <seealso cref="Cache{TKey,TItem}"/>
+	/// <seealso cref="SlidingCache{TKey,TItem}"/>
 	public class SchemaMetadataCache : SlidingCache<Type, ISchemaMetadata>
 	{
 		/// <summary>

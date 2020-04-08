@@ -29,6 +29,7 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 	/// cref="XslCompiledTransform"/> equivalents of <see cref="TransformBase"/>-derived types.
 	/// </summary>
 	/// <seealso cref="Cache{TKey,TItem}"/>
+	/// <seealso cref="SlidingCache{TKey,TItem}"/>
 	[SuppressMessage("ReSharper", "LocalizableElement")]
 	public class XsltCache : SlidingCache<Type, XslCompiledTransformDescriptor>
 	{
