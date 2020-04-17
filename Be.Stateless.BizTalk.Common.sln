@@ -7,19 +7,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Be.Stateless.BizTalk.Common
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Be.Stateless.BizTalk.Common.Tests", "src\Be.Stateless.BizTalk.Common.Tests\Be.Stateless.BizTalk.Common.Tests.csproj", "{D3F84BC5-9885-417D-B91C-A47A742CD14E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{6B1809DD-CB0F-4605-953C-6D603CF650F2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{977C69AF-95DD-490D-863B-B02DC04C86E3}"
 	ProjectSection(SolutionItems) = preProject
-		build\be.stateless.public.snk = build\be.stateless.public.snk
-		build\build.ps1 = build\build.ps1
+		.build\be.stateless.public.snk = .build\be.stateless.public.snk
+		.build\build.ps1 = .build\build.ps1
+		.build\Directory.Build.props = .build\Directory.Build.props
+		.build\Directory.Build.targets = .build\Directory.Build.targets
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common.msbuild", "Common.msbuild", "{87A9AFE7-7AB5-4B0C-B50C-D613E9216ED7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common.msbuild", "Common.msbuild", "{E45048C2-0565-4B69-8486-4C300890FEFF}"
 	ProjectSection(SolutionItems) = preProject
 		src\Directory.Build.props = src\Directory.Build.props
 		src\Directory.Build.targets = src\Directory.Build.targets
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0A435424-68CA-4CFC-85E7-03D7E612300C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipelines", "Pipelines", "{2121BF4C-7531-452D-9194-D9BF0D5B56C9}"
+	ProjectSection(SolutionItems) = preProject
+		azure-continuous-integration-pipeline.yml = azure-continuous-integration-pipeline.yml
+		azure-manual-release-pipeline.yml = azure-manual-release-pipeline.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FB2DB540-81B8-4FA6-A37F-2DD74DE501FC}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
