@@ -106,6 +106,33 @@ namespace Be.Stateless.BizTalk.Schema
 
 		#endregion
 
+		#region Nested Type: UnknownSchemaMetadata
+
+		private class UnknownSchemaMetadata : ISchemaMetadata
+		{
+			#region ISchemaMetadata Members
+
+			public ISchemaAnnotations Annotations => SchemaAnnotations.Empty;
+
+			public string BodyXPath => string.Empty;
+
+			public DocumentSpec DocumentSpec => null;
+
+			public bool IsEnvelopeSchema => false;
+
+			public string MessageType => string.Empty;
+
+			public string RootElementName => string.Empty;
+
+			public string TargetNamespace => string.Empty;
+
+			public Type Type => null;
+
+			#endregion
+		}
+
+		#endregion
+
 		internal static ISchemaMetadata Create(Type type)
 		{
 			if (!type.IsSchema()) throw new ArgumentException("Type is not a SchemaBase derived Type instance.", nameof(type));
@@ -153,5 +180,7 @@ namespace Be.Stateless.BizTalk.Schema
 		{
 			return SchemaMetadataFactory(type);
 		}
+
+		public static readonly ISchemaMetadata Unknown = new UnknownSchemaMetadata();
 	}
 }
