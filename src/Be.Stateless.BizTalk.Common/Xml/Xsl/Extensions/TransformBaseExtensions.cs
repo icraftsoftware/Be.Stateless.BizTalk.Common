@@ -27,11 +27,9 @@ namespace Be.Stateless.BizTalk.Xml.Xsl.Extensions
 	[SuppressMessage("ReSharper", "LocalizableElement")]
 	public static class TransformBaseExtensions
 	{
-		#region Mock's Factory Hook Point
-
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Mock Injection Hook")]
+		[SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global", Justification = "Mock Injection Hook")]
 		internal static Func<Type, XslCompiledTransformDescriptor> TransformDescriptorFactory { get; set; } = type => XsltCache.Instance[type];
-
-		#endregion
 
 		/// <summary>
 		/// Returns whether the <paramref name="type"/> is a <see cref="TransformBase"/>-derived transform type.

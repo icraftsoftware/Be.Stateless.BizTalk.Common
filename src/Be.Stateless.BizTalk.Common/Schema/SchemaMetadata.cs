@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Be.Stateless.BizTalk.Extensions;
 using Be.Stateless.BizTalk.Runtime.Caching;
 using Be.Stateless.Extensions;
@@ -141,8 +142,6 @@ namespace Be.Stateless.BizTalk.Schema
 				: new RootlessSchemaMetadata(type);
 		}
 
-		#region Mock's Factory Hook Point
-
 		/// <summary>
 		/// The purpose of this factory is to make <see cref="SchemaBase"/>-derived <see cref="Type"/>'s <see cref="ISchemaMetadata"/>
 		/// amenable to mocking.
@@ -150,9 +149,9 @@ namespace Be.Stateless.BizTalk.Schema
 		/// <seealso href="http://blogs.clariusconsulting.net/kzu/how-to-mock-extension-methods/"/>
 		/// <seealso href="http://blogs.clariusconsulting.net/kzu/how-extension-methods-ruined-unit-testing-and-oop-and-a-way-forward/"/>
 		/// <seealso href="http://blogs.clariusconsulting.net/kzu/making-extension-methods-amenable-to-mocking/"/>
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Mock Injection Hook")]
+		[SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global", Justification = "Mock Injection Hook")]
 		internal static Func<Type, ISchemaMetadata> SchemaMetadataFactory { get; set; } = type => SchemaMetadataCache.Instance[type];
-
-		#endregion
 
 		/// <summary>
 		/// Metadata for <see cref="SchemaBase"/>-derived <see cref="Type"/>.
@@ -181,6 +180,7 @@ namespace Be.Stateless.BizTalk.Schema
 			return SchemaMetadataFactory(type);
 		}
 
+		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API")]
 		public static readonly ISchemaMetadata Unknown = new UnknownSchemaMetadata();
 	}
 }

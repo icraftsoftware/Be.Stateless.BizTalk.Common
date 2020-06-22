@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.BizTalk.Streaming;
 using Microsoft.XLANGs.BaseTypes;
@@ -35,6 +36,14 @@ namespace Be.Stateless.BizTalk.Streaming.Extensions
 	/// <seealso href="http://blogs.clariusconsulting.net/kzu/making-extension-methods-amenable-to-mocking/"/>
 	public static class StreamExtensions
 	{
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Mock Injection Hook")]
+		[SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global", Justification = "Mock Injection Hook")]
+		internal static Func<MarkableForwardOnlyEventingReadStream, IProbeStream> StreamProberFactory { get; set; } = stream => new Prober(stream);
+
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Mock Injection Hook")]
+		[SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global", Justification = "Mock Injection Hook")]
+		internal static Func<Stream[], ITransformStream> StreamTransformerFactory { get; set; } = streams => new Transformer(streams);
+
 		/// <summary>
 		/// Ensure the <see cref="Stream"/> is wrapped in a <see cref="MarkableForwardOnlyEventingReadStream"/> and thereby ready
 		/// for probing, see <see cref="Probe"/>.
@@ -79,7 +88,7 @@ namespace Be.Stateless.BizTalk.Streaming.Extensions
 		/// </returns>
 		public static IProbeStream Probe(this MarkableForwardOnlyEventingReadStream stream)
 		{
-			return _streamProberFactory(stream);
+			return StreamProberFactory(stream);
 		}
 
 		/// <summary>
@@ -93,7 +102,7 @@ namespace Be.Stateless.BizTalk.Streaming.Extensions
 		/// </returns>
 		public static ITransformStream Transform(this Stream stream)
 		{
-			return _streamTransformerFactory(new[] { stream });
+			return StreamTransformerFactory(new[] { stream });
 		}
 
 		/// <summary>
@@ -107,26 +116,7 @@ namespace Be.Stateless.BizTalk.Streaming.Extensions
 		/// </returns>
 		public static ITransformStream Transform(this Stream[] streams)
 		{
-			return _streamTransformerFactory(streams);
+			return StreamTransformerFactory(streams);
 		}
-
-		#region Mock's Factory Hook Points
-
-		internal static Func<MarkableForwardOnlyEventingReadStream, IProbeStream> StreamProberFactory
-		{
-			get => _streamProberFactory;
-			set => _streamProberFactory = value;
-		}
-
-		internal static Func<Stream[], ITransformStream> StreamTransformerFactory
-		{
-			get => _streamTransformerFactory;
-			set => _streamTransformerFactory = value;
-		}
-
-		#endregion
-
-		private static Func<MarkableForwardOnlyEventingReadStream, IProbeStream> _streamProberFactory = stream => new Prober(stream);
-		private static Func<Stream[], ITransformStream> _streamTransformerFactory = streams => new Transformer(streams);
 	}
 }
