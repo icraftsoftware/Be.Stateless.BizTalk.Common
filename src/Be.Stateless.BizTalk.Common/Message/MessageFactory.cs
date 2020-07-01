@@ -125,7 +125,7 @@ namespace Be.Stateless.BizTalk.Message
 		private static XmlDocument CreateMessage(DocumentSpec documentSpec)
 		{
 			using (var writer = new StringWriter())
-			using (var reader = XmlReader.Create(documentSpec.CreateXmlInstance(writer), new XmlReaderSettings { XmlResolver = null }))
+			using (var reader = XmlReader.Create(documentSpec.CreateXmlInstance(writer), new XmlReaderSettings { CloseInput = true, XmlResolver = null }))
 			{
 				var document = new XmlDocument { XmlResolver = null };
 				document.Load(reader);

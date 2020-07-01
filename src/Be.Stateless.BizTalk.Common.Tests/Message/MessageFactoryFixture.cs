@@ -45,7 +45,7 @@ namespace Be.Stateless.BizTalk.Message
 		[Fact]
 		public void CreatingMessageWithInvalidContentThrows()
 		{
-			var content = MessageFactory.CreateMessage<soap_envelope_1__2.Fault>().OuterXml;
+			var content = MessageFactory.CreateMessage<soap_envelope_1__1.Envelope>().OuterXml;
 			Action act = () => MessageFactory.CreateMessage<soap_envelope_1__2.Envelope>(content);
 			act.Should().Throw<XmlSchemaValidationException>();
 		}
