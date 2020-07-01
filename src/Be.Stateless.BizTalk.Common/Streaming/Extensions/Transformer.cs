@@ -131,7 +131,7 @@ namespace Be.Stateless.BizTalk.Streaming.Extensions
 			{
 				if (_streams.Length == 1)
 				{
-					if (_streams[0] is CompositeStream compositeStream) xsl.Transform(compositeStream.Streams, arguments, writer);
+					if (_streams[0] is CompositeXmlStream compositeStream) xsl.Transform(compositeStream.Streams, arguments, writer);
 					else xsl.Transform(_streams[0], arguments, writer);
 				}
 				else

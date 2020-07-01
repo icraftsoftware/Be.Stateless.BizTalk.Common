@@ -89,7 +89,7 @@ namespace Be.Stateless.BizTalk.Xml
 					var transform = (TransformBase) Activator.CreateInstance(type);
 					// http://stackoverflow.com/questions/11864564/xslcompiledtransform-and-custom-xmlurlresolver-an-entry-with-the-same-key-alre
 					var baseUri = absoluteUri.GetLeftPart(UriPartial.Authority) + "/" + type.FullName;
-					using (var reader = XmlReader.Create(new StringReader(transform.XmlContent), new XmlReaderSettings(), baseUri))
+					using (var reader = XmlReader.Create(new StringReader(transform.XmlContent), new XmlReaderSettings { XmlResolver = null }, baseUri))
 					{
 						// http://stackoverflow.com/questions/1440023/can-i-assign-a-baseuri-to-an-xdocument
 						var xDocument = XDocument.Load(reader, LoadOptions.SetBaseUri);
@@ -139,10 +139,16 @@ namespace Be.Stateless.BizTalk.Xml
 
 		#endregion
 
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 		protected Type ReferenceType { get; }
 
+		// ReSharper disable once MemberCanBePrivate.Global, internals are visible to BizTalk.Unit
 		internal const string MAP_SCHEME = "map";
+
+		// ReSharper disable once MemberCanBePrivate.Global, internals are visible to BizTalk.Unit
 		internal const string RESOURCE_HOST = "resource";
+
+		// ReSharper disable once MemberCanBePrivate.Global, internals are visible to BizTalk.Unit
 		internal const string TYPE_HOST = "type";
 	}
 }

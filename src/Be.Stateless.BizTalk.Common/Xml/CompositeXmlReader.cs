@@ -128,7 +128,7 @@ namespace Be.Stateless.BizTalk.Xml
 			if (!enumerable.Any()) throw new ArgumentException("List of compound streams is empty.", nameof(streams));
 
 			// it is *essential* that all XmlReaders share the same XmlNameTable for any (most) XslTransform(s) to succeed
-			settings = settings.IfNotNull(s => s.Clone()) ?? new XmlReaderSettings();
+			settings = settings.IfNotNull(s => s.Clone()) ?? new XmlReaderSettings { XmlResolver = null };
 			settings.NameTable = new NameTable();
 
 			var compoundReaders = enumerable

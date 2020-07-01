@@ -44,7 +44,7 @@ namespace BizTalk.Factory.XLang
 		[SuppressMessage("Usage", "CA2225:Operator overloads have named alternates")]
 		public static implicit operator XmlReader(MessageCollection collection)
 		{
-			var xmlReaderSettings = new XmlReaderSettings { CloseInput = true };
+			var xmlReaderSettings = new XmlReaderSettings { CloseInput = true, XmlResolver = null };
 			return collection is null
 				? EmptyXmlReader.Create()
 				: collection.Count == 1

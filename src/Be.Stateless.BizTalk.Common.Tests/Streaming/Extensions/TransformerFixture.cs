@@ -145,7 +145,7 @@ namespace Be.Stateless.BizTalk.Streaming.Extensions
 			using (var stream1 = new StringStream("<?xml version='1.0' encoding='utf-16'?><root><one/></root>"))
 			using (var stream2 = new StringStream("<?xml version='1.0' encoding='utf-16'?><root><two/></root>"))
 			using (var stream6 = new StringStream("<?xml version='1.0' encoding='utf-16'?><root><six/></root>"))
-			using (var compositeStream = new CompositeStream(new Stream[] { stream1, stream2, stream6 }))
+			using (var compositeStream = new CompositeXmlStream(new Stream[] { stream1, stream2, stream6 }))
 			using (var memoryStream = new MemoryStream())
 			{
 				compositeStream.CopyTo(memoryStream);
@@ -160,7 +160,7 @@ namespace Be.Stateless.BizTalk.Streaming.Extensions
 			using (var stream1 = new StringStream("<?xml version='1.0' encoding='utf-16'?><root><one/></root>"))
 			using (var stream2 = new StringStream("<?xml version='1.0' encoding='utf-16'?><root><two/></root>"))
 			using (var stream6 = new StringStream("<?xml version='1.0' encoding='utf-16'?><root><six/></root>"))
-			using (var compositeStream = new CompositeStream(new Stream[] { stream1, stream2, stream6 }))
+			using (var compositeStream = new CompositeXmlStream(new Stream[] { stream1, stream2, stream6 }))
 			using (var stream = compositeStream.Transform().Apply(typeof(IdentityTransform)))
 			using (var reader = XmlReader.Create(stream))
 			{

@@ -36,7 +36,7 @@ namespace Be.Stateless.BizTalk.Streaming
 	/// <para>
 	/// Because the input streams are aggregated at the stream level, the contents of the input streams must all be of UTF-8
 	/// encoded and cannot have an <see cref="XmlDeclaration"/>. Note that it is also possible to use a <see
-	/// cref="CompositeXmlReader"/> instead of this <see cref="CompositeStream"/> should you not be able to lift either of these
+	/// cref="CompositeXmlReader"/> instead of this <see cref="CompositeXmlStream"/> should you not be able to lift either of these
 	/// constraints.
 	/// </para>
 	/// <para>
@@ -57,16 +57,16 @@ namespace Be.Stateless.BizTalk.Streaming
 	/// </code>
 	/// </para>
 	/// </remarks>
-	/// <seealso cref="CompositeXmlReader.Create(System.Collections.Generic.IEnumerable{System.IO.Stream},XmlReaderSettings)">CompositeXmlReader.Create</seealso>
-	public class CompositeStream : Stream
+	/// <seealso cref="CompositeXmlReader.Create(System.Collections.Generic.IEnumerable{Stream},XmlReaderSettings)">CompositeXmlReader.Create</seealso>
+	public class CompositeXmlStream : Stream
 	{
 		/// <summary>
-		/// Construct an <see cref="CompositeStream"/> instance wrapper around the <paramref name="streams"/>.
+		/// Construct an <see cref="CompositeXmlStream"/> instance wrapper around the <paramref name="streams"/>.
 		/// </summary>
 		/// <param name="streams">
 		/// The <see cref="Stream"/>s to wrap.
 		/// </param>
-		public CompositeStream(Stream[] streams)
+		public CompositeXmlStream(Stream[] streams)
 		{
 			_streams = streams ?? throw new ArgumentNullException(nameof(streams));
 			_state = CompositeReaderState.RootAggregateOpeningTag;
@@ -103,7 +103,7 @@ namespace Be.Stateless.BizTalk.Streaming
 
 		protected override void Dispose(bool disposing)
 		{
-			if (_logger.IsDebugEnabled) _logger.DebugFormat("{0} is {1}.", typeof(CompositeStream).Name, disposing ? "disposing" : "finalizing");
+			if (_logger.IsDebugEnabled) _logger.DebugFormat("{0} is {1}.", nameof(CompositeXmlStream), disposing ? "disposing" : "finalizing");
 			if (disposing && _streams != null)
 			{
 				_streams.ForEach(s => s.Dispose());
@@ -316,7 +316,7 @@ namespace Be.Stateless.BizTalk.Streaming
 		{
 			get
 			{
-				if (_state != CompositeReaderState.RootAggregateOpeningTag) throw new InvalidOperationException(nameof(CompositeStream) + "'s position is not at beginning.");
+				if (_state != CompositeReaderState.RootAggregateOpeningTag) throw new InvalidOperationException(nameof(CompositeXmlStream) + "'s position is not at beginning.");
 				return _streams;
 			}
 		}
@@ -371,20 +371,15 @@ namespace Be.Stateless.BizTalk.Streaming
 			if (_streams == null) throw new ObjectDisposedException(GetType().Name);
 		}
 
-		private static readonly ILog _logger = LogManager.GetLogger(typeof(CompositeStream));
+		private const string INPUT_MESSAGE_PART_END_TAG = "</agg:InputMessagePart_{0}>";
+		private const string INPUT_MESSAGE_PART_START_TAG = "<agg:InputMessagePart_{0}>";
+		private const string ROOT_END_TAG = "</agg:Root>";
+		private const string ROOT_START_TAG = "<agg:Root xmlns:agg=\"" + CompositeXmlReader.XML_AGGREGATE_SCHEMA_TARGET_NAMESPACE + "\">";
+		private static readonly ILog _logger = LogManager.GetLogger(typeof(CompositeXmlStream));
 		private byte[] _backlog;
 		private Stream _currentStream;
 		private int _currentStreamIndex;
 		private CompositeReaderState _state;
 		private Stream[] _streams;
-
-		#region r#_do_not_reorder
-
-		private const string INPUT_MESSAGE_PART_START_TAG = "<agg:InputMessagePart_{0}>";
-		private const string INPUT_MESSAGE_PART_END_TAG = "</agg:InputMessagePart_{0}>";
-		private const string ROOT_START_TAG = "<agg:Root xmlns:agg=\"" + CompositeXmlReader.XML_AGGREGATE_SCHEMA_TARGET_NAMESPACE + "\">";
-		private const string ROOT_END_TAG = "</agg:Root>";
-
-		#endregion
 	}
 }

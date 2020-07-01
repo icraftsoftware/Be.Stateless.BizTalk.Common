@@ -42,15 +42,14 @@ namespace Be.Stateless.BizTalk.Message
 		/// <returns>
 		/// The envelope document with its content as an <see cref="XmlDocument"/>.
 		/// </returns>
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA3075:Insecure DTD processing in XML")]
 		public static XmlDocument CreateEnvelope<TE, TC>(string content)
 			where TE : SchemaBase, new()
 			where TC : SchemaBase, new()
 		{
-			using (var reader = new StringReader(content))
+			using (var reader = XmlReader.Create(new StringReader(content), new XmlReaderSettings { XmlResolver = null }))
 			using (var xmlReader = ValidatingXmlReader.Create<TE, TC>(reader))
 			{
-				var message = new XmlDocument();
+				var message = new XmlDocument { XmlResolver = null };
 				message.Load(xmlReader);
 				return message;
 			}
@@ -83,13 +82,12 @@ namespace Be.Stateless.BizTalk.Message
 		/// <returns>
 		/// The valid instance document as an <see cref="XmlDocument"/>.
 		/// </returns>
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA3075:Insecure DTD processing in XML")]
 		public static XmlDocument CreateMessage<T>(string content) where T : SchemaBase, new()
 		{
-			using (var reader = new StringReader(content))
+			using (var reader = XmlReader.Create(new StringReader(content), new XmlReaderSettings { XmlResolver = null }))
 			using (var xmlReader = ValidatingXmlReader.Create<T>(reader))
 			{
-				var message = new XmlDocument();
+				var message = new XmlDocument { XmlResolver = null };
 				message.Load(xmlReader);
 				return message;
 			}
@@ -124,13 +122,13 @@ namespace Be.Stateless.BizTalk.Message
 		/// The dummy instance document.
 		/// </returns>
 		/// <seealso href="http://biztalkmessages.vansplunteren.net/2008/06/19/create-message-instance-from-multiroot-xsd-using-documentspec/"/>
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA3075:Insecure DTD processing in XML")]
 		private static XmlDocument CreateMessage(DocumentSpec documentSpec)
 		{
 			using (var writer = new StringWriter())
+			using (var reader = XmlReader.Create(documentSpec.CreateXmlInstance(writer), new XmlReaderSettings { XmlResolver = null }))
 			{
-				var document = new XmlDocument();
-				document.Load(documentSpec.CreateXmlInstance(writer));
+				var document = new XmlDocument { XmlResolver = null };
+				document.Load(reader);
 				return document;
 			}
 		}

@@ -27,7 +27,7 @@ using Xunit;
 
 namespace Be.Stateless.BizTalk.Streaming
 {
-	public class CompositeStreamFixture
+	public class CompositeXmlStreamFixture
 	{
 		[Fact]
 		public void AggregatesIndividualStreams()
@@ -37,7 +37,7 @@ namespace Be.Stateless.BizTalk.Streaming
 				"<agg:InputMessagePart_1><part-two xmlns=\"part-two\"><child-two>two</child-two></part-two></agg:InputMessagePart_1>" +
 				"<agg:InputMessagePart_2><part-six xmlns=\"part-six\"><child-six>six</child-six></part-six></agg:InputMessagePart_2>" +
 				"</agg:Root>";
-			using (var composite = new CompositeStream(new Stream[] { new MemoryStream(_part1), new MemoryStream(_part2), new MemoryStream(_part3) }))
+			using (var composite = new CompositeXmlStream(new Stream[] { new MemoryStream(_part1), new MemoryStream(_part2), new MemoryStream(_part3) }))
 			using (var xmlReader = XmlReader.Create(composite))
 			{
 				xmlReader.Read();
@@ -54,7 +54,7 @@ namespace Be.Stateless.BizTalk.Streaming
 				"<agg:InputMessagePart_1><part-two xmlns=\"part-two\"><child-two>two</child-two></part-two></agg:InputMessagePart_1>" +
 				"</agg:Root>";
 
-			using (var composite = new CompositeStream(new Stream[] { new MemoryStream(_part1), new MemoryStream(_part2) }))
+			using (var composite = new CompositeXmlStream(new Stream[] { new MemoryStream(_part1), new MemoryStream(_part2) }))
 			{
 				var buffer = new byte[Encoding.UTF8.GetByteCount(expected)];
 				var offset = 0;
@@ -74,7 +74,7 @@ namespace Be.Stateless.BizTalk.Streaming
 		{
 			var part1 = Encoding.UTF8.GetBytes("<part-one xmlns=\"part-one\"><child-one>one</child-one></part-one>");
 			var part2 = Encoding.Unicode.GetBytes("<part-two xmlns=\"part-two\"><child-two>two</child-two></part-two>");
-			using (var composite = new CompositeStream(new Stream[] { new MemoryStream(part1), new MemoryStream(part2) }))
+			using (var composite = new CompositeXmlStream(new Stream[] { new MemoryStream(part1), new MemoryStream(part2) }))
 			using (var xmlReader = XmlReader.Create(composite))
 			{
 				xmlReader.Read();
@@ -89,7 +89,7 @@ namespace Be.Stateless.BizTalk.Streaming
 		{
 			var part1 = Encoding.UTF8.GetBytes("<?xml version=\"1.0\" encoding=\"utf-8\" ?><part-one xmlns=\"part-one\"><child-one>one</child-one></part-one>");
 			var part2 = Encoding.UTF8.GetBytes("<?xml version=\"1.0\" encoding=\"utf-8\" ?><part-two xmlns=\"part-two\"><child-two>two</child-two></part-two>");
-			using (var composite = new CompositeStream(new Stream[] { new MemoryStream(part1), new MemoryStream(part2) }))
+			using (var composite = new CompositeXmlStream(new Stream[] { new MemoryStream(part1), new MemoryStream(part2) }))
 			using (var xmlReader = XmlReader.Create(composite))
 			{
 				xmlReader.Read();
@@ -105,7 +105,7 @@ namespace Be.Stateless.BizTalk.Streaming
 			var mock2 = new Mock<MemoryStream>(MockBehavior.Default, _part2) { CallBase = true };
 			var mock3 = new Mock<MemoryStream>(MockBehavior.Default, _part3) { CallBase = true };
 
-			using (var composite = new CompositeStream(new Stream[] { mock1.Object, mock2.Object, mock3.Object }))
+			using (var composite = new CompositeXmlStream(new Stream[] { mock1.Object, mock2.Object, mock3.Object }))
 			{
 				var buffer = new byte[10];
 				composite.Read(buffer, 0, buffer.Length);

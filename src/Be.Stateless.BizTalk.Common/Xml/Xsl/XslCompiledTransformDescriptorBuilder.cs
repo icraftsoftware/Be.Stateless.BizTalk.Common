@@ -39,7 +39,6 @@ namespace Be.Stateless.BizTalk.Xml.Xsl
 		/// of a <see cref="XslCompiledTransformDescriptor"/> for the given <see cref="TransformBase"/>-derived transform.
 		/// </summary>
 		/// <param name="transform">The <see cref="TransformBase"/>-derived transform.</param>
-		[SuppressMessage("Usage", "CA2208:Instantiate argument exceptions correctly")]
 		public XslCompiledTransformDescriptorBuilder(Type transform)
 		{
 			if (transform == null) throw new ArgumentNullException(nameof(transform));
@@ -48,9 +47,7 @@ namespace Be.Stateless.BizTalk.Xml.Xsl
 					$"The type {transform.AssemblyQualifiedName} does not derive from TransformBase.",
 					nameof(transform));
 			var transformBase = Activator.CreateInstance(transform) as TransformBase;
-			_transformBase = transformBase ?? throw new ArgumentException(
-				"transform",
-				$"Cannot instantiate type '{transform.AssemblyQualifiedName}'.");
+			_transformBase = transformBase ?? throw new ArgumentException($"Cannot instantiate type '{transform.AssemblyQualifiedName}'.", nameof(transform));
 			Transform = transform;
 			_navigator = BuildNavigator();
 		}
@@ -85,11 +82,9 @@ namespace Be.Stateless.BizTalk.Xml.Xsl
 			return new Stateless.Xml.Xsl.XsltArgumentList(_transformBase.TransformArgs);
 		}
 
-		[SuppressMessage("Security", "CA3075:Insecure DTD processing in XML")]
-		[SuppressMessage("Security", "CA5372:Use XmlReader For XPathDocument")]
 		private XPathNavigator BuildNavigator()
 		{
-			using (var stringReader = new StringReader(_transformBase.XmlContent))
+			using (var stringReader = XmlReader.Create(new StringReader(_transformBase.XmlContent), new XmlReaderSettings { XmlResolver = null }))
 			{
 				var navigator = new XPathDocument(stringReader).CreateNavigator();
 				navigator.MoveToFollowing(XPathNodeType.Element);
