@@ -20,6 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Xml;
+using Be.Stateless.BizTalk.Unit.Transform;
 using Be.Stateless.BizTalk.Xml.Xsl;
 using Be.Stateless.IO;
 using Be.Stateless.Linq.Extensions;

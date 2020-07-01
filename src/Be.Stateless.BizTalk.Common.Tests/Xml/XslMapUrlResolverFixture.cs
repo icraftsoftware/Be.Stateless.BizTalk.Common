@@ -50,7 +50,7 @@ namespace Be.Stateless.BizTalk.Xml
 		{
 			const string compositeMapTypeTransform = @"<xsl:stylesheet version='1.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'>
 	<xsl:import href='map://type/Be.Stateless.BizTalk.Xml.Xsl.CompoundMapTransform, Be.Stateless.BizTalk.Common.Tests, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3707daa0b119fc14'/>
-	<xsl:include href='map://type/Be.Stateless.BizTalk.Xml.Xsl.IdentityTransform, Be.Stateless.BizTalk.Common.Tests, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3707daa0b119fc14'/>
+	<xsl:include href='map://type/Be.Stateless.BizTalk.Unit.Transform.IdentityTransform, Be.Stateless.BizTalk.Unit, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3707daa0b119fc14'/>
 	<xsl:variable name='attachment-fragment'>
 		<Attachment/>
 	</xsl:variable>

@@ -24,6 +24,7 @@ using System.Xml.Xsl;
 using Be.Stateless.BizTalk.ContextProperties;
 using Be.Stateless.BizTalk.Runtime.Caching;
 using Be.Stateless.BizTalk.Transform;
+using Be.Stateless.BizTalk.Unit.Transform;
 using Be.Stateless.BizTalk.Xml.Xsl;
 using Be.Stateless.IO;
 using Be.Stateless.IO.Extensions;

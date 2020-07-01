@@ -33,7 +33,7 @@ namespace Be.Stateless.BizTalk.Xml.Xsl
 	xmlns:bf='urn:schemas.stateless.be:biztalk:properties:system:2012:04'
 	xmlns:bts='http://schemas.microsoft.com/BizTalk/2003/system-properties'
 	exclude-result-prefixes='ctxt bf bts'>
-	<xsl:import href='map://type/Be.Stateless.BizTalk.Xml.Xsl.IdentityTransform, Be.Stateless.BizTalk.Common.Tests, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3707daa0b119fc14'/>
+	<xsl:import href='map://type/Be.Stateless.BizTalk.Unit.Transform.IdentityTransform, Be.Stateless.BizTalk.Unit, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3707daa0b119fc14'/>
 	<xsl:include href='map://type/Be.Stateless.BizTalk.Xml.Xsl.CompoundMapTransform, Be.Stateless.BizTalk.Common.Tests, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3707daa0b119fc14'/>
 	<xsl:template match='six'><sixth><xsl:value-of select='text()'/></sixth></xsl:template>
 </xsl:stylesheet>";

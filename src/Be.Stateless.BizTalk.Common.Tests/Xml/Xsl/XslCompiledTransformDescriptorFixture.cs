@@ -19,6 +19,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Be.Stateless.BizTalk.ContextProperties;
+using Be.Stateless.BizTalk.Unit.Transform;
 using FluentAssertions;
 using Xunit;
 
