@@ -26,11 +26,12 @@ namespace Be.Stateless.BizTalk.Streaming
 {
 	public class XmlTranslationSetFixture
 	{
+#if DEBUG
 		[Fact]
-		[SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
-#if !DEBUG
-		[Ignore("Only to be run in DEBUG configuration.")]
+#else
+		[Fact(Skip = "Only to be run in DEBUG configuration.")]
 #endif
+		[SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
 		public void CheckItemsUniquenessThrowsWhenConflictingReplacementPatterns()
 		{
 			Action(
