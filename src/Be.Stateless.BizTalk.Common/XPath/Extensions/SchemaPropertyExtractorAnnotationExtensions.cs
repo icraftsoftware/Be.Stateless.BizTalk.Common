@@ -20,6 +20,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Be.Stateless.BizTalk.Schema;
 using Be.Stateless.Extensions;
+using Microsoft.BizTalk.Message.Interop;
 
 namespace Be.Stateless.BizTalk.XPath.Extensions
 {
@@ -29,6 +30,10 @@ namespace Be.Stateless.BizTalk.XPath.Extensions
 		[SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global", Justification = "Mock Injection Hook")]
 		internal static Func<ISchemaAnnotations, PropertyExtractorCollection> SchemaPropertyExtractorCollectionFactory { get; set; } = GetAndReadXmlPropertiesAnnotation;
 
+		/// <summary>
+		/// Collection of <see cref="PropertyExtractor"/>-derived extractors used to read, write or promote values to and from
+		/// the context properties of an <see cref="IBaseMessagePart"/>'s payload while being processed through the pipelines.
+		/// </summary>
 		public static PropertyExtractorCollection GetExtractors(this ISchemaAnnotations schemaAnnotations)
 		{
 			if (schemaAnnotations == null) throw new ArgumentNullException(nameof(schemaAnnotations));

@@ -16,13 +16,22 @@
 
 #endregion
 
+using Be.Stateless.BizTalk.XPath.Extensions;
 using FluentAssertions;
 using Xunit;
+using static Be.Stateless.DelegateFactory;
 
 namespace Be.Stateless.BizTalk.Schema
 {
 	public class SchemaAnnotationsFixture
 	{
+		[Fact]
+		public void CanReadNonexistentAnnotationsFromMicrosoftSoap12Schema()
+		{
+			Action(() => SchemaMetadata.For<BTS.soap_envelope_1__2.Fault>().Annotations.GetExtractors())
+				.Should().NotThrow();
+		}
+
 		[Fact]
 		public void GetAnnotationByNameIsNotNullForKnownAnnotation()
 		{
