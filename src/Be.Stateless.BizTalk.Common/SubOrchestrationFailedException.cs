@@ -27,20 +27,20 @@ namespace Be.Stateless.BizTalk
 {
 	/// <summary>
 	/// In the context of BizTalk Server composite orchestrations, allows a sub-orchestration to notify its caller that it has
-	/// failed by throwing a <see cref="FailedSubOrchestrationException"/> that identifies it by its <see cref="Name"/>.
+	/// failed by throwing a <see cref="SubOrchestrationFailedException"/> that identifies it by its <see cref="Name"/>.
 	/// </summary>
 	[Serializable]
 	[SuppressMessage("Design", "CA1032:Implement standard exception constructors")]
-	public class FailedSubOrchestrationException : Exception
+	public class SubOrchestrationFailedException : Exception
 	{
 		/// <summary>
-		/// XLang helper to throw a <see cref="FailedSubOrchestrationException"/>.
+		/// XLang helper to throw a <see cref="SubOrchestrationFailedException"/>.
 		/// </summary>
 		/// <remarks>
-		/// If the direct caller of this method is an orchestration, i.e. a <see cref="BTXService"/>-derived type, the thrown <see
-		/// cref="FailedSubOrchestrationException"/>'s <see cref="Name"/> will be initialized to this orchestration's namespace,
-		/// which by convention is its name. If the direct caller is not an orchestration, then the <see cref="Name"/> will be
-		/// initialized to the <see cref="Service.RootService"/>'s <see cref="Type"/> namespace.
+		/// If the direct caller of this method is an orchestration, i.e. a <see cref="BTXService"/>-derived type, the thrown
+		/// <see cref="SubOrchestrationFailedException"/>'s <see cref="Name"/> will be initialized to this orchestration's
+      /// namespace, which by convention is its name. If the direct caller is not an orchestration, then the <see cref="Name"/>
+		/// will be initialized to the <see cref="Service.RootService"/>'s <see cref="Type"/> namespace.
 		/// </remarks>
 		public static void Throw()
 		{
@@ -49,21 +49,21 @@ namespace Be.Stateless.BizTalk
 				? declaringType.Namespace
 				: Service.RootService.GetType().Namespace;
 			var message = $"Orchestration '{name}' failed.";
-			throw new FailedSubOrchestrationException(name, message);
+			throw new SubOrchestrationFailedException(name, message);
 		}
 
 		/// <summary>
-		/// XLang helper to throw a <see cref="FailedSubOrchestrationException"/> with an <paramref name="inner"/> <see
+		/// XLang helper to throw a <see cref="SubOrchestrationFailedException"/> with an <paramref name="inner"/> <see
 		/// cref="Exception"/>.
 		/// </summary>
 		/// <param name="inner">
 		/// The inner exception.
 		/// </param>
 		/// <remarks>
-		/// If the direct caller of this method is an orchestration, i.e. a <see cref="BTXService"/>-derived type, the thrown <see
-		/// cref="FailedSubOrchestrationException"/>'s <see cref="Name"/> will be initialized to this orchestration's namespace,
-		/// which by convention is its name. If the direct caller is not an orchestration, then the <see cref="Name"/> will be
-		/// initialized to the <see cref="Service.RootService"/>'s <see cref="Type"/> namespace.
+		/// If the direct caller of this method is an orchestration, i.e. a <see cref="BTXService"/>-derived type, the thrown
+		/// <see cref="SubOrchestrationFailedException"/>'s <see cref="Name"/> will be initialized to this orchestration's
+      /// namespace, which by convention is its name. If the direct caller is not an orchestration, then the <see cref="Name"/>
+		/// will be initialized to the <see cref="Service.RootService"/>'s <see cref="Type"/> namespace.
 		/// </remarks>
 		public static void Throw(Exception inner)
 		{
@@ -72,20 +72,20 @@ namespace Be.Stateless.BizTalk
 				? declaringType.Namespace
 				: Service.RootService.GetType().Namespace;
 			var message = $"Orchestration '{name}' failed.";
-			throw new FailedSubOrchestrationException(name, message, inner);
+			throw new SubOrchestrationFailedException(name, message, inner);
 		}
 
-		public FailedSubOrchestrationException(string name, string message) : base(message)
+		public SubOrchestrationFailedException(string name, string message) : base(message)
 		{
 			Name = name;
 		}
 
-		public FailedSubOrchestrationException(string name, string message, Exception inner) : base(message, inner)
+		public SubOrchestrationFailedException(string name, string message, Exception inner) : base(message, inner)
 		{
 			Name = name;
 		}
 
-		protected FailedSubOrchestrationException(SerializationInfo info, StreamingContext context) : base(info, context)
+		protected SubOrchestrationFailedException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 			Name = info.GetString("Name");
 		}

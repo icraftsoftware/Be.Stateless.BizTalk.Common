@@ -24,13 +24,13 @@ using Xunit;
 
 namespace Be.Stateless.BizTalk
 {
-	public class FailedSubOrchestrationExceptionFixture
+	public class SubOrchestrationFailedExceptionFixture
 	{
 		[Fact]
 		public void Message()
 		{
-			Action act = () => throw new FailedSubOrchestrationException("process", "Can't proceed.");
-			act.Should().Throw<FailedSubOrchestrationException>().WithMessage("Orchestration 'process' failed. Can't proceed.");
+			Action act = () => throw new SubOrchestrationFailedException("process", "Can't proceed.");
+			act.Should().Throw<SubOrchestrationFailedException>().WithMessage("Orchestration 'process' failed. Can't proceed.");
 		}
 
 		[Fact]
@@ -39,11 +39,11 @@ namespace Be.Stateless.BizTalk
 			var stream = new MemoryStream();
 			var formatter = new BinaryFormatter();
 
-			Action act = () => throw new FailedSubOrchestrationException("process", "Can't proceed.");
-			var originalException = act.Should().Throw<FailedSubOrchestrationException>().Which;
+			Action act = () => throw new SubOrchestrationFailedException("process", "Can't proceed.");
+			var originalException = act.Should().Throw<SubOrchestrationFailedException>().Which;
 			formatter.Serialize(stream, originalException);
 			stream.Position = 0;
-			var deserializedException = (FailedSubOrchestrationException) formatter.Deserialize(stream);
+			var deserializedException = (SubOrchestrationFailedException) formatter.Deserialize(stream);
 
 			deserializedException.Should().NotBeSameAs(originalException);
 			deserializedException.Name.Should().Be(originalException.Name);
@@ -53,9 +53,9 @@ namespace Be.Stateless.BizTalk
 		[Fact]
 		public void ToStringSerialization()
 		{
-			Action act = () => throw new FailedSubOrchestrationException("process", "Can't proceed.");
-			var exception = act.Should().Throw<FailedSubOrchestrationException>().Which;
-			exception.ToString().Should().StartWith("Be.Stateless.BizTalk.FailedSubOrchestrationException: Orchestration 'process' failed. Can't proceed.");
+			Action act = () => throw new SubOrchestrationFailedException("process", "Can't proceed.");
+			var exception = act.Should().Throw<SubOrchestrationFailedException>().Which;
+			exception.ToString().Should().StartWith("Be.Stateless.BizTalk.SubOrchestrationFailedException: Orchestration 'process' failed. Can't proceed.");
 		}
 	}
 }
