@@ -35,9 +35,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Be.Stateless.BizTalk.Schemas" Version="2.0.20098.6585" />
+    <PackageReference Include="Be.Stateless.BizTalk.Schemas" Version="2.0.20187.27547" />
     <PackageReference Include="Be.Stateless.Common" Version="2.0.20113.37694" />
-    <PackageReference Include="Be.Stateless.Extensions" Version="2.0.20183.50833" />
+    <PackageReference Include="Be.Stateless.Extensions" Version="2.0.20184.29269" />
     <PackageReference Include="Be.Stateless.Xml" Version="2.0.20113.53240" />
     <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.2">
       <PrivateAssets>all</PrivateAssets>

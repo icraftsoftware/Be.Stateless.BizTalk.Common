@@ -42,7 +42,7 @@ namespace Be.Stateless.BizTalk.Schema
        <xs:appinfo>
          <b:recordInfo body_xpath=""/*[local-name()='Root' and namespace-uri()='urn:schemas.stateless.be:biztalk:any:2020:02']"" />
          <san:Properties xmlns:bf='urn:schemas.stateless.be:biztalk:properties:system:2012:04'>
-           <bf:CorrelationToken xpath=""/*[local-name()='Root']//*[local-name()='Id']"" />
+           <bf:CorrelationId xpath=""/*[local-name()='Root']//*[local-name()='Id']"" />
          </san:Properties>
        </xs:appinfo>
      </xs:annotation>

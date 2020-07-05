@@ -32,7 +32,7 @@ namespace Be.Stateless.BizTalk.XPath.Extensions
 			SchemaMetadata.For<RootedSchema>().Annotations.GetExtractors()
 				.Should().BeEquivalentTo(
 					new PropertyExtractorCollection(
-						new XPathExtractor(BizTalkFactoryProperties.CorrelationToken, "/*[local-name()='Root']//*[local-name()='Id']")
+						new XPathExtractor(BizTalkFactoryProperties.CorrelationId, "/*[local-name()='Root']//*[local-name()='Id']")
 					));
 		}
 

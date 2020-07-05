@@ -33,7 +33,7 @@ namespace Be.Stateless.BizTalk.XPath
 		public void DemoteDoesNotThrowIfNewValueIsNullOrEmpty()
 		{
 			var messageMock = new MessageMock();
-			var sut = new XPathExtractor(BizTalkFactoryProperties.CorrelationToken.QName, "//value1", ExtractionMode.Demote);
+			var sut = new XPathExtractor(BizTalkFactoryProperties.CorrelationId.QName, "//value1", ExtractionMode.Demote);
 			string newValue = null;
 			Action(() => sut.Execute(messageMock.Object.Context, "old", ref newValue)).Should().NotThrow();
 			newValue.Should().BeNull();
