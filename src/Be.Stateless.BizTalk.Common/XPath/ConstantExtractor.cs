@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using Be.Stateless.BizTalk.ContextProperties;
 using Be.Stateless.Extensions;
@@ -52,6 +53,7 @@ namespace Be.Stateless.BizTalk.XPath
 			Value = value;
 		}
 
+		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
 		public ConstantExtractor(IMessageContextProperty property, string value, ExtractionMode extractionMode = ExtractionMode.Write)
 			: this(property?.QName ?? throw new ArgumentNullException(nameof(property)), value, extractionMode) { }
 
@@ -116,6 +118,7 @@ namespace Be.Stateless.BizTalk.XPath
 
 		#endregion
 
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Public API.")]
 		public string Value { get; }
 
 		private static readonly ILog _logger = LogManager.GetLogger(typeof(ConstantExtractor));

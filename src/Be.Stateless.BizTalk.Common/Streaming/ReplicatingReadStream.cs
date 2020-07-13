@@ -72,7 +72,7 @@ namespace Be.Stateless.BizTalk.Streaming
 
 		protected override void Dispose(bool disposing)
 		{
-			if (_logger.IsDebugEnabled) _logger.DebugFormat("{0} is {1}.", typeof(ReplicatingReadStream).Name, disposing ? "disposing" : "finalizing");
+			if (_logger.IsDebugEnabled) _logger.DebugFormat("{0} is {1}.", nameof(ReplicatingReadStream), disposing ? "disposing" : "finalizing");
 			if (disposing)
 			{
 				if (_source != null)
@@ -160,7 +160,7 @@ namespace Be.Stateless.BizTalk.Streaming
 					// must wait for the _source to have been thoroughly read, _target would be unmanageable otherwise
 					if (!CanSeek)
 						throw new InvalidOperationException(
-							$"{typeof(ReplicatingReadStream).Name} is not seekable while the inner stream has not been thoroughly read and replicated.");
+							$"{nameof(ReplicatingReadStream)} is not seekable while the inner stream has not been thoroughly read and replicated.");
 					_source.Position = value;
 				}
 				catch (Exception exception)
@@ -257,7 +257,7 @@ namespace Be.Stateless.BizTalk.Streaming
 				// must wait for the _source to have been thoroughly read, _target would be unmanageable otherwise
 				if (!CanSeek)
 					throw new InvalidOperationException(
-						$"{typeof(ReplicatingReadStream).Name} cannot be sought while the inner stream has not been thoroughly read and replicated.");
+						$"{nameof(ReplicatingReadStream)} cannot be sought while the inner stream has not been thoroughly read and replicated.");
 				return _source.Seek(offset, origin);
 			}
 			catch (Exception exception)

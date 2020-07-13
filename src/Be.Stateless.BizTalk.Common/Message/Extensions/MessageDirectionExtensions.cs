@@ -17,12 +17,14 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Be.Stateless.BizTalk.ContextProperties;
 using Be.Stateless.Extensions;
 using Microsoft.BizTalk.Message.Interop;
 
 namespace Be.Stateless.BizTalk.Message.Extensions
 {
+	[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Public API.")]
 	public static class MessageDirectionExtensions
 	{
 		public static MessageDirection Direction(this IBaseMessage message)
@@ -41,6 +43,7 @@ namespace Be.Stateless.BizTalk.Message.Extensions
 			throw new Exception("Unable to determine message direction.");
 		}
 
+		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
 		public static MessageDirection FailedDirection(this IBaseMessage message)
 		{
 			if (message == null) throw new ArgumentNullException(nameof(message));

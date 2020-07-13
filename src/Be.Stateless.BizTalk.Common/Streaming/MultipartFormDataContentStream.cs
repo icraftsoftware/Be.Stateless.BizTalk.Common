@@ -17,12 +17,13 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.Http;
 
 namespace Be.Stateless.BizTalk.Streaming
 {
-	[System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope")]
+	[SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope")]
 	public class MultipartFormDataContentStream : Stream
 	{
 		public MultipartFormDataContentStream(Stream stream)
@@ -30,6 +31,7 @@ namespace Be.Stateless.BizTalk.Streaming
 			_multipartContent = new MultipartFormDataContent { new StreamContent(stream) };
 		}
 
+		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
 		public MultipartFormDataContentStream(Stream stream, string name)
 		{
 			_multipartContent = new MultipartFormDataContent { { new StreamContent(stream), name } };
@@ -86,9 +88,10 @@ namespace Be.Stateless.BizTalk.Streaming
 
 		#endregion
 
+		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
 		public string ContentType => _multipartContent.Headers.ContentType.ToString();
 
-		private Stream DataContentStream => _dataContentStream ?? (_dataContentStream = _multipartContent.ReadAsStreamAsync().Result);
+		private Stream DataContentStream => _dataContentStream ??= _multipartContent.ReadAsStreamAsync().Result;
 
 		private Stream _dataContentStream;
 

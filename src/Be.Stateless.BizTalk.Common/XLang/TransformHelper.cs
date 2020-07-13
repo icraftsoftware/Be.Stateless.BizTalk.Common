@@ -112,6 +112,7 @@ namespace BizTalk.Factory.XLang
 		/// <returns>
 		/// The transformed message with the result in the first part (at index 0).
 		/// </returns>
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Public API.")]
 		public static XLANGMessage Transform(MessageCollection messages, Type map)
 		{
 			return Transform(messages, map, new XsltArgumentList());
@@ -132,6 +133,7 @@ namespace BizTalk.Factory.XLang
 		/// <returns>
 		/// The transformed message with the result in the first part (at index 0).
 		/// </returns>
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Public API.")]
 		public static XLANGMessage Transform(MessageCollection messages, Type map, params XsltArgument[] arguments)
 		{
 			return Transform(messages, map, new XsltArgumentList(arguments));

@@ -31,6 +31,7 @@ namespace Be.Stateless.BizTalk.Schema
 	/// such as <see cref="ISchemaMetadata.BodyXPath"/>, <see cref="ISchemaMetadata.MessageType"/>, <see
 	/// cref="ISchemaMetadata.TargetNamespace"/>, to annotations embedded in the XML schema definition.
 	/// </summary>
+	[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Public API.")]
 	public static class SchemaMetadata
 	{
 		#region Nested Type: RootedSchemaMetadata
@@ -180,7 +181,6 @@ namespace Be.Stateless.BizTalk.Schema
 			return SchemaMetadataFactory(type);
 		}
 
-		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API")]
 		public static readonly ISchemaMetadata Unknown = new UnknownSchemaMetadata();
 	}
 }

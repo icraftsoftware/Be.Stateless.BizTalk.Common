@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Be.Stateless.BizTalk.ContextProperties;
 using Be.Stateless.BizTalk.Extensions;
 using Be.Stateless.BizTalk.Streaming.Extensions;
@@ -30,6 +31,8 @@ namespace Be.Stateless.BizTalk.Message.Extensions
 	/// <summary>
 	/// Various <see cref="IBaseMessage"/> and <see cref="XLANGMessage"/> extension methods.
 	/// </summary>
+	[SuppressMessage("ReSharper", "UnusedType.Global", Justification = "Public API.")]
+	[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
 	public static class BaseMessageExtensions
 	{
 		public static bool IsAbout<T>(this IBaseMessage message) where T : SchemaBase
@@ -50,6 +53,7 @@ namespace Be.Stateless.BizTalk.Message.Extensions
 				: messageType;
 		}
 
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Public API.")]
 		public static string ProbeMessageType(this IBaseMessage message, IResourceTracker resourceTracker)
 		{
 			if (message == null) throw new ArgumentNullException(nameof(message));

@@ -16,6 +16,7 @@
 
 #endregion
 
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -26,6 +27,7 @@ namespace Be.Stateless.BizTalk.Streaming
 {
 	public class XmlTranslatorStream : Microsoft.BizTalk.Streaming.XmlTranslatorStream
 	{
+		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
 		public XmlTranslatorStream(XmlReader reader, XmlNamespaceTranslation[] translations)
 			: this(reader, Encoding.UTF8, translations, XmlTranslationRequirements.Default) { }
 

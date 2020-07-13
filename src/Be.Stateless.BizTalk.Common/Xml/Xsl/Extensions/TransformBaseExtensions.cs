@@ -54,6 +54,7 @@ namespace Be.Stateless.BizTalk.Xml.Xsl.Extensions
 		/// <returns>
 		/// The <see cref="XmlWriterSettings"/> related to the <see cref="TransformBase"/>-derived <see cref="Type"/>.
 		/// </returns>
+		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
 		public static XmlWriterSettings GetOutputSettings(this Type type)
 		{
 			if (!type.IsTransform()) throw new ArgumentException("Type is not a TransformBase derived Type instance.", nameof(type));

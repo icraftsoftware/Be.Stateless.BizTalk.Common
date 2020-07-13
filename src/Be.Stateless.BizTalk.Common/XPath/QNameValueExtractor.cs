@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using Be.Stateless.BizTalk.ContextProperties;
 using Be.Stateless.Extensions;
@@ -56,6 +57,7 @@ namespace Be.Stateless.BizTalk.XPath
 			QNameValueExtractionMode = qNameValueExtractionMode;
 		}
 
+		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
 		public QNameValueExtractor(
 			IMessageContextProperty property,
 			string xpathExpression,
@@ -112,6 +114,7 @@ namespace Be.Stateless.BizTalk.XPath
 
 		#endregion
 
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Public API.")]
 		public QNameValueExtractionMode QNameValueExtractionMode { get; }
 
 		private static readonly ILog _logger = LogManager.GetLogger(typeof(QNameValueExtractor));

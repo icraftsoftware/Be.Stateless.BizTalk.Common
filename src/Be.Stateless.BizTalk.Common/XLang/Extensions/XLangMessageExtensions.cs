@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -50,6 +51,7 @@ namespace Be.Stateless.BizTalk.XLang.Extensions
 		/// <returns></returns>
 		/// <seealso href="https://maximelabelle.wordpress.com/2011/01/07/retrieving-the-context-of-a-biztalk-message-from-an-orchestration/">Retrieving the Context of a BizTalk Message from an Orchestration</seealso>
 		/// <seealso href="https://tsabar.wordpress.com/2009/12/02/enumerating-context-properties/">Enumerating context properties</seealso>
+		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
 		public static XmlQNameTable GetContext(this XLANGMessage message)
 		{
 			Hashtable contextProperties = null;
@@ -71,6 +73,7 @@ namespace Be.Stateless.BizTalk.XLang.Extensions
 			return new XmlQNameTable(contextProperties ?? new Hashtable());
 		}
 
+		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
 		public static string ToXml(this XmlQNameTable context)
 		{
 			if (context == null) throw new ArgumentNullException(nameof(context));

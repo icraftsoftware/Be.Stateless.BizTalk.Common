@@ -109,10 +109,10 @@ namespace Be.Stateless.BizTalk.Streaming
 				stream.Read(new byte[1024], 0, 1024);
 				Action act = () => stream.Position = 0;
 				act.Should().Throw<InvalidOperationException>()
-					.WithMessage($"{typeof(ReplicatingReadStream).Name} is not seekable while the inner stream has not been thoroughly read and replicated.");
+					.WithMessage($"{nameof(ReplicatingReadStream)} is not seekable while the inner stream has not been thoroughly read and replicated.");
 				act = () => stream.Seek(0, SeekOrigin.Begin);
 				act.Should().Throw<InvalidOperationException>()
-					.WithMessage($"{typeof(ReplicatingReadStream).Name} cannot be sought while the inner stream has not been thoroughly read and replicated.");
+					.WithMessage($"{nameof(ReplicatingReadStream)} cannot be sought while the inner stream has not been thoroughly read and replicated.");
 			}
 		}
 

@@ -103,6 +103,7 @@ namespace Be.Stateless.BizTalk.XPath
 
 		public PropertyExtractorCollection(params PropertyExtractor[] extractors) : this(default, extractors) { }
 
+		[SuppressMessage("ReSharper", "MemberCanBeProtected.Global", Justification = "Public API.")]
 		public PropertyExtractorCollection(ExtractorPrecedence precedence, IEnumerable<PropertyExtractor> extractors) : this(precedence, extractors.ToArray()) { }
 
 		public PropertyExtractorCollection(ExtractorPrecedence precedence, params PropertyExtractor[] extractors)

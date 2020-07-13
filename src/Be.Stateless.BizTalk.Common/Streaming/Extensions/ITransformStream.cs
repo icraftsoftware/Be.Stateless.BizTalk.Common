@@ -55,6 +55,7 @@ namespace Be.Stateless.BizTalk.Streaming.Extensions
 		/// <returns>
 		/// The output <see cref="Stream"/> being the results of the transform.
 		/// </returns>
+		[SuppressMessage("ReSharper", "UnusedMemberInSuper.Global", Justification = "Public API.")]
 		Stream Apply(Type transform, Encoding encoding);
 
 		/// <summary>
@@ -88,6 +89,7 @@ namespace Be.Stateless.BizTalk.Streaming.Extensions
 		/// <returns>
 		/// The output <see cref="Stream"/> being the results of the transform.
 		/// </returns>
+		[SuppressMessage("ReSharper", "UnusedMemberInSuper.Global", Justification = "Public API.")]
 		Stream Apply(Type transform, XsltArgumentList arguments, Encoding encoding);
 
 		/// <summary>

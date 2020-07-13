@@ -162,7 +162,7 @@ namespace Be.Stateless.BizTalk.XPath
 			MessageContextMock = new MessageContextMock();
 		}
 
-		private MessageContextMock MessageContextMock { get; set; }
+		private MessageContextMock MessageContextMock { get; }
 
 		private const string QUALIFIED_LETTER = @"<s1:letter xmlns:s1='urn-one' xmlns:s2='urn-two' xmlns:s6='urn-six' xmlns:s0='urn-ten'>
   <s2:headers>

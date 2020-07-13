@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using Be.Stateless.Extensions;
 using log4net;
@@ -95,6 +96,7 @@ namespace Be.Stateless.BizTalk.XPath
 			if (ExtractionMode != default) writer.WriteAttributeString("mode", ExtractionMode.ToString().ToCamelCase());
 		}
 
+		[SuppressMessage("ReSharper", "MemberCanBeProtected.Global", Justification = "Public API.")]
 		public virtual void Execute(IBaseMessageContext messageContext)
 		{
 			if (messageContext == null) throw new ArgumentNullException(nameof(messageContext));

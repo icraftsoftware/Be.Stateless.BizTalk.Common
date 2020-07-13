@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using log4net;
 using Microsoft.BizTalk.Streaming;
@@ -105,7 +106,7 @@ namespace Be.Stateless.BizTalk.Streaming
 
 		protected override void Dispose(bool disposing)
 		{
-			if (_logger.IsDebugEnabled) _logger.DebugFormat("{0} is {1}.", typeof(EventingReadStream).Name, disposing ? "disposing" : "finalizing");
+			if (_logger.IsDebugEnabled) _logger.DebugFormat("{0} is {1}.", nameof(EventingReadStream), disposing ? "disposing" : "finalizing");
 			if (disposing && InnerStream != null)
 			{
 				InnerStream.Dispose();
@@ -195,8 +196,7 @@ namespace Be.Stateless.BizTalk.Streaming
 				{
 					ThrowIfDisposed();
 					// do not mess around with current position and corrupt fired events (stream is still being read for the 1st time)
-					if (!ReadCompleted)
-						throw new InvalidOperationException($"{typeof(EventingReadStream).Name} is not seekable while its contents has not been read thoroughly.");
+					if (!ReadCompleted) throw new InvalidOperationException($"{nameof(EventingReadStream)} is not seekable while its contents has not been read thoroughly.");
 					InnerStream.Position = value;
 				}
 				catch (Exception exception)
@@ -225,8 +225,7 @@ namespace Be.Stateless.BizTalk.Streaming
 			{
 				ThrowIfDisposed();
 				// do not mess around with current position and corrupt fired events (stream is still being read for the 1st time)
-				if (!ReadCompleted)
-					throw new InvalidOperationException($"{typeof(EventingReadStream).Name} cannot be sought while its contents has not been read thoroughly.");
+				if (!ReadCompleted) throw new InvalidOperationException($"{nameof(EventingReadStream)} cannot be sought while its contents has not been read thoroughly.");
 				return InnerStream.Seek(offset, origin);
 			}
 			catch (Exception exception)
@@ -347,8 +346,10 @@ namespace Be.Stateless.BizTalk.Streaming
 		/// <summary>
 		/// The wrapped inner <see cref="Stream"/>.
 		/// </summary>
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Public API.")]
 		protected Stream InnerStream { get; set; }
 
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Public API.")]
 		protected void ThrowIfDisposed()
 		{
 			if (InnerStream == null) throw new ObjectDisposedException(GetType().Name);

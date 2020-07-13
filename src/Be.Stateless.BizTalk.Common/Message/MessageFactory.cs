@@ -17,6 +17,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Xml;
 using Be.Stateless.BizTalk.Extensions;
@@ -42,6 +43,7 @@ namespace Be.Stateless.BizTalk.Message
 		/// <returns>
 		/// The envelope document with its content as an <see cref="XmlDocument"/>.
 		/// </returns>
+		[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
 		public static XmlDocument CreateEnvelope<TE, TC>(string content)
 			where TE : SchemaBase, new()
 			where TC : SchemaBase, new()
@@ -82,6 +84,7 @@ namespace Be.Stateless.BizTalk.Message
 		/// <returns>
 		/// The valid instance document as an <see cref="XmlDocument"/>.
 		/// </returns>
+		[SuppressMessage("ReSharper", "UnusedMethodReturnValue.Global", Justification = "Public API.")]
 		public static XmlDocument CreateMessage<T>(string content) where T : SchemaBase, new()
 		{
 			using (var reader = XmlReader.Create(new StringReader(content), new XmlReaderSettings { XmlResolver = null }))
@@ -102,7 +105,8 @@ namespace Be.Stateless.BizTalk.Message
 		/// <returns>
 		/// The dummy instance document as an <see cref="XmlDocument"/>.
 		/// </returns>
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Done by .IsSchema() extension method.")]
+		[SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Done by .IsSchema() extension method.")]
+		[SuppressMessage("ReSharper", "UnusedMethodReturnValue.Global", Justification = "Public API.")]
 		public static XmlDocument CreateMessage(Type schema)
 		{
 			if (!schema.IsSchema())

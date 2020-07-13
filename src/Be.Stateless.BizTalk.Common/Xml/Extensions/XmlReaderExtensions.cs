@@ -16,12 +16,15 @@
 
 #endregion
 
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Xml;
 using Microsoft.BizTalk.Streaming;
 
 namespace Be.Stateless.BizTalk.Xml.Extensions
 {
+	[SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Public API.")]
+	[SuppressMessage("ReSharper", "UnusedType.Global", Justification = "Public API.")]
 	public static class XmlReaderExtensions
 	{
 		public static Stream AsStream(this XmlReader reader)

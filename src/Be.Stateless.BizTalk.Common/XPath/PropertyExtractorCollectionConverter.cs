@@ -47,6 +47,7 @@ namespace Be.Stateless.BizTalk.XPath
 		/// The deserialized <see cref="PropertyExtractorCollection"/>.
 		/// </returns>
 		/// <seealso cref="Serialize"/>
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Public API.")]
 		public static PropertyExtractorCollection Deserialize(string xml)
 		{
 			if (xml.IsNullOrEmpty()) return PropertyExtractorCollection.Empty;
@@ -68,7 +69,7 @@ namespace Be.Stateless.BizTalk.XPath
 		/// A <see cref="string"/> that represents the <see cref="PropertyExtractorCollection"/>.
 		/// </returns>
 		/// <seealso cref="Deserialize"/>
-		[SuppressMessage("ReSharper", "PossibleMultipleEnumeration", Justification = "Any does not really enumerate.")]
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Public API.")]
 		public static string Serialize(PropertyExtractorCollection extractors)
 		{
 			if (extractors == null || !extractors.Any()) return null;

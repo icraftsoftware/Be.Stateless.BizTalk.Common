@@ -52,6 +52,7 @@ namespace Be.Stateless.BizTalk.Xml.Xsl
 			_navigator = BuildNavigator();
 		}
 
+		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 		protected Type Transform { get; }
 
 		public virtual ExtensionRequirements BuildExtensionRequirements()
