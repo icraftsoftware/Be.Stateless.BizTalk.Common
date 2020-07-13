@@ -257,11 +257,11 @@ namespace Be.Stateless.BizTalk.XPath
 		{
 			var list = new List<PropertyExtractor>();
 			reader.MoveToContent();
-			reader.AssertStartElement("Properties", SchemaAnnotations.NAMESPACE);
+			reader.AssertStartElement("Properties", SchemaAnnotationCollection.NAMESPACE);
 			Precedence = reader.HasAttribute("precedence")
 				? reader.GetAttribute("precedence").IfNotNull(v => v.Parse<ExtractorPrecedence>())
 				: default;
-			reader.ReadStartElement("Properties", SchemaAnnotations.NAMESPACE);
+			reader.ReadStartElement("Properties", SchemaAnnotationCollection.NAMESPACE);
 			while (reader.NodeType == XmlNodeType.Element)
 			{
 				var name = new XmlQualifiedName(reader.LocalName, reader.NamespaceURI);
@@ -301,7 +301,7 @@ namespace Be.Stateless.BizTalk.XPath
 			}
 			if (!reader.EOF)
 			{
-				reader.AssertEndElement("Properties", SchemaAnnotations.NAMESPACE);
+				reader.AssertEndElement("Properties", SchemaAnnotationCollection.NAMESPACE);
 				reader.ReadEndElement();
 			}
 			Extractors = list.ToArray();
@@ -309,13 +309,13 @@ namespace Be.Stateless.BizTalk.XPath
 
 		private void WriteXmlProperties(XmlWriter writer)
 		{
-			writer.WriteStartElement("s0", "Properties", SchemaAnnotations.NAMESPACE);
+			writer.WriteStartElement("s0", "Properties", SchemaAnnotationCollection.NAMESPACE);
 			{
 				if (Precedence != default) writer.WriteAttributeString("precedence", Precedence.ToString().ToCamelCase());
 
 				// declare all the namespaces and their prefixes at the parent element
 				var nsCache = new XmlDictionary();
-				nsCache.Add(SchemaAnnotations.NAMESPACE);
+				nsCache.Add(SchemaAnnotationCollection.NAMESPACE);
 				Extractors.ForEach(e => nsCache.Add(e.PropertyName.Namespace));
 				for (var i = 0; nsCache.TryLookup(i, out var xds); i++)
 				{
@@ -361,7 +361,7 @@ namespace Be.Stateless.BizTalk.XPath
 		}
 
 		private const string MESSAGE = @"Invalid schema annotations or pipeline configuration, it must be an XML string satisfying the following grammar:
-<san:Properties [extractorPrecedence='schema|schemaOnly|pipeline|pipelineOnly'] xmlns:s0='urn0' xmlns:s1='urn1' xmlns:san='" + SchemaAnnotations.NAMESPACE + @"'>
+<san:Properties [extractorPrecedence='schema|schemaOnly|pipeline|pipelineOnly'] xmlns:s0='urn0' xmlns:s1='urn1' xmlns:san='" + SchemaAnnotationCollection.NAMESPACE + @"'>
   <s0:Property1 [mode='clear|ignore|promote|write'] value='constant' />
   <s0:Property2 [promoted='true'] value='constant' />
   <s1:Property3 [mode='clear|demote|ignore|promote|write'] xpath='*' />

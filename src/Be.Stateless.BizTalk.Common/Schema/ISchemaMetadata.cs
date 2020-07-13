@@ -31,7 +31,7 @@ namespace Be.Stateless.BizTalk.Schema
 		/// <returns>
 		/// The annotations associated, and embedded, with a <see cref="SchemaBase"/>-derived envelope schema <see cref="Type"/>.
 		/// </returns>
-		ISchemaAnnotations Annotations { get; }
+		ISchemaAnnotationCollection Annotations { get; }
 
 		/// <summary>
 		/// Returns the XPath expression to the node being the body of a <see cref="SchemaBase"/>-derived envelope schema <see

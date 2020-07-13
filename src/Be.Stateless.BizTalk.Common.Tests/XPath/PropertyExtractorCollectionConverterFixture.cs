@@ -44,7 +44,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[SuppressMessage("ReSharper", "RedundantArgumentDefaultValue")]
 		public void ConvertFrom()
 		{
-			var xml = $@"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>
+			var xml = $@"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>
   <s0:Property1 xpath='*/some-node'/>
   <s0:Property2 promoted='true' xpath='*/other-node'/>
 </san:Properties>";
@@ -80,7 +80,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[SuppressMessage("ReSharper", "RedundantArgumentDefaultValue")]
 		public void ConvertTo()
 		{
-			var xml = $"<s0:Properties xmlns:s0=\"{SchemaAnnotations.NAMESPACE}\" xmlns:s1=\"urn\">"
+			var xml = $"<s0:Properties xmlns:s0=\"{SchemaAnnotationCollection.NAMESPACE}\" xmlns:s1=\"urn\">"
 				+ "<s1:Property1 xpath=\"*/some-node\" />"
 				+ "<s1:Property2 mode=\"promote\" xpath=\"*/other-node\" />"
 				+ "</s0:Properties>";

@@ -17,10 +17,8 @@
 #endregion
 
 using System;
+using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Xml.Linq;
-using Be.Stateless.BizTalk.Schema.Extensions;
 using Microsoft.XLANGs.BaseTypes;
 
 namespace Be.Stateless.BizTalk.Schema
@@ -66,48 +64,33 @@ namespace Be.Stateless.BizTalk.Schema
 	/// </code>
 	/// </example>
 	[SuppressMessage("ReSharper", "CommentTypo")]
-	public class SchemaAnnotations : ISchemaAnnotations
+	public class SchemaAnnotationCollection : ISchemaAnnotationCollection
 	{
-		#region Nested Type: EmptySchemaAnnotations
-
-		private sealed class EmptySchemaAnnotations : ISchemaAnnotations
-		{
-			#region ISchemaAnnotations Members
-
-			public XElement GetAnnotation(string annotationElementName)
-			{
-				return null;
-			}
-
-			#endregion
-		}
-
-		#endregion
-
-		public static ISchemaAnnotations Create(ISchemaMetadata schemaMetadata)
+		internal static ISchemaAnnotationCollection Create(ISchemaMetadata schemaMetadata)
 		{
 			if (schemaMetadata == null) throw new ArgumentNullException(nameof(schemaMetadata));
-			if (schemaMetadata.Type.Assembly.FullName.StartsWith("Microsoft.", StringComparison.Ordinal)
-				|| !schemaMetadata.HasAnnotations()) return Empty;
-			return new SchemaAnnotations(schemaMetadata);
+			return new SchemaAnnotationCollection(() => SchemaAnnotationReader.Create(schemaMetadata));
 		}
 
-		private SchemaAnnotations(ISchemaMetadata metadata)
+		private SchemaAnnotationCollection(Func<ISchemaAnnotationReader> schemaAnnotationReaderFactory)
 		{
-			_metadata = metadata;
+			_schemaAnnotationReaderFactory = schemaAnnotationReaderFactory;
+			// TODO !!! default capacity is 31 !!! ??? refactor to a synced arraylist or linked list ???
+			_annotationObjects = new ConcurrentDictionary<Type, object>();
 		}
 
-		#region ISchemaAnnotations Members
+		#region ISchemaAnnotationCollection Members
 
-		public XElement GetAnnotation(string annotationElementName)
+		public T Find<T>() where T : ISchemaAnnotation<T>, new()
 		{
-			return _metadata.GetAnnotations().SingleOrDefault(e => e.Name.LocalName == annotationElementName);
+			return (T) _annotationObjects.GetOrAdd(typeof(T), type => new T().Build(_schemaAnnotationReaderFactory()));
 		}
 
 		#endregion
 
 		public const string NAMESPACE = "urn:schemas.stateless.be:biztalk:annotations:2013:01";
-		public static readonly ISchemaAnnotations Empty = new EmptySchemaAnnotations();
-		private readonly ISchemaMetadata _metadata;
+		public static readonly ISchemaAnnotationCollection Empty = new SchemaAnnotationCollection(() => SchemaAnnotationReader.Empty);
+		private readonly ConcurrentDictionary<Type, object> _annotationObjects;
+		private readonly Func<ISchemaAnnotationReader> _schemaAnnotationReaderFactory;
 	}
 }

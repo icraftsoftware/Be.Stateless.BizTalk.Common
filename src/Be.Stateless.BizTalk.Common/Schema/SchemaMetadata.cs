@@ -35,17 +35,17 @@ namespace Be.Stateless.BizTalk.Schema
 	{
 		#region Nested Type: RootedSchemaMetadata
 
-		private class RootedSchemaMetadata : ISchemaMetadata
+		internal class RootedSchemaMetadata : ISchemaMetadata
 		{
 			internal RootedSchemaMetadata(Type type)
 			{
 				Type = type ?? throw new ArgumentNullException(nameof(type));
-				_annotations = new Lazy<ISchemaAnnotations>(() => SchemaAnnotations.Create(this));
+				_annotations = new Lazy<ISchemaAnnotationCollection>(() => SchemaAnnotationCollection.Create(this));
 			}
 
 			#region ISchemaMetadata Members
 
-			public ISchemaAnnotations Annotations => _annotations.Value;
+			public ISchemaAnnotationCollection Annotations => _annotations.Value;
 
 			public string BodyXPath => Microsoft.XLANGs.RuntimeTypes.SchemaMetadata.For(Type).BodyXPath ?? string.Empty;
 
@@ -63,14 +63,14 @@ namespace Be.Stateless.BizTalk.Schema
 
 			#endregion
 
-			private readonly Lazy<ISchemaAnnotations> _annotations;
+			private readonly Lazy<ISchemaAnnotationCollection> _annotations;
 		}
 
 		#endregion
 
 		#region Nested Type: RootlessSchemaMetadata
 
-		private class RootlessSchemaMetadata : ISchemaMetadata
+		internal class RootlessSchemaMetadata : ISchemaMetadata
 		{
 			internal RootlessSchemaMetadata(Type type)
 			{
@@ -86,7 +86,7 @@ namespace Be.Stateless.BizTalk.Schema
 
 			#region ISchemaMetadata Members
 
-			public ISchemaAnnotations Annotations => SchemaAnnotations.Empty;
+			public ISchemaAnnotationCollection Annotations => SchemaAnnotationCollection.Empty;
 
 			public string BodyXPath => string.Empty;
 
@@ -109,11 +109,11 @@ namespace Be.Stateless.BizTalk.Schema
 
 		#region Nested Type: UnknownSchemaMetadata
 
-		private class UnknownSchemaMetadata : ISchemaMetadata
+		internal class UnknownSchemaMetadata : ISchemaMetadata
 		{
 			#region ISchemaMetadata Members
 
-			public ISchemaAnnotations Annotations => SchemaAnnotations.Empty;
+			public ISchemaAnnotationCollection Annotations => SchemaAnnotationCollection.Empty;
 
 			public string BodyXPath => string.Empty;
 
@@ -151,7 +151,7 @@ namespace Be.Stateless.BizTalk.Schema
 		/// <seealso href="http://blogs.clariusconsulting.net/kzu/making-extension-methods-amenable-to-mocking/"/>
 		[SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Mock Injection Hook")]
 		[SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global", Justification = "Mock Injection Hook")]
-		internal static Func<Type, ISchemaMetadata> SchemaMetadataFactory { get; set; } = type => SchemaMetadataCache.Instance[type];
+		internal static Func<Type, ISchemaMetadata> SchemaMetadataFactory { get; set; } = schemaType => schemaType.IsSchema() ? SchemaMetadataCache.Instance[schemaType] : Unknown;
 
 		/// <summary>
 		/// Metadata for <see cref="SchemaBase"/>-derived <see cref="Type"/>.

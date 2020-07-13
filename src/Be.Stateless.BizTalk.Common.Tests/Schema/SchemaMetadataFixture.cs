@@ -22,6 +22,7 @@ using Be.Stateless.BizTalk.Schemas.Xml;
 using FluentAssertions;
 using Microsoft.BizTalk.Component.Interop;
 using Xunit;
+using static Be.Stateless.DelegateFactory;
 
 namespace Be.Stateless.BizTalk.Schema
 {
@@ -29,63 +30,83 @@ namespace Be.Stateless.BizTalk.Schema
 	public class SchemaMetadataFixture
 	{
 		[Fact]
-		public void GetBodyXPathForEnvelopeSchema()
+		public void AnnotationsReturnsEmptySchemaAnnotationCollectionForRootlessSchemaMetadata()
+		{
+			SchemaMetadata.For<RootlessSchema>().Annotations.Should().BeSameAs(SchemaAnnotationCollection.Empty);
+		}
+
+		[Fact]
+		public void AnnotationsReturnsEmptySchemaAnnotationCollectionForUnknownSchemaMetadata()
+		{
+			SchemaMetadata.For(typeof(string)).Annotations.Should().BeSameAs(SchemaAnnotationCollection.Empty);
+		}
+
+		[Fact]
+		public void AnnotationsReturnsSchemaAnnotationCollectionForRootedSchemaMetadata()
+		{
+			SchemaMetadata.For<RootedSchema>().Annotations.Should().BeOfType<SchemaAnnotationCollection>();
+		}
+
+		[Fact]
+		public void BodyXPathForEnvelopeSchema()
 		{
 			SchemaMetadata.For<Envelope>().BodyXPath.Should().Be("/*[local-name()='Envelope' and namespace-uri()='urn:schemas.stateless.be:biztalk:envelope:2013:07']");
 		}
 
 		[Fact]
-		public void GetBodyXPathForNonEnvelopeSchema()
+		public void BodyXPathForNonEnvelopeSchema()
 		{
 			SchemaMetadata.For<Any>().BodyXPath.Should().BeEmpty();
 		}
 
 		[Fact]
-		public void GetDocumentSpecForRootedSchema()
+		public void DocumentSpecForRootedSchema()
 		{
 			SchemaMetadata.For<Any>().DocumentSpec.Should().BeEquivalentTo(new DocumentSpec(typeof(Any).FullName, typeof(Any).Assembly.FullName));
 		}
 
 		[Fact]
-		public void GetDocumentSpecForRootlessSchema()
+		public void DocumentSpecForRootlessSchema()
 		{
 			SchemaMetadata.For<RootlessSchema>().DocumentSpec.Should().BeNull();
 		}
 
 		[Fact]
-		public void GetMessageTypeForRootedSchema()
+		public void ForReturnsDifferentSchemaMetadataForDifferentSchemas()
 		{
-			SchemaMetadata.For<Any>().MessageType.Should().Be("urn:schemas.stateless.be:biztalk:any:2012:12#Any");
+			SchemaMetadata.For<Any>().Should().NotBeSameAs(SchemaMetadata.For<RootedSchema>());
 		}
 
 		[Fact]
-		public void GetMessageTypeForRootlessSchema()
+		public void ForReturnsRootedSchemaMetadata()
 		{
-			SchemaMetadata.For<RootlessSchema>().MessageType.Should().BeEmpty();
+			SchemaMetadata.For<Any>().Should().BeOfType<SchemaMetadata.RootedSchemaMetadata>();
 		}
 
 		[Fact]
-		public void GetRootElementNameForRootedSchema()
+		public void ForReturnsRootlessSchemaMetadata()
 		{
-			SchemaMetadata.For<Any>().RootElementName.Should().Be("Any");
+			SchemaMetadata.For<RootlessSchema>().Should().BeOfType<SchemaMetadata.RootlessSchemaMetadata>();
 		}
 
 		[Fact]
-		public void GetRootElementNameForRootlessSchema()
+		public void ForReturnsSameSchemaMetadataForSameSchema()
 		{
-			SchemaMetadata.For<RootlessSchema>().RootElementName.Should().BeEmpty();
+			SchemaMetadata.For<RootedSchema>().Should().BeSameAs(SchemaMetadata.For<RootedSchema>());
 		}
 
 		[Fact]
-		public void GetTargetNamespaceForRootedSchema()
+		public void ForReturnsUnknownSchemaMetadata()
 		{
-			SchemaMetadata.For<Any>().TargetNamespace.Should().Be("urn:schemas.stateless.be:biztalk:any:2012:12");
+			SchemaMetadata.For(null).Should().BeOfType<SchemaMetadata.UnknownSchemaMetadata>();
 		}
 
 		[Fact]
-		public void GetTargetNamespaceForRootlessSchema()
+		public void ForThrowsForPropertySchema()
 		{
-			SchemaMetadata.For<RootlessSchema>().TargetNamespace.Should().Be("urn:schemas.stateless.be:unit:type");
+			Action(() => SchemaMetadata.For<Schemas.BizTalkFactory.Properties>())
+				.Should().Throw<ArgumentException>()
+				.WithMessage("SchemaMetadata only supports schemas qualified with a SchemaTypeAttribute whose Type is equal to Document*");
 		}
 
 		[Fact]
@@ -101,12 +122,39 @@ namespace Be.Stateless.BizTalk.Schema
 		}
 
 		[Fact]
-		public void ThrowsForPropertySchema()
+		public void MessageTypeForRootedSchema()
 		{
-			Func<ISchemaMetadata> act = SchemaMetadata.For<Schemas.BizTalkFactory.Properties>;
-			act.Should()
-				.Throw<ArgumentException>()
-				.WithMessage("SchemaMetadata only supports schemas qualified with a SchemaTypeAttribute whose Type is equal to Document*");
+			SchemaMetadata.For<Any>().MessageType.Should().Be("urn:schemas.stateless.be:biztalk:any:2012:12#Any");
+		}
+
+		[Fact]
+		public void MessageTypeForRootlessSchema()
+		{
+			SchemaMetadata.For<RootlessSchema>().MessageType.Should().BeEmpty();
+		}
+
+		[Fact]
+		public void RootElementNameForRootedSchema()
+		{
+			SchemaMetadata.For<Any>().RootElementName.Should().Be("Any");
+		}
+
+		[Fact]
+		public void RootElementNameForRootlessSchema()
+		{
+			SchemaMetadata.For<RootlessSchema>().RootElementName.Should().BeEmpty();
+		}
+
+		[Fact]
+		public void TargetNamespaceForRootedSchema()
+		{
+			SchemaMetadata.For<Any>().TargetNamespace.Should().Be("urn:schemas.stateless.be:biztalk:any:2012:12");
+		}
+
+		[Fact]
+		public void TargetNamespaceForRootlessSchema()
+		{
+			SchemaMetadata.For<RootlessSchema>().TargetNamespace.Should().Be("urn:schemas.stateless.be:unit:type");
 		}
 	}
 }

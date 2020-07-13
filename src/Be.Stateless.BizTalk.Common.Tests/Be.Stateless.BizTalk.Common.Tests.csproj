@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="Be.Stateless.BizTalk.Schemas" Version="2.0.20187.27547" />
+    <PackageReference Include="Be.Stateless.BizTalk.Unit" Version="2.0.20195.40782" />
     <PackageReference Include="BizTalk.Server.2020.Runtime" Version="1.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -38,7 +39,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BizTalk.Unit\src\Be.Stateless.BizTalk.Unit\Be.Stateless.BizTalk.Unit.csproj" />
     <ProjectReference Include="..\Be.Stateless.BizTalk.Common\Be.Stateless.BizTalk.Common.csproj" />
   </ItemGroup>
 

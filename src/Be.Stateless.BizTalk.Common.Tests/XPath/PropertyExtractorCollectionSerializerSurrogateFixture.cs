@@ -31,7 +31,7 @@ namespace Be.Stateless.BizTalk.XPath
 		public void ReadXmlForExtractorPrecedence()
 		{
 			var xml = "<Extractors>"
-				+ $"<san:Properties precedence='schemaOnly' xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+				+ $"<san:Properties precedence='schemaOnly' xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<s0:Property1 mode='clear'/>"
 				+ "</san:Properties>"
 				+ "</Extractors>";
@@ -47,7 +47,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[Fact]
 		public void WriteXmlForExtractorPrecedence()
 		{
-			var xml = $"<s0:Properties precedence=\"pipelineOnly\" xmlns:s0=\"{SchemaAnnotations.NAMESPACE}\" xmlns:s1=\"urn\">"
+			var xml = $"<s0:Properties precedence=\"pipelineOnly\" xmlns:s0=\"{SchemaAnnotationCollection.NAMESPACE}\" xmlns:s1=\"urn\">"
 				+ "<s1:Property1 xpath=\"*/some-node\" />"
 				+ "</s0:Properties>";
 

@@ -16,24 +16,10 @@
 
 #endregion
 
-using System.Xml.Linq;
-
 namespace Be.Stateless.BizTalk.Schema
 {
-	/// <summary>
-	/// XML serialized schema annotations' reader.
-	/// </summary>
-	public interface ISchemaAnnotations
+	public interface ISchemaAnnotation<out T>
 	{
-		/// <summary>
-		/// Get annotation's serialized-XML element by annotation's name.
-		/// </summary>
-		/// <param name="annotationElementName">
-		/// Name of the annotation whose XML-serialized element need to be returned.
-		/// </param>
-		/// <returns>
-		/// XML-serialized element for annotation whose name is <paramref name="annotationElementName"/>.
-		/// </returns>
-		XElement GetAnnotation(string annotationElementName);
+		T Build(ISchemaAnnotationReader schemaAnnotationReader);
 	}
 }

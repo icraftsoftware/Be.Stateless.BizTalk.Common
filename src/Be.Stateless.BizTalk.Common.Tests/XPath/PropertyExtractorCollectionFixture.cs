@@ -55,7 +55,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[Fact]
 		public void ReadXml()
 		{
-			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<s0:Property1 xpath='*/some-node'/>"
 				+ "<s0:Property2 promoted='true' xpath='*/other-node'/>"
 				+ "<s0:Property3 mode='write' value='constant'/>"
@@ -78,7 +78,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[Fact]
 		public void ReadXmlForConstantExtractor()
 		{
-			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<s0:Property1 value='constant'/>"
 				+ "</san:Properties>";
 
@@ -94,7 +94,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[SuppressMessage("ReSharper", "AccessToDisposedClosure")]
 		public void ReadXmlForConstantExtractorThrowsWhenModeAttributeIsInvalid()
 		{
-			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<s0:Property1 mode='demote' value='constant'/>"
 				+ "</san:Properties>";
 
@@ -109,7 +109,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[SuppressMessage("ReSharper", "AccessToDisposedClosure")]
 		public void ReadXmlForConstantExtractorThrowsWhenValueIsEmpty()
 		{
-			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<s0:Property1 value=''/>"
 				+ "</san:Properties>";
 
@@ -123,7 +123,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[Fact]
 		public void ReadXmlForConstantExtractorWithModeAttribute()
 		{
-			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<s0:Property1 mode='promote' value='constant'/>"
 				+ "</san:Properties>";
 
@@ -138,7 +138,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[Fact]
 		public void ReadXmlForConstantExtractorWithPromotedAttribute()
 		{
-			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<s0:Property1 promoted='true' value='constant'/>"
 				+ "</san:Properties>";
 
@@ -153,7 +153,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[Fact]
 		public void ReadXmlForExtractorPrecedence()
 		{
-			var xml = $"<san:Properties precedence='schemaOnly' xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+			var xml = $"<san:Properties precedence='schemaOnly' xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<s0:Property1 mode='clear'/>"
 				+ "</san:Properties>";
 
@@ -168,7 +168,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[Fact]
 		public void ReadXmlForPropertyExtractor()
 		{
-			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<s0:Property1 mode='clear'/>"
 				+ "</san:Properties>";
 
@@ -184,7 +184,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[SuppressMessage("ReSharper", "AccessToDisposedClosure")]
 		public void ReadXmlForPropertyExtractorThrowsWhenModeAttributeIsInvalid()
 		{
-			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<s0:Property1 mode='promote'/>"
 				+ "</san:Properties>";
 
@@ -201,7 +201,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[SuppressMessage("ReSharper", "AccessToDisposedClosure")]
 		public void ReadXmlForPropertyExtractorThrowsWhenModeAttributeIsMissing()
 		{
-			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<s0:Property1/>"
 				+ "</san:Properties>";
 
@@ -217,7 +217,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[SuppressMessage("ReSharper", "AccessToDisposedClosure")]
 		public void ReadXmlForPropertyExtractorThrowsWhenPromotedAttributeIsPresent()
 		{
-			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<s0:Property1 promoted='true'/>"
 				+ "</san:Properties>";
 
@@ -232,7 +232,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[Fact]
 		public void ReadXmlForQNameValueExtractor()
 		{
-			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<s0:Property3 mode='promote' qnameValue='localName' xpath='*/extra-node'/>"
 				+ "</san:Properties>";
 
@@ -252,7 +252,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[Fact]
 		public void ReadXmlForQNameValueExtractorFallsBackOnXPathExtractorWhenQNameValueExtractionModeIsDefault()
 		{
-			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<s0:Property3 mode='promote' qnameValue='name' xpath='*/extra-node'/>"
 				+ "</san:Properties>";
 
@@ -267,7 +267,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[Fact]
 		public void ReadXmlForXPathExtractor()
 		{
-			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<s0:Property1 xpath='*/some-node'/>"
 				+ "</san:Properties>";
 
@@ -283,7 +283,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[SuppressMessage("ReSharper", "AccessToDisposedClosure")]
 		public void ReadXmlForXPathExtractorThrowsWhenXPathIsEmpty()
 		{
-			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<s0:PropertyName xpath=''/>"
 				+ "</san:Properties>";
 
@@ -301,7 +301,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[Fact]
 		public void ReadXmlForXPathExtractorWithModeAttribute()
 		{
-			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<s0:Property3 mode='demote' xpath='*/extra-node'/>"
 				+ "</san:Properties>";
 
@@ -316,7 +316,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[Fact]
 		public void ReadXmlForXPathExtractorWithPromotedAttribute()
 		{
-			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<s0:Property2 promoted='true' xpath='*/other-node'/>"
 				+ "</san:Properties>";
 
@@ -336,7 +336,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[SuppressMessage("ReSharper", "AccessToDisposedClosure")]
 		public void ReadXmlThrowsWhenDuplicatePropertyToExtract()
 		{
-			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<s0:PropertyName xpath='*'/><s0:PropertyName xpath='*'/>"
 				+ "</san:Properties>";
 
@@ -358,7 +358,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[SuppressMessage("ReSharper", "AccessToDisposedClosure")]
 		public void ReadXmlThrowsWhenPropertyToExtractHasNoNamespace()
 		{
-			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}'>"
+			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}'>"
 				+ "<PropertyName xpath='*'/>"
 				+ "</san:Properties>";
 
@@ -384,7 +384,7 @@ namespace Be.Stateless.BizTalk.XPath
 				Action(() => sut.ReadXml(reader))
 					.Should().Throw<ConfigurationErrorsException>()
 					.WithInnerException<XmlException>()
-					.WithMessage($"Element 'Properties' with namespace name '{SchemaAnnotations.NAMESPACE}' was not found. Line 1, position 2.");
+					.WithMessage($"Element 'Properties' with namespace name '{SchemaAnnotationCollection.NAMESPACE}' was not found. Line 1, position 2.");
 			}
 		}
 
@@ -400,7 +400,7 @@ namespace Be.Stateless.BizTalk.XPath
 				Action(() => sut.ReadXml(reader))
 					.Should().Throw<ConfigurationErrorsException>()
 					.WithInnerException<XmlException>()
-					.WithMessage($"Element 'Properties' with namespace name '{SchemaAnnotations.NAMESPACE}' was not found. Line 1, position 2.");
+					.WithMessage($"Element 'Properties' with namespace name '{SchemaAnnotationCollection.NAMESPACE}' was not found. Line 1, position 2.");
 			}
 		}
 
@@ -416,14 +416,14 @@ namespace Be.Stateless.BizTalk.XPath
 				Action(() => sut.ReadXml(reader))
 					.Should().Throw<ConfigurationErrorsException>()
 					.WithInnerException<XmlException>()
-					.WithMessage($"Element 'Properties' with namespace name '{SchemaAnnotations.NAMESPACE}' was not found. Line 1, position 2.");
+					.WithMessage($"Element 'Properties' with namespace name '{SchemaAnnotationCollection.NAMESPACE}' was not found. Line 1, position 2.");
 			}
 		}
 
 		[Fact]
 		public void ReadXmlWithoutProperties()
 		{
-			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotations.NAMESPACE}' />";
+			var xml = $"<san:Properties xmlns:s0='urn' xmlns:san='{SchemaAnnotationCollection.NAMESPACE}' />";
 
 			using (var reader = XmlReader.Create(new StringReader(xml)))
 			{
@@ -769,7 +769,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[Fact]
 		public void WriteXml()
 		{
-			var xml = $"<s0:Properties xmlns:s0=\"{SchemaAnnotations.NAMESPACE}\" xmlns:s1=\"urn\">"
+			var xml = $"<s0:Properties xmlns:s0=\"{SchemaAnnotationCollection.NAMESPACE}\" xmlns:s1=\"urn\">"
 				+ "<s1:Property1 xpath=\"*/some-node\" />"
 				+ "<s1:Property2 mode=\"promote\" xpath=\"*/other-node\" />"
 				+ "<s1:Property3 mode=\"promote\" value=\"constant\" />"
@@ -793,7 +793,7 @@ namespace Be.Stateless.BizTalk.XPath
 		[Fact]
 		public void WriteXmlForExtractorPrecedence()
 		{
-			var xml = $"<s0:Properties precedence=\"pipelineOnly\" xmlns:s0=\"{SchemaAnnotations.NAMESPACE}\" xmlns:s1=\"urn\">"
+			var xml = $"<s0:Properties precedence=\"pipelineOnly\" xmlns:s0=\"{SchemaAnnotationCollection.NAMESPACE}\" xmlns:s1=\"urn\">"
 				+ "<s1:Property1 xpath=\"*/some-node\" />"
 				+ "</s0:Properties>";
 
