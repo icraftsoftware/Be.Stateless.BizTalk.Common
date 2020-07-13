@@ -17,7 +17,7 @@
 #endregion
 
 using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.XLANGs.BaseTypes;
 
@@ -75,22 +75,28 @@ namespace Be.Stateless.BizTalk.Schema
 		private SchemaAnnotationCollection(Func<ISchemaAnnotationReader> schemaAnnotationReaderFactory)
 		{
 			_schemaAnnotationReaderFactory = schemaAnnotationReaderFactory;
-			// TODO !!! default capacity is 31 !!! ??? refactor to a synced arraylist or linked list ???
-			_annotationObjects = new ConcurrentDictionary<Type, object>();
+			_annotationObjects = new Dictionary<Type, object>(3);
 		}
 
 		#region ISchemaAnnotationCollection Members
 
 		public T Find<T>() where T : ISchemaAnnotation<T>, new()
 		{
-			return (T) _annotationObjects.GetOrAdd(typeof(T), type => new T().Build(_schemaAnnotationReaderFactory()));
+			if (_annotationObjects.TryGetValue(typeof(T), out var annotationObject)) return (T) annotationObject;
+			lock (_annotationObjects)
+			{
+				if (_annotationObjects.TryGetValue(typeof(T), out annotationObject)) return (T) annotationObject;
+				var annotation = new T().Build(_schemaAnnotationReaderFactory());
+				_annotationObjects.Add(typeof(T), annotation);
+				return annotation;
+			}
 		}
 
 		#endregion
 
 		public const string NAMESPACE = "urn:schemas.stateless.be:biztalk:annotations:2013:01";
 		public static readonly ISchemaAnnotationCollection Empty = new SchemaAnnotationCollection(() => SchemaAnnotationReader.Empty);
-		private readonly ConcurrentDictionary<Type, object> _annotationObjects;
+		private readonly Dictionary<Type, object> _annotationObjects;
 		private readonly Func<ISchemaAnnotationReader> _schemaAnnotationReaderFactory;
 	}
 }
