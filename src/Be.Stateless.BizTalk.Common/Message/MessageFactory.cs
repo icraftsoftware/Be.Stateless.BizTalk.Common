@@ -117,10 +117,10 @@ namespace Be.Stateless.BizTalk.Message
 		}
 
 		/// <summary>
-		/// Creates a dummy instance document for a given schema's <see cref="DocumentSpec"/>.
+		/// Creates a dummy instance document for a given schema <see cref="DocumentSpec"/>.
 		/// </summary>
 		/// <param name="documentSpec">
-		/// The schema's <see cref="DocumentSpec"/>.
+		/// The schema <see cref="DocumentSpec"/>.
 		/// </param>
 		/// <returns>
 		/// The dummy instance document.
