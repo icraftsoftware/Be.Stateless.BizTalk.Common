@@ -98,7 +98,6 @@ namespace Be.Stateless.BizTalk.Xml
 						return xDocument.CreateNavigator();
 					}
 				}
-
 				if (absoluteUri.Host == RESOURCE_HOST)
 				{
 					var assembly = ReferenceType.Assembly;
@@ -108,7 +107,6 @@ namespace Be.Stateless.BizTalk.Xml
 					return stream;
 				}
 			}
-
 			return base.GetEntity(absoluteUri, role, ofObjectToReturn);
 		}
 
@@ -133,7 +131,6 @@ namespace Be.Stateless.BizTalk.Xml
 				if (uri.Host == TYPE_HOST) return uri;
 				if (uri.Host == RESOURCE_HOST) return uri;
 			}
-
 			return base.ResolveUri(baseUri, relativeUri);
 		}
 

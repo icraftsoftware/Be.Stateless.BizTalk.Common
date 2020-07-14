@@ -202,7 +202,6 @@ namespace Be.Stateless.BizTalk.Streaming
 				if (!_readCompleted)
 				{
 					_length += bytesReadCount;
-
 					if (bytesReadCount > 0)
 					{
 						if (_logger.IsDebugEnabled) _logger.DebugFormat("Replicating {0} bytes to target stream.", bytesReadCount);
@@ -224,7 +223,6 @@ namespace Be.Stateless.BizTalk.Streaming
 						_target = null;
 					}
 				}
-
 				return bytesReadCount;
 			}
 			catch (Exception exception)

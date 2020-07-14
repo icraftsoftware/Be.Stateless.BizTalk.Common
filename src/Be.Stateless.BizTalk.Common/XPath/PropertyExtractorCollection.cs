@@ -248,7 +248,7 @@ namespace Be.Stateless.BizTalk.XPath
 				ExtractorPrecedence.SchemaOnly => schemaExtractors.Any() ? schemaExtractors : pipelineExtractors,
 				ExtractorPrecedence.Pipeline => pipelineExtractors.Union(schemaExtractors, _lambdaComparer),
 				ExtractorPrecedence.PipelineOnly => pipelineExtractors.Any() ? pipelineExtractors : schemaExtractors,
-				_ => throw new InvalidOperationException($"Unknown ExtractorPrecedence value '{pipelineExtractors.Precedence}'."),
+				_ => throw new InvalidOperationException($"Unknown ExtractorPrecedence value '{pipelineExtractors.Precedence}'.")
 			};
 			// filter out extractors to be ignored
 			return mergedExtractors.Where(pe => pe.ExtractionMode != ExtractionMode.Ignore).ToArray();

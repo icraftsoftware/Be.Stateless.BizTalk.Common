@@ -75,7 +75,6 @@ namespace Be.Stateless.BizTalk.Runtime.Caching
 			{
 				var keyString = _keyFactory(key);
 				if (_cache.Contains(keyString)) return (TItem) _cache[keyString];
-
 				lock (_cache)
 				{
 					if (!_cache.Contains(keyString))

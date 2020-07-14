@@ -189,7 +189,6 @@ namespace Be.Stateless.BizTalk.Xml
 					{
 						if (InnerReader.NodeType != XmlNodeType.XmlDeclaration) return true;
 					}
-
 					// switch to next state if fall through
 					return Read();
 

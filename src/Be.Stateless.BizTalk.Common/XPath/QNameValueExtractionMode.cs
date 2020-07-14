@@ -62,6 +62,6 @@ namespace Be.Stateless.BizTalk.XPath
 		/// against xml type names without having to care about varying xml namespace prefixes that can mangle the type
 		/// name.
 		/// </remarks>
-		LocalName = 1,
+		LocalName = 1
 	}
 }
